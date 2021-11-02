@@ -1,32 +1,45 @@
 <html>
-    <head>
-        <style>
-            table { border-collapse: collapse; font-family: Calibri, sans-serif; }
-            colgroup, tbody { border: solid medium; }
-            td { border: solid thin; height: 5em; width: 5em; text-align: center; padding: 0; }
-        </style>
+<head>
+    <title>Sudoku Helper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='client.js') }}"></script>
+</head>
+<body>
+<div class="flex-container">
+    <div class="flex-item">
 
-        <title>Home Page</title>
-    </head>
-    <body>
+        <table class="board">
+            {% for i in range(9) %}
+            <tr class="board">
+                {% for j in range(9) %}
+                <td class="board">
+                    <div class="input">
+                        <label><input id={{i}}{{j}} class="cell" type="checkbox"><pre> </pre></label>
+                    </div>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
 
-<table>
-  <colgroup><col><col><col></colgroup>
-  <colgroup><col><col><col></colgroup>
-  <colgroup><col><col><col></colgroup>
-  <tbody>
-   <tr> <td>1 <td>  <td>3 <td>6 <td>  <td>4 <td>7 <td>  <td>9
-   <tr> <td>  <td>2 <td>  <td>  <td>9 <td>  <td>  <td>1 <td>
-   <tr> <td>7 <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>6
-  <tbody>
-   <tr> <td>2 <td>  <td>4 <td>  <td>3 <td>  <td>9 <td>  <td>8
-   <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
-   <tr> <td>5 <td>  <td>  <td>9 <td>  <td>7 <td>  <td>  <td>1
-  <tbody>
-   <tr> <td>6 <td>  <td>  <td>  <td>5 <td>  <td>  <td>  <td>2
-   <tr> <td>  <td>  <td>  <td>  <td>7 <td>  <td>  <td>  <td>
-   <tr> <td>9 <td>  <td>  <td>8 <td>  <td>2 <td>  <td>  <td>5
-</table>
+    </div>
+    <div class="flex-item">
+        <div id="keyboard">
+            <button type="submit" type="submit" id="submit">&crarr;</button>
+            <button type="submit" id="clear">CE</button>
+            <button type="submit" id="delete" name="del">&lArr;</button>
 
-    </body>
+            <div id="numpad">
+                {% for i in range(1, 10) %}
+                <button type="submit" class="number" name={{i}}>{{i}}</button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>
