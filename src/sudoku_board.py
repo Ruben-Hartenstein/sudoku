@@ -12,8 +12,10 @@ class SudokuBoard:
             self.board = deepcopy(board)
         else:
             self.board = []
-            for i in range(SIZE + 1):
-                self.board.append([0] * 9)
+            for i in range(SIZE):
+                self.board.append([])
+                for j in range(SIZE):
+                    self.board[i].append([0] * (SIZE + 1))
         temp_board = deepcopy(self.board)
         self.solve()
         self.solved = deepcopy(self.board)
@@ -38,12 +40,12 @@ class SudokuBoard:
 
         for i in range(*numbers):
             if self.is_valid(i, square):
-                self.board[square[0]][square[1]] = i
+                self.board[square[0]][square[1]][0] = i
 
                 if self.solve(numbers):
                     return True
 
-                self.board[square[0]][square[1]] = 0
+                self.board[square[0]][square[1]][0] = 0
 
         return False
 
@@ -60,12 +62,12 @@ class SudokuBoard:
 
         # Check row
         for j in range(SIZE):
-            if self.board[position[0]][j] == number and j != position[1]:
+            if self.board[position[0]][j][0] == number and j != position[1]:
                 return False
 
         # Check column
         for i in range(SIZE):
-            if self.board[i][position[1]] == number and i != position[0]:
+            if self.board[i][position[1]][0] == number and i != position[0]:
                 return False
 
         # Check Box
@@ -74,7 +76,7 @@ class SudokuBoard:
 
         for i in range(box_y, box_y + 3):
             for j in range(box_x, box_x + 3):
-                if self.board[i][j] == number and (i, j) != position:
+                if self.board[i][j][0] == number and (i, j) != position:
                     return False
 
         return True
@@ -92,10 +94,10 @@ class SudokuBoard:
             for j in range(SIZE):
                 if j % 3 == 0 and j != 0:
                     print("| ", end="")
-                if board[i][j] == 0:
+                if board[i][j][0] == 0:
                     to_print = " "
                 else:
-                    to_print = board[i][j]
+                    to_print = board[i][j][0]
                 if j == 8:
                     print(to_print)
                 else:
@@ -108,11 +110,11 @@ class SudokuBoard:
         """
         for i in range(SIZE):
             for j in range(SIZE):
-                if self.board[i][j] == 0:
+                if self.board[i][j][0] == 0:
                     return i, j
         return None
 
     def updateCell(self, number, cells):
         for cell in cells:
             x, y = [int(i) for i in cell]
-            self.board[x][y] = number
+            self.board[x][y][0] = number

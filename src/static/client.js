@@ -37,7 +37,7 @@ $(document).ready(function () {
         console.log(board);
        $('.cell').each(function (i, obj) {
            let coords = obj.id.split('');
-           $(this).next().text(board[coords[0]][coords[1]]);
+           $(this).next().text(board[coords[0]][coords[1]][0]);
        });
     }
 
