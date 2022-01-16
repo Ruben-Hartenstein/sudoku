@@ -1,3 +1,4 @@
+from imp import source_from_cache
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit
 import sudoku_board
@@ -27,8 +28,14 @@ def test_connect():
 
 @socketio.on('numbers')
 def new_numbers(data):
-    sudoku_board.updateCell(data["number"], data["checkedCells"])
     print(f"Emit: {data}")
+    sudoku_board.updateNumbers(data["number"], data["checkedCells"])
+    emit('update cells', {'number': data["number"], 'checkedCells': data["checkedCells"]})
+
+@socketio.on('erase')
+def erase(checkedCells):
+    sudoku_board.eraseCells(checkedCells)
+    emit('update cells', {'number': 0, 'checkedCells': checkedCells})
 
 
 def list2board(num_list):

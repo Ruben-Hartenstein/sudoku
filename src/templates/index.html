@@ -30,13 +30,13 @@
     </div>
     <div class="flex-item">
         <div id="keyboard">
-            <button type="submit" type="submit" id="submit">&crarr;</button>
-            <button type="submit" id="clear">CE</button>
-            <button type="submit" id="delete" name="del">&lArr;</button>
-
+            <button id="erase">DEL</button>
+            <button id="candidate">&crarr;</button>
+            <button id="clear">CE</button>
+            
             <div id="numpad">
                 {% for i in range(1, 10) %}
-                <button type="submit" class="number" name={{i}}>{{i}}</button>
+                <button class="number" name={{i}}>{{i}}</button>
                 {% endfor %}
             </div>
         </div>
