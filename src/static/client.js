@@ -54,7 +54,7 @@ $(document).ready(function () {
         $('.cell').each(function (i, obj) {
             if (obj.checked) {
                 checkedCells.push(obj.id);
-                obj.checked = false;
+                obj.click()
             }
         });
         return checkedCells;
