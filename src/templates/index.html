@@ -18,9 +18,7 @@
             <tr class="board">
                 {% for j in range(9) %}
                 <td class="board">
-                    <div class="input">
-                        <label><input id={{i}}{{j}} class="cell" type="checkbox"><pre> </pre></label>
-                    </div>
+                    <label><input id={{i}}{{j}} class="cell" type="checkbox"><pre> </pre></label>
                 </td>
                 {% endfor %}
             </tr>
@@ -31,7 +29,7 @@
     <div class="flex-item">
         <div id="keyboard">
             <button id="erase">DEL</button>
-            <button id="candidate">&crarr;</button>
+            <button id="candidate">Note</button>
             <button id="clear">CE</button>
             
             <div id="numpad">

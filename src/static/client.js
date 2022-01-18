@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    var socket = io.connect('http://127.0.0.1:5000/');
+    const socket = io.connect('http://127.0.0.1:5000/');
+    var isCandidate = false;
 
     // Initialize connection
     socket.on('connect', function () {
@@ -17,30 +18,37 @@ $(document).ready(function () {
     });
 
     socket.on('update cells', function (data) {
-        console.log(data)
-        updateCells(data['number'], data['checkedCells']);
+        updateCells(data['values'], data['checkedCells']);
     });
 
     // Updates whole board TODO: candidates
     function updateBoard(board){
        $('.cell').each(function (i, obj) {
-           let coords = obj.id.split('');
-           $(this).next().text(board[coords[0]][coords[1]][0]);
+           let coords = obj.id.split(''); 
+           let text = board[coords[0]][coords[1]][0] == 0 ? " " :  board[coords[0]][coords[1]][0];
+           $(this).next().text(text);
        });
     }
 
     // Updates content of cells
-    function updateCells(number, cells){
-        cells.forEach(id => {
-            $('#' + id).next().text(number);
+    function updateCells(cellValues, cells){
+        cells.forEach((id, i) => {
+            let text = "";
+            if(cellValues[i][0] == 0){
+                let candidates = cellValues[i].slice(1)
+                text = candidates.some(Boolean) ? candidates : " "
+            } else {
+                text = cellValues[i][0]
+            }
+            $('#' + id).next().text(text);
         });
     }
 
     // Send number with every checked Cell everytime a number is clicked
-    // TODO: server should initiate change
     $('.number').on('click', function () {
         let dict = {
             'number': $(this).attr('name'),
+            'isCandidate': isCandidate,
             'checkedCells': getCheckedCells(),
         }
         socket.emit('numbers', dict);
@@ -58,17 +66,21 @@ $(document).ready(function () {
         return checkedCells;
     }
 
-    $('#erase').on('click', function() { 
-        checkedCells = getCheckedCells();
-        socket.emit('erase', checkedCells)
+    $('#erase').on('click', function() {
+        let checkedCells = getCheckedCells();
+        socket.emit('erase', checkedCells);
     }); 
     
-    $('#candidate').on('click', function() { 
-        console.log("Candidate Toggle")
+    $('#candidate').on('click', function() {
+        isCandidate = !isCandidate;
+        if (isCandidate) {
+            $('#candidate').css('color', 'red');
+        } else {
+            $('#candidate').css('color', 'black');
+        }
     });
 
     $('#clear').on('click', function() { 
-        console.log("Clear");
         socket.emit('clear');
     });
 });

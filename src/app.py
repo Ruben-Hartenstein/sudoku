@@ -29,13 +29,18 @@ def test_connect():
 @socketio.on('numbers')
 def new_numbers(data):
     print(f"Emit: {data}")
-    sudoku_board.updateNumbers(data["number"], data["checkedCells"])
-    emit('update cells', {'number': data["number"], 'checkedCells': data["checkedCells"]})
+    if data["isCandidate"]:
+        cell_values = sudoku_board.update_candidates(data["number"], data["checkedCells"])
+    else:
+        cell_values = sudoku_board.update_numbers(data["number"], data["checkedCells"])
+    print(cell_values)
+    emit('update cells', {'values': cell_values, 'checkedCells': data["checkedCells"]})
 
 @socketio.on('erase')
-def erase(checkedCells):
-    sudoku_board.eraseCells(checkedCells)
-    emit('update cells', {'number': 0, 'checkedCells': checkedCells})
+def erase(checked_cells):
+    cell_values = sudoku_board.erase_cells(checked_cells)
+    print(cell_values)
+    emit('update cells', {'values': cell_values, 'checkedCells': checked_cells})
 
 
 def list2board(num_list):

@@ -29,7 +29,7 @@ Lösungsstrategien zu implementieren.
 
 Diverse Lösungsstrategien sind bspw. hier gut erklärt: <br>
 [Lösungsstrategien-1](https://www.thinkgym.de/r%C3%A4tselarten/sudoku/l%C3%B6sungsstrategien-1/) <br>
-[Lösungsstrategien-2](https://www.thinkgym.de/r%C3%A4tselarten/sudoku/l%C3%B6sungsstrategien-2/)<br>
+[Lösungsstrategien-2](https://www.thinkgym.de/r%C3%A4tselarten/sudoku/l%C3%B6sungsstrategien-2/) <br>
 [Lösungsstrategien-3](https://www.thinkgym.de/r%C3%A4tselarten/sudoku/l%C3%B6sungsstrategien-3/)
 
 Das Frontend soll sowohl für SmallScreen (Smartphone) als auch BigScreen (Laptop)

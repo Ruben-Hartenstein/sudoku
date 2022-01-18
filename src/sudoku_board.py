@@ -114,20 +114,30 @@ class SudokuBoard:
                     return i, j
         return None
 
-    def updateNumbers(self, number, cells):
+    def update_numbers(self, number, cells):
+        cell_values = []
+        number = int(number)
         for cell in cells:
             x, y = [int(i) for i in cell]
             if self.board[x][y][0] == number:
                 self.board[x][y][0] = 0
             else:
                 self.board[x][y][0] = number
+            cell_values.append(self.board[x][y])
+        return cell_values
 
-    def updateCandidates(self, candidate, cells, clr):
+    def update_candidates(self, candidate, cells):
+        cell_values = []
         for cell in cells:
             x, y = [int(i) for i in cell]
-            self.board[x][y][candidate] ^= 1
-    
-    def eraseCells(self, cells):
+            self.board[x][y][int(candidate)] ^= 1
+            cell_values.append(self.board[x][y])
+        return cell_values
+
+    def erase_cells(self, cells):
+        cell_values = []
         for cell in cells:
             x, y = [int(i) for i in cell]
             self.board[x][y] = [0] * (SIZE + 1)
+            cell_values.append(self.board[x][y])
+        return cell_values
