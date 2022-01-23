@@ -44,10 +44,18 @@ $(document).ready(function () {
         });
     }
 
+    // Simulate button click on keypress (0 = 48,1 = 49,...)
+    $(document).on('keypress', function(key) {
+        let digit = key.which - 48;
+        if (0 <= digit && digit <= 9){
+            $(`#${digit}`).click();
+        }
+    });
+
     // Send number with every checked Cell everytime a number is clicked
     $('.number').on('click', function () {
         let dict = {
-            'number': $(this).attr('name'),
+            'number': $(this).attr('id'),
             'isCandidate': isCandidate,
             'checkedCells': getCheckedCells(),
         }
