@@ -16,7 +16,7 @@ $(document).ready(function () {
          if (status.hasStarted) {
              $('#start').hide();
              $('#started').show();
-             colorNumbers(status.startCoords);
+             colorNumbers(status.startCoords, 'blue');
          } else {
              $('#start').show();
              $('#started').hide();
@@ -30,7 +30,8 @@ $(document).ready(function () {
         if (status.hasStarted) {
             $('#start').hide();
             $('#started').show();
-            colorNumbers(status.startCoords);
+            console.log(status.startCoords)
+            colorNumbers(status.startCoords, 'blue');
         } else {
             $('#start').show();
             $('#started').hide();
@@ -39,6 +40,11 @@ $(document).ready(function () {
 
     socket.on('update cells', function (data) {
         updateCells(data['values'], data['checkedCells']);
+    });
+
+    socket.on('help0', function(errors) {
+        console.log("help0")
+        colorNumbers(errors, 'red');
     });
 
     // Send number with every checked Cell everytime a number is clicked
@@ -77,6 +83,10 @@ $(document).ready(function () {
      $('#start').on('click', function () {
         socket.emit('start');
      });
+
+     $('#help').on('click', function () {
+        socket.emit('help');
+     });
 });
 
 // Returns all checked cells and unchecks them
@@ -102,6 +112,7 @@ function updateBoard(board){
 
 // Updates content of cells
 function updateCells(cellValues, cells){
+    colorNumbers(cells, 'black');
     cells.forEach((id, i) => {
         let text = "";
         if(cellValues[i][0] == 0){

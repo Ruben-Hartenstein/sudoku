@@ -10,17 +10,17 @@ class SudokuBoard:
         """
         self.solved = None
         self.start_coords = None
-        if not board:
-            self.board = []
-            self.calc_candidates = []
-            for i in range(SIZE):
-                self.board.append([])
-                self.calc_candidates.append([])
-                for j in range(SIZE):
-                    self.board[i].append([0] * (SIZE + 1))
-                    self.calc_candidates[i].append([1] * (SIZE + 1))
-        else:
-            self.board = board
+        self.calc_candidates = []
+    #if not board:
+        #self.board = []
+        for i in range(SIZE):
+            #self.board.append([])
+            self.calc_candidates.append([])
+            for j in range(SIZE):
+                #self.board[i].append([0] * (SIZE + 1))
+                self.calc_candidates[i].append([1] * SIZE)
+        #else:
+        self.board = board
 
     def calculate_start_coords(self):
         self.start_coords = []
@@ -138,12 +138,12 @@ class SudokuBoard:
                     return i, j
         return None
 
-    def check(self):
+    def get_errors(self):
         errors = []
         for i in range(SIZE):
             for j in range(SIZE):
                 if self.board[i][j][0] != 0:
-                    if self.board[i][j][0] != self.solved[i][j]:
+                    if self.board[i][j][0] != self.solved[i][j][0]:
                         errors.append((i, j))
         return errors
 
@@ -151,8 +151,9 @@ class SudokuBoard:
         print(self.calc_candidates)
         for i in range(SIZE):
             for j in range(SIZE):
-                for candidate in range(1, SIZE + 1):
-                    self.calc_candidates[i][j][candidate] = int(self.is_valid(candidate, (i, j)))
+                if self.board[i][j][0] == 0:
+                    for candidate in range(1, SIZE + 1):
+                        self.calc_candidates[i][j][candidate-1] = int(self.is_valid(candidate, (i, j)))
         print(self.calc_candidates)
 
     def update_numbers(self, number, cells):

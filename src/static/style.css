@@ -13,18 +13,22 @@ td.board {
 
 td:first-child.board {
     border-left: solid;
+    border-left-width: 2px;
 }
 
 td:nth-child(3n).board {
     border-right: solid;
+    border-right-width: 2px;
 }
 
 tr:first-child.board {
     border-top: solid;
+    border-top-width: 2px;
 }
 
 tr:nth-child(3n).board {
     border-bottom: solid;
+    border-bottom-width: 2px;
 }
 
 input {
@@ -56,6 +60,10 @@ label {
     background: white;
     border: 1px solid black;
     border-radius: 5px;
+}
+
+#help button{
+    width: 190px;
 }
 
 #keyboard button:active {

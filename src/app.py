@@ -8,6 +8,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 has_started = False
+help_nr = 0
 sudoku_board = sudoku_board.SudokuBoard([[[6, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                           [1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                           [9, 0, 0, 0, 0, 0, 0, 0, 0, 0], [4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -100,7 +101,16 @@ def erase(checked_cells):
 @socketio.on('clear')
 def clear(string):
     print(string)
-    sudoku_board.calculate_candidates()
+
+
+@socketio.on('help')
+def help():
+    global help_nr
+    errors = sudoku_board.get_errors()
+    print(errors)
+    emit(f'help{help_nr}', errors)
+    #help_nr += 1
+    #sudoku_board.calculate_candidates()
 
 
 def start_game():

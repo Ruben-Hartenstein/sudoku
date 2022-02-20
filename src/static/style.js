@@ -28,22 +28,27 @@ $(document).on('keydown', function(key) {
         toggleCellHighlighting(pointer);
         switch(pressedKey) {
             case 37: // Left
-                if (pointer[1] > 0);
-                    pointer[1] -= 1;
+                pointer[1] -= 1;
+                if (pointer[1] == -1)
+                    pointer[1] = 8
                 break;
             case 38: // Up
-                if (pointer[0] > 0);
-                    pointer[0] -= 1;
+                pointer[0] -= 1;
+                if (pointer[0] == -1)
+                    pointer[0] = 8
                 break;
             case 39: // Right
-                if (pointer[1] < 8);
-                    pointer[1] += 1;
+                pointer[1] += 1;
+                if (pointer[1] == 9)
+                    pointer[1] = 0
                 break;
             case 40: // Down
-                if (pointer[0] < 8);
-                    pointer[0] += 1;
+                pointer[0] += 1;
+                if (pointer[0] == 9)
+                    pointer[0] = 0
                 break;
         }
+        console.log(pointer)
         toggleCellHighlighting(pointer)
     }
     // Space Bar to click cell
@@ -63,10 +68,10 @@ function toggleCellHighlighting(coord) {
     obj.css('color',obj.css('color') == 'rgb(0, 0, 255)' ? 'black' : 'blue');
 }
 
-function colorNumbers(coords) {
+function colorNumbers(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
-        $(`#${id}`).next().css('color', 'blue');
+        $(`#${id}`).next().css('color', color);
     });
 }
 
