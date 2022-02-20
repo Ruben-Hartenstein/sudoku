@@ -48,6 +48,11 @@ $(document).ready(function () {
             'isCandidate': isCandidate,
             'checkedCells': getCheckedCells(),
         }
+        // If no cell is selected, take the current pointer position
+        if (!dict['checkedCells'].length) {
+            let id = pointer[0].toString() + pointer[1].toString();
+            dict['checkedCells'].push(id);
+        }
         socket.emit('numbers', dict);
     });
 

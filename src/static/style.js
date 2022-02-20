@@ -16,7 +16,6 @@ $(document).ready(function () {
 // Down arrow = 40
 // Shift = 16
 // Space = 32
-
 $(document).on('keydown', function(key) {
     let pressedKey = key.which;
     // Numpad to press numbers
