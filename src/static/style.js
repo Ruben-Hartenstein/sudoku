@@ -48,7 +48,6 @@ $(document).on('keydown', function(key) {
                     pointer[0] = 0
                 break;
         }
-        console.log(pointer)
         toggleCellHighlighting(pointer)
     }
     // Space Bar to click cell
@@ -71,6 +70,9 @@ function toggleCellHighlighting(coord) {
 function colorNumbers(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
+        // Never change the color of a blue number (start coordinates)
+        if ($(`#${id}`).next().css('color') == 'rgb(0, 0, 255)')
+            return;
         $(`#${id}`).next().css('color', color);
     });
 }

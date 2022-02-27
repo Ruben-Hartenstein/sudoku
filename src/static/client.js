@@ -20,7 +20,7 @@ $(document).ready(function () {
          } else {
              $('#start').show();
              $('#started').hide();
-             alert("Sudoku either not solvable or not uniquely solvable!")
+             alert("Sudoku either not solvable or not uniquely solvable!");
          }
     });
 
@@ -30,7 +30,6 @@ $(document).ready(function () {
         if (status.hasStarted) {
             $('#start').hide();
             $('#started').show();
-            console.log(status.startCoords)
             colorNumbers(status.startCoords, 'blue');
         } else {
             $('#start').show();
@@ -43,7 +42,7 @@ $(document).ready(function () {
     });
 
     socket.on('help0', function(errors) {
-        console.log("help0")
+        console.log("help0");
         colorNumbers(errors, 'red');
     });
 
@@ -117,9 +116,9 @@ function updateCells(cellValues, cells){
         let text = "";
         if(cellValues[i][0] == 0){
             let candidates = cellValues[i].slice(1)
-            text = candidates.some(Boolean) ? candidates : " "
+            text = candidates.some(Boolean) ? candidates : " ";
         } else {
-            text = cellValues[i][0]
+            text = cellValues[i][0];
         }
         $('#' + id).next().text(text);
     });

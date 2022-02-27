@@ -82,19 +82,23 @@ def test_connect():
 
 @socketio.on('numbers')
 def new_numbers(data):
+    global help_nr
     print(f"Emit: {data}")
     if data["isCandidate"]:
         cell_values = sudoku_board.update_candidates(data["number"], data["checkedCells"])
     else:
         cell_values = sudoku_board.update_numbers(data["number"], data["checkedCells"])
     print(cell_values)
+    help_nr = 0
     emit('update cells', {'values': cell_values, 'checkedCells': data["checkedCells"]})
 
 
 @socketio.on('erase')
 def erase(checked_cells):
+    global help_nr
     cell_values = sudoku_board.erase_cells(checked_cells)
     print(cell_values)
+    help_nr = 0
     emit('update cells', {'values': cell_values, 'checkedCells': checked_cells})
 
 
@@ -106,11 +110,17 @@ def clear(string):
 @socketio.on('help')
 def help():
     global help_nr
-    errors = sudoku_board.get_errors()
-    print(errors)
-    emit(f'help{help_nr}', errors)
-    #help_nr += 1
-    #sudoku_board.calculate_candidates()
+    if help_nr == 0:
+        errors = sudoku_board.get_errors()
+        print(errors)
+        emit(f'help{help_nr}', errors)
+        help_nr += 1
+    elif help_nr == 1:
+        help_nr += 1
+        pass
+    else:
+        help_nr = 0
+    # sudoku_board.calculate_candidates()
 
 
 def start_game():
