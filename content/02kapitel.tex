@@ -1,11 +1,13 @@
 %!TEX root = ../dokumentation.tex
 
-\chapter{Rahmenbedinungnen}
+\chapter{Rahmenbedingungen}
+Für das Projekt werden verschiedene Rahmenbedingungen festgelegt. Dazu gehört die Programmiersprache, indem der Sudoku Solver programmiert werden soll, ein Webserver auf dem das Programm später laufen wird und ein Framework, dass als Gerüst für das Programm auf dem Webserver fungiert. Wichtig ist, dass das Framework auf die Programmiersprache angepasst ist, um Probleme zu vermeiden. Im Zuge der Recherchen wurden verschiedenen Webserver in Betracht gezogen und besonders die Webserver Apache HTTP Server und Nginx Server aufgrund ihrer Beliebtheit miteinander verglichen. Auch bei den Frameworks wurden zwei besonders in Betracht gezogen und evaluiert, welches besser geeignet ist für die Studienarbeit.
 
 \section{Programmiersprache}
+\todo{Programmiersprache... Warum Python? Vorteile Python?}
+
 
 \section{Webserver}
-
 Ein Webserver ist in der Regel ein Server, der zur Verbreitung von Webinhalten im Inter- oder Intranet dient. Die jeweiligen Informationen und Dokumentationen können demnach weltweit oder firmenintern erreicht werden. Damit eine Website jederzeit erreichbar sein kann, muss der Webserver permanent online sein.
 Der Rechner, auf dem der Webserver läuft, wird als Host bezeichnet. Der Webserver ist für die zuverlässige Übertragung von statischen, wie beispielsweise von unveränderlichen \ac{HTML}-Dateien, aber auch von dynamischen Dateien verantwortlich. Für dynamische Dateien muss der Webserver vor der Antwort Programmcode ausführen. Dieser Programmcode wird in diesem Fall in der Programmiersprache Python geschrieben. Mittels einer \ac{CSS} Datei können die Inhalte der dynamischen Dateien weitestgehend von den Darstellungsvorgaben getrennt werden. In der \ac{HTML} Datei wird folglich nur die inhaltliche Gliederung definiert und in der \ac{CSS} Datei die Darstellung, wie etwa Farben oder Layout.
 Für die Übermittlung wird das Übertragungsprotokoll \ac{HTTP} oder die verschlüsselte Variante \ac{HTTPS} verwendet.
@@ -18,30 +20,27 @@ Ein Webserver ist in der Lage, die Inhalte auf viele verschiedene Rechner gleich
 	\label{fig:WebserverStatistik}
 \end{figure}
 
-
-Am verbreiteten sind unter anderem die Webserver Computerprogramme Apache HTTP Server und nginx wie in die Statistik \ref{fig:WebserverStatistik}. Beide Programme sind freie Software und wurden daher für das Projekt in Betracht gezogen. Im Folgenden werden diese beide Programme verglichen.
+Am verbreiteten sind unter anderem die Webserver Apache HTTP Server und nginx, wie in die Statistik \ref{fig:WebserverStatistik} dargestellt. Beide Programme sind freie Software und wurden daher für das Projekt in Betracht gezogen. Im Folgenden werden diese beide Programme verglichen.
 
 
 \subsection{Apache HTTP Server}
-
 Der Apache Webserver wurde erstmals 1195 veröffentlicht und hat sich schnell zu einem der beliebtesten Webserver entwickelt. Er unterstützt neben Unix und Linux noch eine Vielzahl an weiteren Betriebssystemen.
-
-Beim Apache-Webserver wird ein Ansatz verfolgt, bei dem jede Clientanfrage von einem separaten Prozess oder Thread bearbeitet wird. Dadurch werden Prozesse, die Schreib- oder Leseoperationen erfordern, nacheinander abgearbeitet und es kann passieren, dass ein Request in der Warteschlange verweilen muss, bis der vorherige Request durchgeführt werden konnte. Damit man dieses Problem umgehen kann, gibt es die Möglichkeit mehrere Single-Threading-Prozesse gleichzeitig zu starten. Diese Strategie ist jedoch mit einem hohen Ressourcenaufwand verbunden. Um dies zu vermeiden, kommen Multi-Threading-Mechanismen zum Einsatz. Für die parallele Abfrage von Clientanfragen gibt es verschiedene Multi-Processing-Module, die integriert werden können.
 
 Der Apache Server ist modular aufgebaut, wodurch benötigte Funktionen, die der Server nicht nativ bereitstellt, durch Module importiert werden können. Das Erstellen dynamischer Webseiten wird mittels serverseitiger Skriptsprachen bewerkstelligt. Über ein Modul kann der entsprechende Interpreter in den Server integriert werden.
 
+Beim Apache-Webserver wird ein Ansatz verfolgt, bei dem jede Clientanfrage von einem separaten Prozess oder Thread bearbeitet wird. Dadurch werden Prozesse, die Schreib- oder Leseoperationen erfordern, nacheinander abgearbeitet und es kann passieren, dass ein Request in der Warteschlange verweilen muss, bis der vorherige Request durchgeführt werden konnte. Damit man dieses Problem umgehen kann, gibt es die Möglichkeit, mehrere Single-Threading-Prozesse gleichzeitig zu starten. Diese Strategie ist jedoch mit einem hohen Ressourcenaufwand verbunden. Um dies zu vermeiden, kommen Multi-Threading-Mechanismen zum Einsatz. Für die parallele Abfrage von Clientanfragen gibt es verschiedene Multi-Processing-Module, die integriert werden können.
+
+
 
 \subsection{Nginx Webserver}
-
 Der Marktanteil von Nginx ist in den letzten Jahren kontinuierlich gestiegen, weshalb auch dieser Webserver für die Studienarbeit in Betracht gezogen wurde. Nginx wurde erstmals 2004 veröffentlicht und ist wie der Apache Server auch mit diversen Betriebssystemen kompatibel.
 
-Dieser Server zeichnet sich durch eine hohe Performance aus. Dabei können eine möglichst große Anzahl an Clients gleichzeitig bedient werden und der Ressourcenverbrauch trotzdem gering gehalten. Durch die ereignisorientierte Architektur können Client-Anfragen asynchron bearbeitet werden, wodurch Arbeitsspeicher und Zeit gespart werden kann. Die Nebenläufigkeit ist realisiert, ohne dass für jede neue Verbindung ein zusätzlicher Prozess oder Thread benötigt wird.  Die Stärke dieser Architektur zeigt sich bei großen Webprojekten.
+Wie Apache ist auch Nginx modular aufgebaut und verschiedene Funktionen können über Module bereitgestellt werden. Zu diesen Modulen gehört jedoch nicht die Option, Interpreter für eine Programmiersprache entsprechend in den Webserver zu integrieren. Es wird also ein weiterer Anwendungsserver benötigt. Für kleine Webprojekte ist das ein Mehraufwand, der nicht immer eingegangen werden muss. 
 
-Wie Apache ist auch Nginx modular aufgebaut und verschiedene Funktionen können über Module bereitgestellt werden. Zu diesen Modulen gehört jedoch nicht die Option Interpreter für eine Programmiersprache entsprechend in den Webserver zu integrieren. Es wird also ein weiterer Anwendungsserver benötigt. Für kleine Webprojekte ist das ein Mehraufwand, der nicht immer eingegangen werden muss. 
+Dieser Server zeichnet sich durch eine hohe Performance aus. Dabei können eine möglichst große Anzahl an Clients gleichzeitig bedient werden und der Ressourcenverbrauch trotzdem gering gehalten. Durch die ereignisorientierte Architektur können Client-Anfragen asynchron bearbeitet werden, wodurch Arbeitsspeicher und Zeit gespart werden kann. Die Nebenläufigkeit ist realisiert, ohne dass für jede neue Verbindung ein zusätzlicher Prozess oder Thread benötigt wird. Die Stärke dieser Architektur zeigt sich bei großen Webprojekten. 
 
 
 \subsection{Fazit}
-
 Die folgende Tabelle \ref{tab:ServerVergleich} zeigt die Unterschiede und Gemeinsamkeiten der beiden Webserver auf. Der ausschlaggebende Grund warum sich für einen Apache Server entschieden wurde, ist das Merkmal der dynamischen Webinhalte.
 
 \newlength{\colWidth}
@@ -52,8 +51,8 @@ Die folgende Tabelle \ref{tab:ServerVergleich} zeigt die Unterschiede und Gemein
 		\hline
 		Merkmal & Apache & NGINX \\
 		\hline
-		Funktion & Webserver, Proxy-Server & Webserver, Proxy-Server, E-Mail-Proxy, Load-Balancer \\
-		Betriebssystem & Alle unixoiden Plattformen, Windows & FreeBSD, Linux, Solaris, IBM AIX, HP-UX, macOS, Windows \\
+		Funktion & Webserver, Proxy-Server & Webserver, Proxy-Server,\newline E-Mail-Proxy,\newline Load-Balancer \\
+		Betriebssystem & Alle unixoiden Plattformen, Windows & FreeBSD, Linux, Solaris,\newline IBM AIX, HP-UX, \newline macOS, Windows \\
 		Lizenz & Apache License v2.0 & \acs{BSD}-Lizenz \\
 		Entwickler & Apache Software Foundation & Nginx, Inc. \\
 		Statische Webinhalte & Ja & Ja \\
@@ -66,20 +65,66 @@ Die folgende Tabelle \ref{tab:ServerVergleich} zeigt die Unterschiede und Gemein
 \end{table}
 
 Der Apache Webserver bietet eine breite Möglichkeit an Modulen, um die Software zu erweitern.
-Der ausschlaggebende Grund, warum sich in diesem Projekt für den Apache HTTP Server entschieden wurde, ist die Möglichkeit Interpreter für Programmiersprachen über ein Modul direkt in den Webserver zu integrieren. Zudem muss für das Projekt nur ein Client bedient werden. Dadurch wird für das Anzeigen von dynamischen Inhalten kein separaten  Anwendungsserver benötigt. Dadurch bietet der Apache HTTP Server eine bequemere Lösung für kleine Websites, deren Inhalt dynamisch erzeugt wird.
-
-
-
+Der ausschlaggebende Grund, warum sich in diesem Projekt für den Apache HTTP Server entschieden wurde, ist die Möglichkeit Interpreter für Programmiersprachen über ein Modul direkt in den Webserver zu integrieren. Zudem muss für das Projekt nur ein Client bedient werden. Dadurch wird für das Anzeigen von dynamischen Inhalten kein separaten  Anwendungsserver benötigt. Damit bietet der Apache HTTP Server eine bequemere Lösung für kleine Websites, deren Inhalt dynamisch erzeugt wird.
 
 
 \section{Framework}
+Ein Framework ist ein Programmiergerüst. Es wird insbesondere bei komponentenbasierten und bei der objektorientierten Softwareentwicklung verwendet. Ein Framework ist kein fertiges Programm, sondern stellt den Rahmen, in der eine Anwendung erstellt werden soll, zur Verfügung. Frameworks lassen sich in Typen gliedern, wobei es nicht immer eine strikte Trennung gibt. Zu diesen Typen gehören beispielsweise  Application Frameworks oder Webframeworks.
+
+Die beiden Frameworks, Django und Flask, die für das Projekt in Betracht gezogen wurden, gehören zu den beliebtesten Webframeworks für Python und sind für die Entwicklung von dynamischen Webanwendungen ausgelegt. 
 
 \subsection{Django}
+Django ist ein kostenloses Open Source Webframework und kann plattformübergreifend genutzt werden. Es folgt dem \ac{MVC} Entwurfsmuster, das auch in der Studienarbeit genutzt wird. Der Fokus von Django liegt in einer schnellen Entwicklung mit weniger Code. Mit dem Framework kommen viele bereits eingebaute Pakete, die genutzt werden können. Dazu gehört unter anderem die integrierte Anbindungen an verschiedenen Datenbanksysteme. Django hat verschiedene Mechanismen integriert, um die Sicherheit der Website zu garantieren. So können SQL Injektionen oder Cross-site Scripting ausgeschlossen werden.
+
+Ein weiterer Vorteil von Django ist die große und aktive Community, wodurch viel Fragen schnell beantwortet werden können und es gibt es eine ausführliche Dokumentation zu dem Framework. 
 
 \subsection{Flask}
+Webseiten die Flask als Framework nutzten sind meistens einseitige Anwendungen. Flask ist im Gegensatz zu Django modular und eher minimalistisch aufgebaut. Daher muss in der Entwicklung eher mit externen Bibliotheken gearbeitet werden. Man nennt Flask deshalb auch ein Mikroframework. Für die Sicherheit der Website gibt es die Flask-Security Bibliothek, die dieselben Mechanismen wie Django beinhaltet.
 
+Aus diesen Gründen ist Flask eher für kleinere Projekte geeignet, die benutzerdefinierte Komponenten erfordern oder für das Prototyping. Die Anzahl der Webseiten, die Flask als Framework nutzen, steigt stetig weiter. Der Vorteil, warum Flask immer beliebter wird ist die Kontrolle, die man über das Projekt bekommt, indem die Komponenten selbst bestimmt.
 
+\subsection{Fazit}
+Beide Frameworks wären für das Projekt geeignet. Die Django Community ist größer und aktiver als die von Flask. Daher gibt es mehr Informationen über Django. Jedoch wird Flask mittlerweile in mehreren Projekten genutzt. In der Tabelle \ref{tab:FrameworkVergleich} sind die wichtigsten Eigenschaften nochmals gegenübergestellt. 
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{p{\colWidth}p{\colWidth} p{\colWidth}}
+		\hline
+		Merkmal & Django & Flask \\
+		\hline
+		Use cases & mittelgroße bis große Projekte & kleine bis mittelgroße \newline Projekte \\
+		Community & große, aktive Community & kleinere Community \\
+		Packages & built-in Packages & modular \\
+		Performance & gut & gut \\
+
+		\hline
+	\end{tabular}
+	\caption[Tabelle]{Vergleich der Frameworks Django und Flask}
+	\label{tab:FrameworkVergleich}
+\end{table}
+
+Aufgrund der Leichtigkeit wurde sich bei den Frameworks für Flask entschieden. Da es bei der Performance keine großen Unterschiede zwischen Django und Flask gibt, ist es als Merkmal für die Entscheidung eines Frameworks nicht relevant. Für den Sudoku Solver wird nur eine einseitige Anwendung ohne Datenbankanbindung benötigt, wodurch Flask das geeignetere Framework ist. Auch der modulare Aufbau spricht für Flask, da nur wenige zusätzliche Pakete genutzt werden. 
+
+Das Entwurfsmuster \ac{MVC} wird im Framework Flask übernommen.
 
 \section{Entwurfsmuster}
+Wie im Abschnitt der Frameworks schon erwähnt, wird in diesem Projekt eine bestimmte Softwarearchitektur verwendet. Damit wird einem Projekt die grundlegenden Komponenten und das Zusammenspiel dieser visualisiert. Damit ist es einfacher nicht-funktionale Eigenschaften wie die Modifizierbarkeit, Wartbarkeit oder Sicherheit darzustellen und zu verstehen.
 
-\subsection{MVC}
+Das Framework Django arbeitet immer mit dem \ac{MVC} Architekturmuster. Da aber Flask als Framework genutzt wird, muss diese Architektur selbst implementiert werden. Im Folgenden wird das Architekturmuster mit seinen drei Komponenten kurz beschrieben \textit{(und wie es in der Studienarbeit umgesetzt wurde)}.
+
+\subsection{\acl{MVC}}
+Das Ziel dieser Entwurfsarchitektur ist es, spätere Änderungen oder Erweiterungen zu vereinfachen und die Wiederverwendbarkeit der einzelnen Komponenten zu steigern. In der Abbildung \ref{fig:MVC} ist die Architektur visualisiert. Durchgezogene Linien stehen hierbei für eine direkte Assoziation und gestichelte für eine indirekte Assoziation.  
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{images/MVC.png}
+	\caption{\ac{MVC} Konzept}
+	\label{fig:MVC}
+\end{figure}
+
+\subsubsection{Model}
+Im Model sind die Daten enthalten, die dargestellt werden sollen. In Falle des Sudoku Solvers ist hier das Sudoku Board gespeichert.
+\subsubsection{View}
+In der View oder der Präsentation werden die Daten aus dem Model dargestellt. Außerdem wird in der View die Benutzerinteraktion geregelt. Die View kennt die Daten aus dem Model, soll diese aber nicht bearbeiten oder verändern und ist völlig unabhängig von dem Controller.
+\subsubsection{Controller}
+Im Controller werden das Model und die View verwaltet. Die View unterrichtet den Controller von Benutzerinteraktionen. Im Controller wird diese dann ausgewertet und gegebenenfalls das Model und die View angepasst.  In dieser Komponente sind die Lösungsstrategien für den Sudoku Solver implementiert.

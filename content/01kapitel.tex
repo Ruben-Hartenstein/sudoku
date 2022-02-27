@@ -1,29 +1,28 @@
 %!TEX root = ../dokumentation.tex
 
 \chapter{Einleitung}
-
 In vielen Zeitungen ist eine Vielzahl von Logikrätseln gedruckt. Darunter eines der häufigsten Logikrätsel: das Sudoku.
 In der üblichen Version ist es das Ziel, ein 9×9-Gitter mit den Ziffern 1 bis 9 zu füllen. Dabei kann das Gitter in drei unterschiedliche Einheiten aufgeteilt werden. Diese Einheiten sind die Spalten, Zeile und Blöcke des Gitters. Ein Block ist eine 3×3-Unterquadrat des Gitters. In jeder Einheit darf jede Ziffer genau einmal vorkommen.
-Ausgangspunkt ist ein Gitter, in dem bereits mehrere Ziffern vorgegeben sind. Sudokus gibt es in unterschiedlichen Schwierigkeitsgraden. Dabei spielt nicht nur die Anzahl der vorgegebenen Ziffern eine Rolle, sondern auch die Anordnung der Ziffern.
+Ausgangspunkt ist ein Gitter, in dem bereits mehrere Ziffern vorgegeben sind. Sudokus gibt es in unterschiedlichen Schwierigkeitsgraden. 
 
  
 
 \section{Motivation}
+Sudokus gibt es mittlerweile in vielen verschiedenen Varianten mit modifizierten Regeln. In dieser Arbeit und für den Sudoku Solver wird jedoch nur das klassische Sudoku, wie es in der Einleitung beschrieben wurde, betrachtet. Es gibt verschiedene Schwierigkeitsstufen von Sudokus. Meistens werden Sudokus mit vielen vorgegebenen Zahlen als einfach eingestuft und Sudokus mit wenigen vorgegebenen Zahlen als schwierig. Ein weiterer Punkt, der Einfluss auf die Schwierigkeitsstufe eines Sudokus hat, ist die Anordnung der vorgegebenen Ziffern.
 
-Wer schon einmal ein schweres Sudoku versucht hat zu lösen ist vielleicht auch schon an seine Grenzen zu kommen. 
+Wer schon einmal versucht hat ein schweres Sudoku  zu lösen, ist vielleicht auch bereits an seine Grenzen gekommen. Gerade bei schwierige Sudokus mit wenigen vorgebenden Zahlen kann es schwierig sein selbst eine passende Lösungsstrategie für das Sudoku zu finden. Oft sind die Lösungsstrategie schwierig zu verstehen und anzuwenden und es lassen sich damit nur Kandidaten eliminieren. Bei einfachen Sudokus werden diese Lösungsstrategien meist unbewusst und intuitiv eingesetzt. In dieser Studienarbeit soll ein Web Frontend entwickelt werden, auf dem ein Bearbeiter des Sudokus unterstützt wird, eine Lösung zu finden.
+
+Das Ziel dieser Arbeit ist es diese schwierige Lösungsstrategie sichtbar zu machen und über mehrere Stufen von Hilfestellungen den Bearbeiter des Sudokus zu zeigen, welche Lösungsstrategie im nächsten Schritt anzuwenden sind und an welcher Stelle des Sudokugitters. 
 
 
 
 \section{Forschungsstand}
-
-
 Im Internet findet man immer wieder Websites mit dem Angebot Sudokus zu lösen. Hierbei können die angegebenen Zahlen eingegeben werden und das Sudoku wird korrekt vervollständigt, falls es eine eindeutige Lösung gibt. Daraus kann der Anwender jedoch keinen Nutzen ziehen. Des Weiteren gibt es Websites mit Lösungsstrategien, die bei schwierigeren Sudokus angewendet werden müssen.
 
 Das Beherrschen der Lösungsstrategien besitzt einen großen Stellenwert. Einfache Sudokus lassen sich meist noch intuitiv und durch konzentriertes Absuchen lösen. Die beiden dafür ausreichenden Anfängertechniken heißen „Nackter Single“ und unter „Versteckter Single“ und werden im Verlauf dieser Arbeit noch erläutert. Sie werden mehrheitlich intuitiv und unbewusst eingesetzt, wenn für ein bestimmtes Feld nur eine Zahl möglich ist oder wenn eine bestimmte Zahl nur in ein einziges Feld passt. Bei kniffligeren Sudokus müssen gewissenhaft Notizen gemacht werden. Dafür wird die Methode der „Kandidaten“ verwendet. Damit lassen sich die Zusammenhänge am besten beschreiben. Manche Situationen in einem anspruchsvollen Sudoku erfordern sehr komplexe Lösungsansätze, die nicht immer so einfach zu verstehen sind. 
 
 
 \section{Forschungsfrage}
-
 Für diese Studienarbeit ist die Zielsetzung ein Sudoku Solver zu entwickeln. Ziel ist es nicht ein Sudoku automatisch zu lösen, sondern dem Benutzer Schritt für Schritt den Weg zur Lösung aufzuzeigen. Auf dieser Basis wird zunächst geprüft, ob das Sudoku eindeutig lösbar ist. Ist dies der Fall, muss der Nutzer die Möglichkeit haben sich Anweisungen geben zu lassen, wie man weiter vorgehen könnte und welche Lösungsstrategie der Benutzer anwenden muss, damit man das Sudoku lösen kann. Das heißt, dass die Zahlen auf Basis der bereits vorhandenen Zahlen und Kandidaten mit ein wenig überlegen ermittelt und erklärt werden kann, anstatt einfach eine korrekte Zahl zu zeigen, damit der Benutzer das Sudoku lösen kann. Die Lösungsstrategien sollen mittels des aktuellen Rätels erläutert und von der Software angewandt werden können. Diese Anweisungen, im folgenden auch Hilfestellungen genannt, sind in vier Varianten unterteilt.
 
 Für die erste Hilfestellung soll das Programm dem Benutzer die anzuwendende Strategie nennen und den Bereich hervorheben, auf dem die Strategie angewendet werden soll. Wenn diese Hilfestellung nicht ausreichend ist, dann markiert das Programm die konkreten Zellen und Kandidaten, die von der Strategie betroffen sind. Mit der dritten Hilfestellung soll eine Erläuterung gezeigt werden, warum bestimmte Kandidaten laut Strategie gestrichen werden können. Mit der letzten Hilfestellungen löscht das Programm den betroffenen oder mehrere betroffene Kandidaten.
