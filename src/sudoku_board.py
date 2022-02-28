@@ -147,13 +147,16 @@ class SudokuBoard:
                         errors.append((i, j))
         return errors
 
-    def calculate_candidates(self):
+    def update_calculated_candidates(self):
         print(self.calc_candidates)
         for i in range(SIZE):
             for j in range(SIZE):
+                # Ignore cells with filled in value
                 if self.board[i][j][0] == 0:
                     for candidate in range(1, SIZE + 1):
-                        self.calc_candidates[i][j][candidate-1] = int(self.is_valid(candidate, (i, j)))
+                        # Only delete possible candidates
+                        if not self.is_valid(candidate, (i, j)):
+                            self.calc_candidates[i][j][candidate-1] = 0
         print(self.calc_candidates)
 
     def update_numbers(self, number, cells):

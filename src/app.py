@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 from copy import deepcopy
 import sudoku_board
+from solutions import naked_single
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -110,16 +111,21 @@ def clear(string):
 @socketio.on('help')
 def help():
     global help_nr
-    if help_nr == 0:
-        errors = sudoku_board.get_errors()
+    errors = sudoku_board.get_errors()
+    if errors:
         print(errors)
-        emit(f'help{help_nr}', errors)
-        help_nr += 1
-    elif help_nr == 1:
-        help_nr += 1
-        pass
-    else:
+        emit('showErrors', errors)
         help_nr = 0
+    else:
+        sudoku_board.update_calculated_candidates()
+        technique = naked_single.NakedSingle(sudoku_board.board, sudoku_board.calc_candidates)
+        technique.execute_technique()
+        result = technique.get_result()
+        print(result["name"])
+        print(result["cross_outs"])
+        print(result["fields"])
+        print(result["associated_fields"])
+
     # sudoku_board.calculate_candidates()
 
 

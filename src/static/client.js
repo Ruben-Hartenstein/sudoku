@@ -41,8 +41,8 @@ $(document).ready(function () {
         updateCells(data['values'], data['checkedCells']);
     });
 
-    socket.on('help0', function(errors) {
-        console.log("help0");
+    socket.on('showErrors', function(errors) {
+        console.log("showErrors");
         colorNumbers(errors, 'red');
     });
 
