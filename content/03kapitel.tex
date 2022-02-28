@@ -1,15 +1,56 @@
 %!TEX root = ../dokumentation.tex
 
 \chapter{Die Mathematik hinter Sudoku}
-
-\section{Mathematische Fragen}
-\subsection{Abzählfragen}
-\subsection{Komplexität}
-\subsection{Strategie}
+In diesem Kapitel sollen einige Mathematische Fragen über Sudokus geklärt werden. Dazu gehören Fragen zur eindeutigen Lösbarkeit und wie diese bewiesen werden kann oder wie viele mögliche fertige Sudokus es denn überhaupt gibt.
 
 
-\section{Mathematisches Argumentieren beim Lösen eines Sudoku}
-\subsection{Existenzbeweis}
-\subsection{Eindeutigkeitsbeweis}
+\section{Abzählfragen}
+Um alle denkbaren, vollständig ausgefüllten 9×9 Standard-Sudokus zu erzeugen, könnte man wie folgt vorgehen: man beginnt mit einem leeren 9×9-Gitter und setzt nun zeilenweise von links nach rechts die Ziffern ein. Für das erste Feld in der ersten Zeile hat man offenbar 9 Möglichkeiten, für das zweite 8, das dritte 7 usw. Insgesamt ergeben sich für die erste Zeile 9! (d. h. 9 Fakultät) Möglichkeiten. Wenn man in den verbleibenden 8 Zeilen ebenso vorgeht, erzeugt man mithin 
+\begin{equation}\formelentry{vollständig ausgefüllten 9×9 Standard-Sudokus}
+	(9!)9 = 1,1*10^{50}) 
+\end{equation} 
+
+\section{Komplexität}
+\section{Strategie}
+
+%\section{Existenzbeweis}
+\section{Eindeutige Lösbarkeit}
+Für ein Sudokugitter ohne vorgegebene Ziffern gibt es 5.472.730.538 (5,5 Milliarden) richtige Lösungen. Auch wenn nur eine oder zwei Ziffern vorgegeben werden gibt es immer noch eine sehr große Anzahl an Lösungen für dieses Sudoku. 
+
+Sudokus die in irgendeiner Form veröffentlicht werden, sind normalerweise mit der Vorgabe einer eindeutigen Lösungen erstellt. Sobald ein Sudoku nur eine korrekte Vervollständigung hat, ist es eindeutig lösbar. Daraus lässt sich folgern, dass in eindeutigen Sudokus in jede freie Zelle nur eine einzige Ziffer eingetragen werden kann, ohne die Regeln zu brechen. Sobald mehr als eine Ziffer in dem Rätsel gesucht wird, kann es zu einer Mehrdeutigkeit kommen. 
+
+Unter den vorgegebenen Zahlen eines Sudoku Rätsels müssen daher immer mindestens acht unterschiedliche Zahlen von 1-9 vorkommen. Dieses Kriterium ist gegeben durch den Fakt, dass bei nur sieben vorgegebenen unterschiedlichen Ziffern die beiden übrigen in der zugehörigen Lösung vertauscht werden können (Herzberg und Murty 2007).
+
+\subsection{Anzahl vorgegebene Ziffern für ein eindeutiges Sudoku}  
+Es gibt die Vermutung, dass die minimale Anzahl an vorgegebenen Ziffern 17 ist. Mittels der Brute-Force Methode wurden eindeutige Sudokus mit nur 17 vorgegebenen Zahlen gesucht. Daran wurde 2011 von einem Forschungsteam um Gary McGuire geforscht. Es gibt jedoch noch keinen mathematischen Beweis für die Vermutung. Diese Vermutung basiert also hauptsächlich auf dem Generieren und Ausprobieren von vielen unterschiedlichen Sudokurätseln mit nur 17 Ziffern und einer eindeutigen Lösung. 
+
+\section{Algorithmische Lösungsmethode: Backtracking}
+Quelle: https://simonknott.de/articles/backtracking
+
+Backtracking ist eine Problemlösungsstrategie und mit der Rekursion verwandt. Es werden alle möglichen Lösungen ausprobiert und in jedem Schritt nach einer Abbruchbedingung überprüft. Die Bedingungen an das Problem, dass mit Backtracking gelöst werden sollen sind die Folgenden: 
+\begin{enumerate}
+	\item Das Problem ist in endlich vielen Teilschritten lösbar
+	\item Jeder der Teilschritte besitzt Abbruchbedingungen
+	\item Jeder der Schritte hat eine endliche Anzahl Lösungsmöglichkeiten
+\end{enumerate}
+
+Für jedes Element des Problems, in diesem Fall für jedes freie Kästchen, werden alle möglichen Zustände ausprobiert. Die Zustände sind im Fall des Sudokus die Zahlen eins bis neun. Wenn ein Zustand zulässig ist, also in der Zeile, Reihe oder Kästchen die Zahl nicht bereits eingetragen ist, so wird rekursiv überprüft, ob es für den aktuellen Zustand eine Lösung gibt. Wenn es diese nicht gibt, wird der vorherige Schritt Rückgängig gemacht und eine neue Lösung gesucht. 
+Damit basiert Backtracking auf dem Trial and Error Prinzip und versucht eine erreichte Teillösung in eine Gesamtlösung zu transferieren. 
+
+Bei $z$ möglichen Verzweigungen jeder Teillösung und einem möglichen Verweigungsbaum mit der Tiefe von $N$ hat das Backtracking sofern $z > 1$ ist im schlechtesten Fall mit $O(z^{N})$  eine exponentielle Laufzeit.
+\begin{equation}\formelentry{Zeitkomplexität}
+	1 + z + z^{2} + z^{3} + ... + z^{N} 
+\end{equation} 
+
+Wenn mittels dem Backtracking keine Lösung für das Sudoku gefunden wurde, gibt es keine Lösung. Wenn jedoch eine Lösung gefunden wurde so ist noch nicht bewiesen, dass diese Lösung eindeutig ist.
+
+Da es für das Lösen eines Sudokus keinen effizienten Algorithmus gibt und bereits vor der Anwendung der Lösungsstrategie überprüft werden soll, ob es eine eindeutige Lösbarkeit gibt, ist dieser Ansatz am Sinnvollsten. 
+
+\subsection{Backtracking mit Brute-Force-Methode}
+Backtracking mit der Brute Force Methode funktioniert wie oben beschrieben auf dem Prinzip des Backtraking mit dem Ausprobieren aller möglichen Fällen. Mit dem ersten freien Feld probiert man mit der Eins beginnend, ob man zu einer Lösung kommt. Als Abbruchbedingung ist das singuläre Auftreten der neu eingefügten Zahl in Reihe, Zeile und Kasten implementiert. 
+
+Die Laufzeit des Algorithmus hängt von den freien Zellen ab und damit auch von der Anzahl der vorgegeben Zahlen. Wenn viele Zahlen vorgegeben sind dann ist die Tiefe $N$ des Verzweigungsbaum und damit auch die Laufzeit geringer. 
+\subsection{Backtracking mit dynamischer Reihenfolge}
+\subsection{Beweis Eindeutigkeit}
 
 \section{Lösungshilfen: Kandidaten-Notation}
