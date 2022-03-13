@@ -20,6 +20,15 @@ class SolvingTechniques(ABC):
             "associated_fields": self.associated_fields
         }
 
+    @abstractmethod
+    def update_associated_fields(self):
+        pass
+
+    @abstractmethod
+    def execute_technique(self):
+        pass
+
+'''
     def update_associated_fields(self):
         def remove_duplicates():
             return list(dict.fromkeys(self.associated_fields))
@@ -38,10 +47,5 @@ class SolvingTechniques(ABC):
             for i in range(box_y, box_y + 3):
                 for j in range(box_x, box_x + 3):
                     self.associated_fields.append((i, j))
-        print(self.associated_fields)
         self.associated_fields = remove_duplicates()
-        print(self.associated_fields)
-
-    @abstractmethod
-    def execute_technique(self):
-        pass
+        print(self.associated_fields)'''

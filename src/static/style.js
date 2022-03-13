@@ -5,6 +5,9 @@ $(document).ready(function () {
 
     $('.cell').on('click', function() { 
         $(this).parents('td').css('background-color', $(this).is(':checked') ? 'red' : 'white');
+        toggleCellHighlighting(pointer);
+        pointer = $(this).attr('id').split('');
+        toggleCellHighlighting(pointer);
     });
 });
 
@@ -64,7 +67,7 @@ $(document).on('keydown', function(key) {
 function toggleCellHighlighting(coord) {
     let id = coord[0].toString() + coord[1].toString();
     let obj = $(`#${id}`).parents('td');
-    obj.css('color',obj.css('color') == 'rgb(0, 0, 255)' ? 'black' : 'blue');
+    obj.css('color',obj.css('color') == 'rgb(0, 255, 0)' ? 'black' : 'rgb(0, 255, 0)');
 }
 
 function colorNumbers(coords, color) {
@@ -76,4 +79,18 @@ function colorNumbers(coords, color) {
         $(`#${id}`).next().css('color', color);
     });
 }
+
+function colorCells(coords, color) {
+    coords.forEach(coord => {
+        let id = coord[0].toString() + coord[1].toString();
+        $(`#${id}`).parents('td').css('background', color);
+    });
+}
+
+function resetCellColor() {
+    $('.cell').each(function() {
+        $(this).parents('td').css('background', 'white');
+    });
+}
+
 

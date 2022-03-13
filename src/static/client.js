@@ -15,11 +15,11 @@ $(document).ready(function () {
     socket.on('start', function (status) {
          if (status.hasStarted) {
              $('#start').hide();
-             $('#started').show();
+             $('.started').show();
              colorNumbers(status.startCoords, 'blue');
          } else {
              $('#start').show();
-             $('#started').hide();
+             $('.started').hide();
              alert("Sudoku either not solvable or not uniquely solvable!");
          }
     });
@@ -29,12 +29,18 @@ $(document).ready(function () {
         updateBoard(status.board);
         if (status.hasStarted) {
             $('#start').hide();
-            $('#started').show();
+            $('.started').show();
             colorNumbers(status.startCoords, 'blue');
         } else {
             $('#start').show();
-            $('#started').hide();
+            $('.started').hide();
         }
+    });
+
+     socket.on('help0', function (result) {
+        alert("Technique: " + result.name);
+        colorCells(result.fields, 'rgb(255,216,115)');
+        colorCells(result.associatedFields,'rgb(181,216,244)')
     });
 
     socket.on('update cells', function (data) {
@@ -42,12 +48,12 @@ $(document).ready(function () {
     });
 
     socket.on('showErrors', function(errors) {
-        console.log("showErrors");
         colorNumbers(errors, 'red');
     });
 
     // Send number with every checked Cell everytime a number is clicked
     $('.number').on('click', function () {
+        resetCellColor()
         let dict = {
             'number': $(this).attr('id'),
             'isCandidate': isCandidate,

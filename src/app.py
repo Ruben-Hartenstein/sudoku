@@ -57,9 +57,9 @@ sudoku_board = sudoku_board.SudokuBoard([[[6, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0,
                                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]])
 
 
-@app.route("/")
+@app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template('index.html')
 
 
 @socketio.on('message')
@@ -76,7 +76,7 @@ def start():
 
 @socketio.on('connect')
 def test_connect():
-    print("Server Connected")
+    print('Server Connected')
     emit('server status',
          {'board': sudoku_board.board, 'hasStarted': has_started, 'startCoords': sudoku_board.start_coords})
 
@@ -84,14 +84,14 @@ def test_connect():
 @socketio.on('numbers')
 def new_numbers(data):
     global help_nr
-    print(f"Emit: {data}")
-    if data["isCandidate"]:
-        cell_values = sudoku_board.update_candidates(data["number"], data["checkedCells"])
+    print(f'Emit: {data}')
+    if data['isCandidate']:
+        cell_values = sudoku_board.update_candidates(data['number'], data['checkedCells'])
     else:
-        cell_values = sudoku_board.update_numbers(data["number"], data["checkedCells"])
+        cell_values = sudoku_board.update_numbers(data['number'], data['checkedCells'])
     print(cell_values)
     help_nr = 0
-    emit('update cells', {'values': cell_values, 'checkedCells': data["checkedCells"]})
+    emit('update cells', {'values': cell_values, 'checkedCells': data['checkedCells']})
 
 
 @socketio.on('erase')
@@ -111,22 +111,25 @@ def clear(string):
 @socketio.on('help')
 def help():
     global help_nr
-    errors = sudoku_board.get_errors()
-    if errors:
-        print(errors)
-        emit('showErrors', errors)
+    if help_nr == 0:
+        errors = sudoku_board.get_errors()
+        if errors:
+            print(errors)
+            emit('showErrors', errors)
+        else:
+            sudoku_board.update_calculated_candidates()
+            technique = naked_single.NakedSingle(sudoku_board.board, sudoku_board.calc_candidates)
+            technique.execute_technique()
+            result = technique.get_result()
+            print(result['name'])
+            print(result['cross_outs'])
+            print(result['fields'])
+            print(result['associated_fields'])
+            emit(f'help0', {'name': result['name'], 'fields': result['fields'], 'associatedFields': result['associated_fields']})
+            help_nr += 1
+    if help_nr == 1:
         help_nr = 0
-    else:
-        sudoku_board.update_calculated_candidates()
-        technique = naked_single.NakedSingle(sudoku_board.board, sudoku_board.calc_candidates)
-        technique.execute_technique()
-        result = technique.get_result()
-        print(result["name"])
-        print(result["cross_outs"])
-        print(result["fields"])
-        print(result["associated_fields"])
-
-    # sudoku_board.calculate_candidates()
+        pass
 
 
 def start_game():
@@ -146,5 +149,5 @@ def list2board(num_list):
     return [num_list[i:i + 9] for i in range(0, len(num_list), 9)]
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     socketio.run(app, debug=True)
