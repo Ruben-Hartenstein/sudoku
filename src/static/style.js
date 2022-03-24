@@ -22,45 +22,49 @@ $(document).ready(function () {
 $(document).on('keydown', function(key) {
     let pressedKey = key.which;
     // Numpad to press numbers
-    if (96 <= pressedKey && pressedKey <= 105){
+    if (96 <= pressedKey && pressedKey <= 105) {
         let digit = pressedKey - 96;
         $(`#${digit}`).click();
+        return;
     }
     // Arrow Keys to move pointer
-    if (37 <= pressedKey && pressedKey <= 40){
+    if (37 <= pressedKey && pressedKey <= 40) {
         toggleCellHighlighting(pointer);
         switch(pressedKey) {
             case 37: // Left
                 pointer[1] -= 1;
                 if (pointer[1] == -1)
-                    pointer[1] = 8
+                    pointer[1] = 8;
                 break;
             case 38: // Up
                 pointer[0] -= 1;
                 if (pointer[0] == -1)
-                    pointer[0] = 8
+                    pointer[0] = 8;
                 break;
             case 39: // Right
                 pointer[1] += 1;
                 if (pointer[1] == 9)
-                    pointer[1] = 0
+                    pointer[1] = 0;
                 break;
             case 40: // Down
                 pointer[0] += 1;
                 if (pointer[0] == 9)
-                    pointer[0] = 0
+                    pointer[0] = 0;
                 break;
         }
-        toggleCellHighlighting(pointer)
+        toggleCellHighlighting(pointer);
+        return;
     }
     // Space Bar to click cell
     if (pressedKey == 32) {
         let id = pointer[0].toString() + pointer[1].toString();
         $(`#${id}`).click();
+        return;
     }
     // Shift Key to toggle Note
     if (pressedKey == 16) {
         $('#candidate').click();
+        return;
     }
 });
 

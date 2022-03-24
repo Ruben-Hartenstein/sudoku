@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 from copy import deepcopy
 import sudoku_board
-from solutions import naked_single
+from src.solutions import hidden_single
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -118,7 +118,7 @@ def help():
             emit('showErrors', errors)
         else:
             sudoku_board.update_calculated_candidates()
-            technique = naked_single.NakedSingle(sudoku_board.board, sudoku_board.calc_candidates)
+            technique = hidden_single.HiddenSingle(sudoku_board.board, sudoku_board.calc_candidates)
             technique.execute_technique()
             result = technique.get_result()
             print(result['name'])
