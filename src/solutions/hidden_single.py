@@ -1,4 +1,4 @@
-from src.solutions.solving_techniques import SolvingTechniques, remove_duplicates, get_influential_cells
+from src.solutions.solving_techniques import SolvingTechniques
 
 
 class HiddenSingle(SolvingTechniques):
@@ -13,102 +13,53 @@ class HiddenSingle(SolvingTechniques):
         self.unit = ""
 
     def execute_technique(self):
-        # Loop through possible numbers
-        for num in range(9):
-            # Look for only one occurrence of candidate in rows
-            occurrences = 0
-            last_occurrence = 0
-            for j in range(9):
-                for i in range(9):
-                    if self.board[i][j] == 0:
-                        if self.candidates[i][j][num] == 1:
-                            occurrences += 1
-                            last_occurrence = i
-                if occurrences == 1:
-                    self.cross_outs = num + 1
-                    self.cells.append((last_occurrence, j))
-                    self.unit = "row"
-                    return True
-                occurrences = 0
-
-            # Look for columns
-            occurrences = 0
-            last_occurrence = 0
+        # Look for only one occurrence of candidate in unit
+        for j in range(9):
             for i in range(9):
-                for j in range(9):
-                    if self.board[i][j] == 0:
-                        if self.candidates[i][j][num] == 1:
-                            occurrences += 1
-                            last_occurrence = j
-                if occurrences == 1:
-                    self.cross_outs = num + 1
-                    self.cells.append((i, last_occurrence))
-                    self.unit = "column"
-                    return True
-                occurrences = 0
-
-            #Look for boxes
-            for box_x in range(0, 9, 3):
-                for box_y in range(0, 9, 3):
-                    for i in range(box_x, box_x + 3):
-                        for j in range(box_y, box_y + 3):
-                            if self.board[i][j] == 0:
-                                if self.candidates[i][j][num] == 1:
-                                    occurrences += 1
-                                    last_occurrence = (i, j)
-                    if occurrences == 1:
-                        self.cross_outs = num + 1
-                        self.cells.append(last_occurrence)
-                        self.unit = "box"
+                if self.board[i][j] != 0:
+                    continue
+                num = SolvingTechniques.solved_board[i][j]
+                influential_cells = SolvingTechniques.get_influential_cells((i, j))
+                for key in influential_cells.keys():
+                    candidate_once = False
+                    for x, y in influential_cells[key]:
+                        if self.board[x][y] != 0:
+                            continue
+                        if self.candidates[x][y][num - 1] == 1:
+                            if candidate_once:
+                                self.cells = []
+                                candidate_once = False
+                                break
+                            self.cells.append((x, y))
+                            candidate_once = True
+                    if candidate_once:
+                        self.cross_outs = [num]
+                        self.unit = key
                         return True
-                    occurrences = 0
         return False
 
     def update_associated_cells(self):
         print(self.unit)
         cell = self.cells[0]
-        if self.unit == "row":
-            for i in range(9):
-                if self.board[cell[0]][i] != 0:
-                    self.associated_cells.append((cell[0], i))
-                for j in range(9):
-                    if self.board[i][j] == self.cross_outs:
-                        for index in range(9):
-                            self.associated_cells.append((index, j))
+        cross_out = self.cross_outs[0]
+        influential_cells = SolvingTechniques.get_influential_cells(cell)
+        for i, j in influential_cells[self.unit]:
+            if (i, j) == cell:
+                continue
+            if self.board[i][j] != 0:
+                self.associated_cells.append((i, j))
+            else:
+                cells = SolvingTechniques.get_influential_cells((i, j))
+                for key in cells.keys():
+                    temp_cells = []
+                    num_in_unit = False
+                    if key == self.unit:
+                        continue
+                    for x, y in cells[key]:
+                        temp_cells.append((x, y))
+                        if self.board[x][y] == cross_out:
+                            num_in_unit = True
+                    if num_in_unit:
+                        self.associated_cells.extend(temp_cells)
                         break
-
-        elif self.unit == "column":
-            for i in range(9):
-                if self.board[i][cell[1]] != 0:
-                    self.associated_cells.append((i, cell[1]))
-                for j in range(9):
-                    if self.board[i][j] == self.cross_outs:
-                        for index in range(9):
-                            self.associated_cells.append((i, index))
-                        break
-
-        else:
-            box_x = (cell[0] // 3) * 3
-            box_y = (cell[1] // 3) * 3
-
-            # All in same columns as the box
-            for i in range(box_x, box_x + 3):
-                for j in range(9):
-                    if self.board[i][j] == self.cross_outs:
-                        for index in range(9):
-                            self.associated_cells.append((i, index))
-                        break
-            # All in same rows as the box
-            for j in range(box_y, box_y + 3):
-                for i in range(9):
-                    if self.board[i][j] == self.cross_outs:
-                        for index in range(9):
-                            self.associated_cells.append((index, j))
-                        break
-
-            # All in same box
-            for i in range(box_x, box_x + 3):
-                for j in range(box_y, box_y + 3):
-                    if self.board[i][j] != 0:
-                        self.associated_cells.append(i, j)
-            self.associated_cells = remove_duplicates(self.associated_cells)
+        self.associated_cells = SolvingTechniques.remove_duplicates(self.associated_cells)

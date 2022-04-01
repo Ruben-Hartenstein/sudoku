@@ -2,7 +2,9 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 from copy import deepcopy
 import sudoku_board
-from src.solutions import naked_single
+from src.solutions.naked_single import NakedSingle
+from src.solutions.hidden_single import HiddenSingle
+from src.solutions.solving_techniques import SolvingTechniques
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -19,6 +21,7 @@ sudoku_board = sudoku_board.SudokuBoard([[6, 0, 1, 0, 9, 4, 0, 0, 0],
                                          [0, 0, 0, 0, 0, 1, 9, 6, 2],
                                          [4, 0, 2, 0, 3, 0, 1, 0, 5],
                                          [0, 0, 0, 9, 8, 2, 3, 0, 0]])
+
 
 @app.route('/')
 def home():
@@ -78,14 +81,15 @@ def help():
             emit('showErrors', errors)
         else:
             sudoku_board.update_candidates()
-            technique = naked_single.NakedSingle(sudoku_board.board, sudoku_board.candidates)
+            technique = HiddenSingle(sudoku_board.board, sudoku_board.candidates)
             technique.execute_technique()
             result = technique.get_result()
             print(result['name'])
             print(result['cross_outs'])
             print(result['fields'])
             print(result['associated_fields'])
-            emit(f'help0', {'name': result['name'], 'fields': result['fields'], 'associatedFields': result['associated_fields']})
+            emit(f'help0',
+                 {'name': result['name'], 'fields': result['fields'], 'associatedFields': result['associated_fields']})
             help_nr += 1
     if help_nr == 1:
         help_nr = 0
@@ -101,6 +105,7 @@ def start_game():
     if not sudoku_board.is_uniquely_solvable():
         return False
     sudoku_board.calculate_start_coords()
+    SolvingTechniques.set_solved_board(sudoku_board.solved)
     return True
 
 
