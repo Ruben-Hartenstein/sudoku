@@ -2,9 +2,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 from copy import deepcopy
 import sudoku_board
-from src.solutions.naked_single import NakedSingle
-from src.solutions.hidden_single import HiddenSingle
-from src.solutions.solving_techniques import SolvingTechniques
+from src.solutions import technique_manager
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -81,9 +79,10 @@ def help():
             emit('showErrors', errors)
         else:
             sudoku_board.update_candidates()
-            technique = HiddenSingle(sudoku_board.board, sudoku_board.candidates)
-            technique.execute_technique()
-            result = technique.get_result()
+            result = technique_manager.try_techniques(sudoku_board.board, sudoku_board.candidates)
+            if not result:
+                help_nr = 0
+                print("No suitable technique found!")
             print(result['name'])
             print(result['cross_outs'])
             print(result['fields'])
@@ -105,7 +104,7 @@ def start_game():
     if not sudoku_board.is_uniquely_solvable():
         return False
     sudoku_board.calculate_start_coords()
-    SolvingTechniques.set_solved_board(sudoku_board.solved)
+    technique_manager.set_solved_board(sudoku_board.solved)
     return True
 
 
