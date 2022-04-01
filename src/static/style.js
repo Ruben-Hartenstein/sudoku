@@ -6,7 +6,7 @@ $(document).ready(function () {
     $('.cell').on('click', function() { 
         $(this).parents('td').css('background-color', $(this).is(':checked') ? 'red' : 'white');
         toggleCellHighlighting(pointer);
-        pointer = $(this).attr('id').split('');
+        pointer = $(this).attr('id').split('').map(Number);
         toggleCellHighlighting(pointer);
     });
 });
@@ -33,22 +33,22 @@ $(document).on('keydown', function(key) {
         switch(pressedKey) {
             case 37: // Left
                 pointer[1] -= 1;
-                if (pointer[1] == -1)
+                if (pointer[1] === -1)
                     pointer[1] = 8;
                 break;
             case 38: // Up
                 pointer[0] -= 1;
-                if (pointer[0] == -1)
+                if (pointer[0] === -1)
                     pointer[0] = 8;
                 break;
             case 39: // Right
                 pointer[1] += 1;
-                if (pointer[1] == 9)
+                if (pointer[1] === 9)
                     pointer[1] = 0;
                 break;
             case 40: // Down
                 pointer[0] += 1;
-                if (pointer[0] == 9)
+                if (pointer[0] === 9)
                     pointer[0] = 0;
                 break;
         }
@@ -56,29 +56,28 @@ $(document).on('keydown', function(key) {
         return;
     }
     // Space Bar to click cell
-    if (pressedKey == 32) {
+    if (pressedKey === 32) {
         let id = pointer[0].toString() + pointer[1].toString();
         $(`#${id}`).click();
         return;
     }
     // Shift Key to toggle Note
-    if (pressedKey == 16) {
+    if (pressedKey === 16) {
         $('#candidate').click();
-        return;
     }
 });
 
 function toggleCellHighlighting(coord) {
     let id = coord[0].toString() + coord[1].toString();
     let obj = $(`#${id}`).parents('td');
-    obj.css('color',obj.css('color') == 'rgb(0, 255, 0)' ? 'black' : 'rgb(0, 255, 0)');
+    obj.css('color',obj.css('color') === 'rgb(0, 255, 0)' ? 'black' : 'rgb(0, 255, 0)');
 }
 
 function colorNumbers(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
         // Never change the color of a blue number (start coordinates)
-        if ($(`#${id}`).next().css('color') == 'rgb(0, 0, 255)')
+        if ($(`#${id}`).next().css('color') === 'rgb(0, 0, 255)')
             return;
         $(`#${id}`).next().css('color', color);
     });
