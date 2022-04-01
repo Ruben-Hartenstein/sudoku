@@ -4,29 +4,35 @@ SIZE = 9
 
 
 class SudokuBoard:
-    def __init__(self, board=False):
+    def __init__(self, board=[]):
         """
         Initializes the sudoku board with numbers
         """
         self.solved = None
         self.start_coords = None
-        self.calc_candidates = []
-    #if not board:
-        #self.board = []
-        for i in range(SIZE):
-            #self.board.append([])
-            self.calc_candidates.append([])
-            for j in range(SIZE):
-                #self.board[i].append([0] * (SIZE + 1))
-                self.calc_candidates[i].append([1] * SIZE)
-        #else:
+        self.candidates = []
         self.board = board
+        self.init_candidates()
+        if not self.board:
+            self.init_board()
+
+    def init_board(self):
+        for i in range(SIZE):
+            self.board.append([])
+            for j in range(SIZE):
+                self.board[i].append(0)
+
+    def init_candidates(self):
+        for i in range(SIZE):
+            self.candidates.append([])
+            for j in range(SIZE):
+                self.candidates[i].append([1] * SIZE)
 
     def calculate_start_coords(self):
         self.start_coords = []
         for i in range(SIZE):
             for j in range(SIZE):
-                if self.board[i][j][0] != 0:
+                if self.board[i][j] != 0:
                     self.start_coords.append((i, j))
 
     def is_uniquely_solvable(self):
@@ -49,20 +55,20 @@ class SudokuBoard:
 
         for i in range(*numbers):
             if self.is_valid(i, square, board=board):
-                board[square[0]][square[1]][0] = i
+                board[square[0]][square[1]] = i
 
                 if self.solve(numbers=numbers, board=board):
                     return True
 
-                board[square[0]][square[1]][0] = 0
+                board[square[0]][square[1]] = 0
 
         return False
 
     def is_board_valid(self):
         for i in range(SIZE):
             for j in range(SIZE):
-                if self.board[i][j][0] != 0:
-                    if not self.is_valid(self.board[i][j][0], (i, j)):
+                if self.board[i][j] != 0:
+                    if not self.is_valid(self.board[i][j], (i, j)):
                         return False
         return True
 
@@ -83,12 +89,12 @@ class SudokuBoard:
 
         # Check row
         for j in range(SIZE):
-            if board[position[0]][j][0] == number and j != position[1]:
+            if board[position[0]][j] == number and j != position[1]:
                 return False
 
         # Check column
         for i in range(SIZE):
-            if board[i][position[1]][0] == number and i != position[0]:
+            if board[i][position[1]] == number and i != position[0]:
                 return False
 
         # Check Box
@@ -97,7 +103,7 @@ class SudokuBoard:
 
         for i in range(box_y, box_y + 3):
             for j in range(box_x, box_x + 3):
-                if board[i][j][0] == number and (i, j) != position:
+                if board[i][j] == number and (i, j) != position:
                     return False
 
         return True
@@ -115,10 +121,10 @@ class SudokuBoard:
             for j in range(SIZE):
                 if j % 3 == 0 and j != 0:
                     print("| ", end="")
-                if board[i][j][0] == 0:
+                if board[i][j] == 0:
                     to_print = " "
                 else:
-                    to_print = board[i][j][0]
+                    to_print = board[i][j]
                 if j == 8:
                     print(to_print)
                 else:
@@ -134,7 +140,7 @@ class SudokuBoard:
 
         for i in range(SIZE):
             for j in range(SIZE):
-                if board[i][j][0] == 0:
+                if board[i][j] == 0:
                     return i, j
         return None
 
@@ -142,22 +148,20 @@ class SudokuBoard:
         errors = []
         for i in range(SIZE):
             for j in range(SIZE):
-                if self.board[i][j][0] != 0:
-                    if self.board[i][j][0] != self.solved[i][j][0]:
+                if self.board[i][j] != 0:
+                    if self.board[i][j] != self.solved[i][j]:
                         errors.append((i, j))
         return errors
 
-    def update_calculated_candidates(self):
-        print(self.calc_candidates)
+    def update_candidates(self):
         for i in range(SIZE):
             for j in range(SIZE):
                 # Ignore cells with filled in value
-                if self.board[i][j][0] == 0:
+                if self.board[i][j] == 0:
                     for candidate in range(1, SIZE + 1):
                         # Only delete possible candidates
                         if not self.is_valid(candidate, (i, j)):
-                            self.calc_candidates[i][j][candidate-1] = 0
-        print(self.calc_candidates)
+                            self.candidates[i][j][candidate - 1] = 0
 
     def update_numbers(self, number, cells):
         cell_values = []
@@ -165,19 +169,10 @@ class SudokuBoard:
         for cell in cells:
             x, y = [int(i) for i in cell]
             if not (self.start_coords and (x, y) in self.start_coords):
-                if self.board[x][y][0] == number:
-                    self.board[x][y][0] = 0
+                if self.board[x][y] == number:
+                    self.board[x][y] = 0
                 else:
-                    self.board[x][y][0] = number
-            cell_values.append(self.board[x][y])
-        return cell_values
-
-    def update_candidates(self, candidate, cells):
-        cell_values = []
-        for cell in cells:
-            x, y = [int(i) for i in cell]
-            if not (self.start_coords and (x, y) in self.start_coords):
-                self.board[x][y][int(candidate)] ^= 1
+                    self.board[x][y] = number
             cell_values.append(self.board[x][y])
         return cell_values
 
@@ -186,6 +181,6 @@ class SudokuBoard:
         for cell in cells:
             x, y = [int(i) for i in cell]
             if not (self.start_coords and (x, y) in self.start_coords):
-                self.board[x][y] = [0] * (SIZE + 1)
+                self.board[x][y] = 0
             cell_values.append(self.board[x][y])
         return cell_values

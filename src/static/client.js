@@ -56,7 +56,6 @@ $(document).ready(function () {
         resetCellColor()
         let dict = {
             'number': $(this).attr('id'),
-            'isCandidate': isCandidate,
             'checkedCells': getCheckedCells(),
         }
         // If no cell is selected, take the current pointer position
@@ -106,11 +105,10 @@ function getCheckedCells() {
     return checkedCells;
 }
 
-// Updates whole board TODO: candidates
 function updateBoard(board){
    $('.cell').each(function (i, obj) {
        let coords = obj.id.split('');
-       let text = board[coords[0]][coords[1]][0] == 0 ? " " :  board[coords[0]][coords[1]][0];
+       let text = board[coords[0]][coords[1]] == 0 ? " " :  board[coords[0]][coords[1]];
        $(this).next().text(text);
    });
 }
@@ -119,13 +117,7 @@ function updateBoard(board){
 function updateCells(cellValues, cells){
     colorNumbers(cells, 'black');
     cells.forEach((id, i) => {
-        let text = "";
-        if(cellValues[i][0] == 0){
-            let candidates = cellValues[i].slice(1)
-            text = candidates.some(Boolean) ? candidates : " ";
-        } else {
-            text = cellValues[i][0];
-        }
+        let text = cellValues[i] === 0 ? " " :  cellValues[i];
         $('#' + id).next().text(text);
     });
 }

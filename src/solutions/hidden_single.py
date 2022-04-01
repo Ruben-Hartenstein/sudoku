@@ -20,7 +20,7 @@ class HiddenSingle(SolvingTechniques):
             last_occurrence = 0
             for j in range(9):
                 for i in range(9):
-                    if self.board[i][j][0] == 0:
+                    if self.board[i][j] == 0:
                         if self.candidates[i][j][num] == 1:
                             occurrences += 1
                             last_occurrence = i
@@ -36,7 +36,7 @@ class HiddenSingle(SolvingTechniques):
             last_occurrence = 0
             for i in range(9):
                 for j in range(9):
-                    if self.board[i][j][0] == 0:
+                    if self.board[i][j] == 0:
                         if self.candidates[i][j][num] == 1:
                             occurrences += 1
                             last_occurrence = j
@@ -52,7 +52,7 @@ class HiddenSingle(SolvingTechniques):
                 for box_y in range(0, 9, 3):
                     for i in range(box_x, box_x + 3):
                         for j in range(box_y, box_y + 3):
-                            if self.board[i][j][0] == 0:
+                            if self.board[i][j] == 0:
                                 if self.candidates[i][j][num] == 1:
                                     occurrences += 1
                                     last_occurrence = (i, j)
@@ -69,20 +69,20 @@ class HiddenSingle(SolvingTechniques):
         cell = self.cells[0]
         if self.unit == "row":
             for i in range(9):
-                if self.board[cell[0]][i][0] != 0:
+                if self.board[cell[0]][i] != 0:
                     self.associated_cells.append((cell[0], i))
                 for j in range(9):
-                    if self.board[i][j][0] == self.cross_outs:
+                    if self.board[i][j] == self.cross_outs:
                         for index in range(9):
                             self.associated_cells.append((index, j))
                         break
 
         elif self.unit == "column":
             for i in range(9):
-                if self.board[i][cell[1]][0] != 0:
+                if self.board[i][cell[1]] != 0:
                     self.associated_cells.append((i, cell[1]))
                 for j in range(9):
-                    if self.board[i][j][0] == self.cross_outs:
+                    if self.board[i][j] == self.cross_outs:
                         for index in range(9):
                             self.associated_cells.append((i, index))
                         break
@@ -94,14 +94,14 @@ class HiddenSingle(SolvingTechniques):
             # All in same columns as the box
             for i in range(box_x, box_x + 3):
                 for j in range(9):
-                    if self.board[i][j][0] == self.cross_outs:
+                    if self.board[i][j] == self.cross_outs:
                         for index in range(9):
                             self.associated_cells.append((i, index))
                         break
             # All in same rows as the box
             for j in range(box_y, box_y + 3):
                 for i in range(9):
-                    if self.board[i][j][0] == self.cross_outs:
+                    if self.board[i][j] == self.cross_outs:
                         for index in range(9):
                             self.associated_cells.append((index, j))
                         break
@@ -109,6 +109,6 @@ class HiddenSingle(SolvingTechniques):
             # All in same box
             for i in range(box_x, box_x + 3):
                 for j in range(box_y, box_y + 3):
-                    if self.board[i][j][0] != 0:
+                    if self.board[i][j] != 0:
                         self.associated_cells.append(i, j)
             self.associated_cells = remove_duplicates(self.associated_cells)
