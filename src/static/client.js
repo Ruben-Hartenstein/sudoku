@@ -39,8 +39,8 @@ $(document).ready(function () {
 
      socket.on('help0', function (result) {
         alert("Technique: " + result.name);
-        colorCells(result.fields, 'rgb(255,216,115)');
-        colorCells(result.associatedFields,'rgb(181,216,244)')
+        colorCells(result.primaryCells, 'rgb(255,216,115)');
+        colorCells(result.secondaryCells,'rgb(181,216,244)')
     });
 
     socket.on('update cells', function (data) {

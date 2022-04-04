@@ -84,11 +84,11 @@ def help():
                 help_nr = 0
                 print("No suitable technique found!")
             print(result['name'])
-            print(result['cross_outs'])
-            print(result['fields'])
-            print(result['associated_fields'])
+            print(result['cross_out'])
+            print(result['primary_cells'])
+            print(result['secondary_cells'])
             emit(f'help0',
-                 {'name': result['name'], 'fields': result['fields'], 'associatedFields': result['associated_fields']})
+                 {'name': result['name'], 'primaryCells': result['primary_cells'], 'secondaryCells': result['secondary_cells']})
             help_nr += 1
     if help_nr == 1:
         help_nr = 0

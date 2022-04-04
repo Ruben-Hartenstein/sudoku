@@ -9,9 +9,10 @@ class SolvingTechniques(ABC):
         self.explanation = explanation
         self.board = board
         self.candidates = candidates
-        self.cross_outs = []
-        self.cells = []
-        self.associated_cells = []
+        self.cross_out = []
+        self.highlight = []
+        self.primary_cells = []
+        self.secondary_cells = []
 
     @classmethod
     def set_solved_board(cls, board):
@@ -51,16 +52,16 @@ class SolvingTechniques(ABC):
         return influential_cells
 
     def get_result(self):
-        self.update_associated_cells()
+        self.update_secondary_cells()
         return {
             "name": self.name,
-            "cross_outs": self.cross_outs,
-            "fields": self.cells,
-            "associated_fields": self.associated_cells
+            "cross_out": self.cross_out,
+            "primary_cells": self.primary_cells,
+            "secondary_cells": self.secondary_cells
         }
 
     @abstractmethod
-    def update_associated_cells(self):
+    def update_secondary_cells(self):
         pass
 
     @abstractmethod

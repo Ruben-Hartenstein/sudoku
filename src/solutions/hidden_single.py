@@ -27,27 +27,28 @@ class HiddenSingle(SolvingTechniques):
                             continue
                         if self.candidates[x][y][num - 1] == 1:
                             if candidate_once:
-                                self.cells = []
+                                self.primary_cells = []
                                 candidate_once = False
                                 break
-                            self.cells.append((x, y))
+                            self.primary_cells.append((x, y))
                             candidate_once = True
                     if candidate_once:
-                        self.cross_outs = [num]
+                        self.cross_out.append(
+                            {'value': num,
+                             'cell': self.primary_cells[0]})
                         self.unit = key
                         return True
         return False
 
-    def update_associated_cells(self):
-        print(self.unit)
-        cell = self.cells[0]
-        cross_out = self.cross_outs[0]
+    def update_secondary_cells(self):
+        cell = self.cross_out[0]['cell']
+        cross_out_value = self.cross_out[0]['value']
         influential_cells = SolvingTechniques.get_influential_cells(cell)
         for i, j in influential_cells[self.unit]:
             if (i, j) == cell:
                 continue
             if self.board[i][j] != 0:
-                self.associated_cells.append((i, j))
+                self.secondary_cells.append((i, j))
             else:
                 cells = SolvingTechniques.get_influential_cells((i, j))
                 for key in cells.keys():
@@ -57,9 +58,9 @@ class HiddenSingle(SolvingTechniques):
                         continue
                     for x, y in cells[key]:
                         temp_cells.append((x, y))
-                        if self.board[x][y] == cross_out:
+                        if self.board[x][y] == cross_out_value:
                             num_in_unit = True
                     if num_in_unit:
-                        self.associated_cells.extend(temp_cells)
+                        self.secondary_cells.extend(temp_cells)
                         break
-        self.associated_cells = SolvingTechniques.remove_duplicates(self.associated_cells)
+        self.secondary_cells = SolvingTechniques.remove_duplicates(self.secondary_cells)
