@@ -1,8 +1,9 @@
 from src.solutions.solving_techniques import SolvingTechniques
 from src.solutions.naked_single import NakedSingle
 from src.solutions.hidden_single import HiddenSingle
+from src.solutions.naked_pair import NakedPair
 
-techniques = [NakedSingle, HiddenSingle]
+techniques = [NakedPair]
 
 
 def set_solved_board(board):

@@ -12,13 +12,15 @@ class NakedSingle(SolvingTechniques):
     def execute_technique(self):
         for i in range(9):
             for j in range(9):
-                if self.board[i][j] == 0:
-                    if sum(self.candidates[i][j]) == 1:
-                        self.primary_cells.append((i, j))
-                        self.cross_out.append(
-                            {'value': self.candidates[i][j].index(1) + 1,
-                             'cell': self.primary_cells[0]})
-                        return True
+                if self.board[i][j] != 0:
+                    continue
+                if sum(self.candidates[i][j]) != 1:
+                    continue
+                self.primary_cells.append((i, j))
+                self.cross_out.append(
+                    {'value': self.candidates[i][j].index(1) + 1,
+                     'cell': self.primary_cells[0]})
+                return True
         return False
 
     def update_secondary_cells(self):
