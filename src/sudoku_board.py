@@ -163,6 +163,10 @@ class SudokuBoard:
                         if not self.is_valid(candidate, (i, j)):
                             self.candidates[i][j][candidate - 1] = 0
 
+    def remove_candidates(self, candidates, cells):
+        for i, x, y in enumerate(cells):
+            self.candidates[x][y][candidates[i] - 1] = 0
+
     def update_numbers(self, number, cells):
         cell_values = []
         number = int(number)
@@ -177,10 +181,4 @@ class SudokuBoard:
         return cell_values
 
     def erase_cells(self, cells):
-        cell_values = []
-        for cell in cells:
-            x, y = [int(i) for i in cell]
-            if not (self.start_coords and (x, y) in self.start_coords):
-                self.board[x][y] = 0
-            cell_values.append(self.board[x][y])
-        return cell_values
+        return self.update_numbers(0, cells)
