@@ -51,7 +51,9 @@ class HiddenSingle(SolvingTechniques):
                 self.secondary_cells.append((i, j))
             else:
                 cells = SolvingTechniques.get_influential_cells((i, j))
-                for key in cells.keys():
+                keys = list(cells.keys())
+                keys.reverse()
+                for key in keys:
                     temp_cells = []
                     num_in_unit = False
                     if key == self.unit:

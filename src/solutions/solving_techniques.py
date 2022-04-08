@@ -27,16 +27,6 @@ class SolvingTechniques(ABC):
         x, y = cell
         influential_cells = {}
 
-        # All in box
-        influential_cells_box = []
-        box_x = (y // 3) * 3
-        box_y = (x // 3) * 3
-
-        for i in range(box_y, box_y + 3):
-            for j in range(box_x, box_x + 3):
-                influential_cells_box.append((i, j))
-        influential_cells["box"] = influential_cells_box
-
         # All in row
         influential_cells_row = []
         for j in range(9):
@@ -48,6 +38,16 @@ class SolvingTechniques(ABC):
         for i in range(9):
             influential_cells_column.append((i, y))
             influential_cells["column"] = influential_cells_column
+
+        # All in box
+        influential_cells_box = []
+        box_x = (y // 3) * 3
+        box_y = (x // 3) * 3
+
+        for i in range(box_y, box_y + 3):
+            for j in range(box_x, box_x + 3):
+                influential_cells_box.append((i, j))
+        influential_cells["box"] = influential_cells_box
 
         return influential_cells
 

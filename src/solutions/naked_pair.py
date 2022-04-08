@@ -10,19 +10,16 @@ class NakedPair(SolvingTechniques):
                           not in the other squares of this unit can occur further. Therefore,
                           you can remove these two values in the rest of the affected units""",
                          board, candidates)
+        self.unit = ""
 
     def execute_technique(self):
-        temp_candidates = []
         for j in range(9):
             for i in range(9):
                 if self.board[i][j] != 0 or sum(self.candidates[i][j]) != 2:
                     continue
                 temp_candidates = self.candidates[i][j]
-                print(i, j)
-                print(temp_candidates)
                 influential_cells = SolvingTechniques.get_influential_cells((i, j))
                 for key in influential_cells.keys():
-                    print(key)
                     candidate_pair_twice = False
                     for x, y in influential_cells[key]:
                         if self.board[x][y] != 0 or (x, y) == (i, j) or self.candidates[x][y] != temp_candidates:
@@ -58,7 +55,6 @@ class NakedPair(SolvingTechniques):
                          'cell': (x, y)})
 
     def update_secondary_cells(self):
-        print(self.unit)
         influential_cells = SolvingTechniques.get_influential_cells(self.primary_cells[0])
         for x, y in influential_cells[self.unit]:
             if (x, y) in self.primary_cells:

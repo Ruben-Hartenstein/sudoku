@@ -10,6 +10,8 @@ socketio = SocketIO(app)
 
 has_started = False
 help_nr = 0
+technique_result = None
+
 sudoku_board = sudoku_board.SudokuBoard([[6, 0, 1, 0, 9, 4, 0, 0, 0],
                                          [0, 7, 5, 0, 1, 0, 6, 0, 0],
                                          [9, 4, 8, 0, 2, 7, 5, 0, 0],
@@ -72,6 +74,7 @@ def clear(string):
 @socketio.on('help')
 def help():
     global help_nr
+    global technique_result
     if help_nr == 0:
         errors = sudoku_board.get_errors()
         if errors:
@@ -79,21 +82,24 @@ def help():
             emit('showErrors', errors)
         else:
             sudoku_board.update_candidates()
-            result = technique_manager.try_techniques(sudoku_board.board, sudoku_board.candidates)
-            if not result:
+            technique_result = technique_manager.try_techniques(sudoku_board.board, sudoku_board.candidates)
+            if not technique_result:
                 help_nr = 0
                 print("No suitable technique found!")
-            print(result['name'])
-            print(result['cross_out'])
-            print(result['primary_cells'])
-            print(result['secondary_cells'])
+            print(technique_result['name'])
+            print(technique_result['cross_out'])
+            print(technique_result['primary_cells'])
+            print(technique_result['secondary_cells'])
             emit(f'help0',
-                 {'name': result['name'], 'primaryCells': result['primary_cells'], 'secondaryCells': result['secondary_cells']})
+                 {'name': technique_result['name'], 'primaryCells': technique_result['primary_cells'],
+                  'secondaryCells': technique_result['secondary_cells']})
             help_nr += 1
-    if help_nr == 1:
+    elif help_nr == 1:
+        values = [cross_out['value'] for cross_out in technique_result['cross_out']]
+        cells = [cross_out['cell'] for cross_out in technique_result['cross_out']]
+        sudoku_board.remove_candidates(values, cells)
+    elif help_nr == 2:
         help_nr = 0
-        pass
-
 
 def start_game():
     if not sudoku_board.is_board_valid():

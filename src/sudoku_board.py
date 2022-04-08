@@ -164,7 +164,8 @@ class SudokuBoard:
                             self.candidates[i][j][candidate - 1] = 0
 
     def remove_candidates(self, candidates, cells):
-        for i, x, y in enumerate(cells):
+        for i, cell in enumerate(cells):
+            x, y = cell
             self.candidates[x][y][candidates[i] - 1] = 0
 
     def update_numbers(self, number, cells):
