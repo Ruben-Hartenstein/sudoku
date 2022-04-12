@@ -70,11 +70,22 @@ def erase(checked_cells):
 def clear(string):
     print(string)
 
+@socketio.on('getCandidates')
+def candidates():
+    errors = sudoku_board.get_errors()
+    if errors:
+        print(errors)
+        emit('showErrors', errors)
+    else:
+        sudoku_board.update_candidates()
+        emit('showCandidates', sudoku_board.candidates)
+
 
 @socketio.on('help')
 def help():
     global help_nr
     global technique_result
+    print(help_nr)
     if help_nr == 0:
         errors = sudoku_board.get_errors()
         if errors:
@@ -98,6 +109,7 @@ def help():
         values = [cross_out['value'] for cross_out in technique_result['cross_out']]
         cells = [cross_out['cell'] for cross_out in technique_result['cross_out']]
         sudoku_board.remove_candidates(values, cells)
+        help_nr += 1
     elif help_nr == 2:
         help_nr = 0
 

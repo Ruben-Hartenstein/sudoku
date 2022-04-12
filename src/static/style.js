@@ -68,7 +68,7 @@ $(document).on('keydown', function(key) {
 function toggleCellHighlighting(coord, isOn) {
     let id = coord[0].toString() + coord[1].toString();
     //background: radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%);
-    let obj = $($(`#${id}`).children('p')[0]);
+    let obj = $(`#${id}`);
     obj.css('background', isOn ? 'radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%)': 'white');
 }
 
@@ -86,7 +86,13 @@ function colorNumbers(coords, color) {
 function colorCells(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
-        let obj = $($(`#${id}`).children('p')[0]);
-        obj.css('color', color);
+        let obj = $(`#${id}`);
+        obj.css('background-color', color);
+    });
+}
+
+function resetCellColor() {
+    $('.cell').each(function() {
+        $(this).parents('td').css('background', 'white');
     });
 }
