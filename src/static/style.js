@@ -1,13 +1,11 @@
 var pointer = [0, 0];
 
 $(document).ready(function () {
-    toggleCellHighlighting(pointer);
-
     $('.cell').on('click', function() { 
-        $(this).parents('td').css('background-color', $(this).is(':checked') ? 'red' : 'white');
-        toggleCellHighlighting(pointer);
+        $(this).css('background-color', $(this).prop('checked') ? 'red' : 'white');
+        toggleCellHighlighting(pointer, false);
         pointer = $(this).attr('id').split('').map(Number);
-        toggleCellHighlighting(pointer);
+        toggleCellHighlighting(pointer, true);
     });
 });
 
@@ -29,7 +27,7 @@ $(document).on('keydown', function(key) {
     }
     // Arrow Keys to move pointer
     if (37 <= pressedKey && pressedKey <= 40) {
-        toggleCellHighlighting(pointer);
+        toggleCellHighlighting(pointer, false);
         switch(pressedKey) {
             case 37: // Left
                 pointer[1] -= 1;
@@ -52,7 +50,7 @@ $(document).on('keydown', function(key) {
                     pointer[0] = 0;
                 break;
         }
-        toggleCellHighlighting(pointer);
+        toggleCellHighlighting(pointer, true);
         return;
     }
     // Space Bar to click cell
@@ -67,33 +65,28 @@ $(document).on('keydown', function(key) {
     }
 });
 
-function toggleCellHighlighting(coord) {
+function toggleCellHighlighting(coord, isOn) {
     let id = coord[0].toString() + coord[1].toString();
-    let obj = $(`#${id}`).parents('td');
-    obj.css('color',obj.css('color') === 'rgb(0, 255, 0)' ? 'black' : 'rgb(0, 255, 0)');
+    //background: radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%);
+    let obj = $($(`#${id}`).children('p')[0]);
+    obj.css('background', isOn ? 'radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%)': 'white');
 }
 
 function colorNumbers(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
+        let obj = $($(`#${id}`).children('p')[0]);
         // Never change the color of a blue number (start coordinates)
-        if ($(`#${id}`).next().css('color') === 'rgb(0, 0, 255)')
+        if (obj.css('color') === 'rgb(0, 0, 255)')
             return;
-        $(`#${id}`).next().css('color', color);
+        obj.css('color', color);
     });
 }
 
 function colorCells(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
-        $(`#${id}`).parents('td').css('background', color);
+        let obj = $($(`#${id}`).children('p')[0]);
+        obj.css('color', color);
     });
 }
-
-function resetCellColor() {
-    $('.cell').each(function() {
-        $(this).parents('td').css('background', 'white');
-    });
-}
-
-

@@ -17,8 +17,8 @@
             {% for i in range(9) %}
             <tr class="board">
                 {% for j in range(9) %}
-                <td class="board">
-                    <label><input id={{i}}{{j}} class="cell" type="checkbox"><pre> </pre></label>
+                <td class="board cell" id={{i}}{{j}}>
+                <p></p>
                 </td>
                 {% endfor %}
             </tr>

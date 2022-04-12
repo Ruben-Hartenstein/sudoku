@@ -31,12 +31,7 @@ tr:nth-child(3n).board {
     border-bottom-width: 2px;
 }
 
-input {
-    display: none;
-}
-
-label {
-    display: block;
+.cell {
     text-align: center;
 }
 

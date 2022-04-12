@@ -53,7 +53,7 @@ $(document).ready(function () {
 
     // Send number with every checked Cell everytime a number is clicked
     $('.number').on('click', function () {
-        resetCellColor()
+        //resetCellColor()
         let dict = {
             'number': $(this).attr('id'),
             'checkedCells': getCheckedCells(),
@@ -64,6 +64,11 @@ $(document).ready(function () {
             dict['checkedCells'].push(id);
         }
         socket.emit('numbers', dict);
+    });
+
+    // Update checked property and cell color
+    $('.cell').on('click', function() {
+        $(this).prop('checked', !$(this).prop('checked'));
     });
 
     $('#erase').on('click', function() {
@@ -93,24 +98,14 @@ $(document).ready(function () {
      });
 });
 
-// Returns all checked cells and unchecks them
-function getCheckedCells() {
-    let checkedCells = [];
-    $('.cell').each(function (i, obj) {
-        if (obj.checked) {
-            checkedCells.push(obj.id);
-            obj.click();
-        }
-    });
-    return checkedCells;
-}
-
 function updateBoard(board){
-   $('.cell').each(function (i, obj) {
-       let coords = obj.id.split('');
-       let text = board[coords[0]][coords[1]] == 0 ? " " :  board[coords[0]][coords[1]];
-       $(this).next().text(text);
-   });
+   let cell = ""
+   for (let i = 0; i < 9; i++) {
+       for (let j = 0; j < 9; j++) {
+           cell = i.toString() + j.toString();
+           updateCells([board[i][j]], [cell]);
+       }
+   }
 }
 
 // Updates content of cells
@@ -118,6 +113,18 @@ function updateCells(cellValues, cells){
     colorNumbers(cells, 'black');
     cells.forEach((id, i) => {
         let text = cellValues[i] === 0 ? " " :  cellValues[i];
-        $('#' + id).next().text(text);
+        $($('#' + id).children('p')[0]).text(text);
     });
+}
+
+// Returns all checked cells and unchecks them
+function getCheckedCells() {
+    let checkedCells = [];
+    $('.cell').each(function (i, obj) {
+        if ($(this).prop('checked')) {
+            checkedCells.push(obj.id);
+            obj.click();
+        }
+    });
+    return checkedCells;
 }
