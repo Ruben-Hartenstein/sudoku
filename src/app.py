@@ -51,7 +51,7 @@ def test_connect():
 def new_numbers(data):
     global help_nr
     print(f'Emit: {data}')
-    cell_values = sudoku_board.update_numbers(data['number'], data['checkedCells'])
+    cell_values = sudoku_board.update_numbers(int(data['number']), data['checkedCells'])
     print(cell_values)
     help_nr = 0
     emit('update cells', {'values': cell_values, 'checkedCells': data['checkedCells']})
@@ -69,6 +69,7 @@ def erase(checked_cells):
 @socketio.on('clear')
 def clear(string):
     print(string)
+
 
 @socketio.on('getCandidates')
 def candidates():
@@ -112,6 +113,7 @@ def help():
         help_nr += 1
     elif help_nr == 2:
         help_nr = 0
+
 
 def start_game():
     if not sudoku_board.is_board_valid():

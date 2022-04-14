@@ -1,6 +1,7 @@
 $(document).ready(function () {
     const socket = io.connect('http://127.0.0.1:5000/');
     var showCandidates = false;
+    var startCoords = [];
 
     // Initialize connection
     socket.on('connect', function () {
@@ -13,10 +14,11 @@ $(document).ready(function () {
     });
 
     socket.on('start', function (status) {
-        if (status.hasStarted) {
+        if (status['hasStarted']) {
             $('#start').hide();
             $('.started').show();
-            colorNumbers(status.startCoords, 'blue');
+            startCoords = status['startCoords']
+            colorNumbers(startCoords, 'blue');
         } else {
             $('#start').show();
             $('.started').hide();
@@ -26,11 +28,12 @@ $(document).ready(function () {
 
     // Get current status of server after (re-)connecting
     socket.on('server status', function (status) {
-        updateBoard(status.board);
-        if (status.hasStarted) {
+        updateBoard(status['board']);
+        if (status['hasStarted']) {
             $('#start').hide();
             $('.started').show();
-            colorNumbers(status.startCoords, 'blue');
+            startCoords = status['startCoords']
+            colorNumbers(startCoords, 'blue');
         } else {
             $('#start').show();
             $('.started').hide();
@@ -53,8 +56,9 @@ $(document).ready(function () {
 
     socket.on('help0', function (result) {
         alert("Technique: " + result.name);
-        colorCells(result.primaryCells, 'rgb(255,216,115)');
-        colorCells(result.secondaryCells, 'rgb(181,216,244)');
+        console.log(result['primaryCells'])
+        colorCells(result['primaryCells'], 'rgb(255,216,115)');
+        colorCells(result['secondaryCells'], 'rgb(181,216,244)');
     });
 
     socket.on('update cells', function (data) {
@@ -74,15 +78,9 @@ $(document).ready(function () {
         }
         // If no cell is selected, take the current pointer position
         if (!dict['checkedCells'].length) {
-            let id = pointer[0].toString() + pointer[1].toString();
-            dict['checkedCells'].push(id);
+            dict['checkedCells'].push(pointer);
         }
         socket.emit('numbers', dict);
-    });
-
-    // Update checked property and cell color
-    $('.cell').on('click', function () {
-        $(this).prop('checked', !$(this).prop('checked'));
     });
 
     $('#erase').on('click', function () {
@@ -121,11 +119,14 @@ $(document).ready(function () {
 
     // Updates content of cells
     function updateCells(cellValues, cells) {
+        let tempJSON = JSON.stringify(startCoords);
+        cellValues = cellValues.filter(x =>tempJSON.indexOf(cells[cellValues.indexOf(x)]) === -1);
+        cells = cells.filter(x =>tempJSON.indexOf(x) === -1);
         colorNumbers(cells, 'black');
         cells.forEach((id, i) => {
             let text = cellValues[i] === 0 ? "" : cellValues[i];
-            let obj = $('#' + id);
-            $(obj.children()[0]).replaceWith("<p></p>");
+            let obj = $('#' + id.join(''));
+            $(obj.children('div')[0]).replaceWith("<p></p>");
             $(obj.children('p')[0]).text(text);
         });
         if (showCandidates)
@@ -133,11 +134,9 @@ $(document).ready(function () {
     }
 
     function updateBoard(board) {
-        let cell = ""
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++) {
-                cell = i.toString() + j.toString();
-                updateCells([board[i][j]], [cell]);
+                updateCells([board[i][j]], [[i, j]]);
             }
         }
     }
@@ -148,20 +147,26 @@ function getCheckedCells() {
     let checkedCells = [];
     $('.cell').each(function (i, obj) {
         if ($(this).prop('checked')) {
-            checkedCells.push(obj.id);
-            obj.click();
+            checkedCells.push(obj.id.split('').map(Number));
+            toggleCell($(this));
         }
     });
     return checkedCells;
 }
 
-    function candidateFormatter(candidates) {
-        let formattedCandidates = [];
-        for (let index in candidates) {
-            if (candidates[index] == 0)
-                formattedCandidates.push(" ");
-             else
-                formattedCandidates.push(Number(index) + 1);
-        }
-        return formattedCandidates;
+function candidateFormatter(candidates) {
+    let formattedCandidates = [];
+    for (let index in candidates) {
+        if (candidates[index] === 0)
+            formattedCandidates.push(" ");
+         else
+            formattedCandidates.push(Number(index) + 1);
     }
+    return formattedCandidates;
+}
+
+// Update checked property and cell color
+function toggleCell(cell) {
+    cell.prop('checked', !cell.prop('checked'));
+    console.log(cell.prop('checked'));
+}

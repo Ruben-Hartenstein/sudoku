@@ -170,9 +170,7 @@ class SudokuBoard:
 
     def update_numbers(self, number, cells):
         cell_values = []
-        number = int(number)
-        for cell in cells:
-            x, y = [int(i) for i in cell]
+        for x, y in cells:
             if not (self.start_coords and (x, y) in self.start_coords):
                 if self.board[x][y] == number:
                     self.board[x][y] = 0

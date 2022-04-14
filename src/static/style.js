@@ -1,10 +1,12 @@
 var pointer = [0, 0];
 
 $(document).ready(function () {
-    $('.cell').on('click', function() { 
-        $(this).css('background-color', $(this).prop('checked') ? 'red' : 'white');
+    $('.cell').on('click', function() {
+        toggleCell($(this));
         toggleCellHighlighting(pointer, false);
         pointer = $(this).attr('id').split('').map(Number);
+        let color = $(this).prop('checked') ? 'red' : 'white'
+        colorCells([pointer], color);
         toggleCellHighlighting(pointer, true);
     });
 });
@@ -67,32 +69,29 @@ $(document).on('keydown', function(key) {
 
 function toggleCellHighlighting(coord, isOn) {
     let id = coord[0].toString() + coord[1].toString();
-    //background: radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%);
     let obj = $(`#${id}`);
-    obj.css('background', isOn ? 'radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%)': 'white');
+    //obj.css('background', isOn ? 'radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%)': 'white');
+    obj.css('outline', isOn ? '1px solid red' : '1px none black');
 }
 
 function colorNumbers(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
-        let obj = $($(`#${id}`).children('p')[0]);
-        // Never change the color of a blue number (start coordinates)
-        if (obj.css('color') === 'rgb(0, 0, 255)')
-            return;
-        obj.css('color', color);
+        $($(`#${id}`).children('p')[0]).css('color', color);
     });
 }
 
 function colorCells(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
-        let obj = $(`#${id}`);
-        obj.css('background-color', color);
+        $(`#${id}`).css('background', color);
     });
 }
 
 function resetCellColor() {
+    let coords = [];
     $('.cell').each(function() {
-        $(this).parents('td').css('background', 'white');
+        coords.push($(this).attr('id').split('').map(Number));
     });
+    colorCells(coords, 'white')
 }
