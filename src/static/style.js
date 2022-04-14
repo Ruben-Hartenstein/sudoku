@@ -5,7 +5,7 @@ $(document).ready(function () {
         toggleCell($(this));
         toggleCellHighlighting(pointer, false);
         pointer = $(this).attr('id').split('').map(Number);
-        let color = $(this).prop('checked') ? 'red' : 'white'
+        let color = $(this).prop('checked') ? 'lightgrey' : 'white'
         colorCells([pointer], color);
         toggleCellHighlighting(pointer, true);
     });
@@ -71,7 +71,7 @@ function toggleCellHighlighting(coord, isOn) {
     let id = coord[0].toString() + coord[1].toString();
     let obj = $(`#${id}`);
     //obj.css('background', isOn ? 'radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%)': 'white');
-    obj.css('outline', isOn ? '1px solid red' : '1px none black');
+    obj.css('outline', isOn ? '2px solid yellowgreen' : '1px none black');
 }
 
 function colorNumbers(coords, color) {

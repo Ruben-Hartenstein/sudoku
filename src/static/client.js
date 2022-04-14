@@ -18,7 +18,7 @@ $(document).ready(function () {
             $('#start').hide();
             $('.started').show();
             startCoords = status['startCoords']
-            colorNumbers(startCoords, 'blue');
+            colorNumbers(startCoords, 'mediumblue');
         } else {
             $('#start').show();
             $('.started').hide();
@@ -33,7 +33,7 @@ $(document).ready(function () {
             $('#start').hide();
             $('.started').show();
             startCoords = status['startCoords']
-            colorNumbers(startCoords, 'blue');
+            colorNumbers(startCoords, 'mediumblue');
         } else {
             $('#start').show();
             $('.started').hide();
@@ -56,7 +56,6 @@ $(document).ready(function () {
 
     socket.on('help0', function (result) {
         alert("Technique: " + result.name);
-        console.log(result['primaryCells'])
         colorCells(result['primaryCells'], 'rgb(255,216,115)');
         colorCells(result['secondaryCells'], 'rgb(181,216,244)');
     });
@@ -83,11 +82,6 @@ $(document).ready(function () {
         socket.emit('numbers', dict);
     });
 
-    $('#erase').on('click', function () {
-        let checkedCells = getCheckedCells();
-        socket.emit('erase', checkedCells);
-    });
-
     $('#candidate').on('click', function () {
         showCandidates = !showCandidates;
         if (showCandidates) {
@@ -101,15 +95,24 @@ $(document).ready(function () {
         }
     });
 
+    $('#erase').on('click', function () {
+        resetCellColor()
+        let checkedCells = getCheckedCells();
+        socket.emit('erase', checkedCells);
+    });
+
     $('#clear').on('click', function () {
+        resetCellColor()
         socket.emit('clear', "test");
     });
 
     $('#start').on('click', function () {
+        resetCellColor()
         socket.emit('start');
     });
 
     $('#help').on('click', function () {
+        resetCellColor()
         socket.emit('help');
     });
 
@@ -168,5 +171,4 @@ function candidateFormatter(candidates) {
 // Update checked property and cell color
 function toggleCell(cell) {
     cell.prop('checked', !cell.prop('checked'));
-    console.log(cell.prop('checked'));
 }
