@@ -43,7 +43,7 @@ table.candidates {
     text-align: center;
 }
 
-td.candidates {
+.candidates td {
     height: calc(100% / 3);
     width: calc(100% / 3);
 }
