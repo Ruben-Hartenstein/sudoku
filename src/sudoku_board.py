@@ -163,10 +163,11 @@ class SudokuBoard:
                         if not self.is_valid(candidate, (i, j)):
                             self.candidates[i][j][candidate - 1] = 0
 
-    def remove_candidates(self, candidates, cells):
-        for i, cell in enumerate(cells):
-            x, y = cell
-            self.candidates[x][y][candidates[i] - 1] = 0
+    def remove_candidates(self, cross_outs):
+        for cross_out in cross_outs:
+
+            x, y = cross_out['cell']
+            self.candidates[x][y][cross_out['value'] - 1] = 0
 
     def update_numbers(self, number, cells):
         cell_values = []

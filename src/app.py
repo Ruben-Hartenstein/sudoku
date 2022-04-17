@@ -9,7 +9,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 has_started = False
-help_nr = 0
+help_step = 0
 technique_result = None
 
 sudoku_board = sudoku_board.SudokuBoard([[6, 0, 1, 0, 9, 4, 0, 0, 0],
@@ -49,20 +49,20 @@ def test_connect():
 
 @socketio.on('numbers')
 def new_numbers(data):
-    global help_nr
+    global help_step
     print(f'Emit: {data}')
     cell_values = sudoku_board.update_numbers(int(data['number']), data['checkedCells'])
     print(cell_values)
-    help_nr = 0
+    help_step = 0
     emit('update cells', {'values': cell_values, 'checkedCells': data['checkedCells']})
 
 
 @socketio.on('erase')
 def erase(checked_cells):
-    global help_nr
+    global help_step
     cell_values = sudoku_board.erase_cells(checked_cells)
     print(cell_values)
-    help_nr = 0
+    help_step = 0
     emit('update cells', {'values': cell_values, 'checkedCells': checked_cells})
 
 
@@ -84,35 +84,35 @@ def candidates():
 
 @socketio.on('help')
 def help():
-    global help_nr
+    global help_step
     global technique_result
-    print(help_nr)
-    if help_nr == 0:
-        errors = sudoku_board.get_errors()
-        if errors:
-            print(errors)
-            emit('showErrors', errors)
-        else:
-            sudoku_board.update_candidates()
-            technique_result = technique_manager.try_techniques(sudoku_board.board, sudoku_board.candidates)
-            if not technique_result:
-                help_nr = 0
-                print("No suitable technique found!")
-            print(technique_result['name'])
-            print(technique_result['cross_out'])
-            print(technique_result['primary_cells'])
-            print(technique_result['secondary_cells'])
-            emit(f'help0',
-                 {'name': technique_result['name'], 'primaryCells': technique_result['primary_cells'],
-                  'secondaryCells': technique_result['secondary_cells']})
-            help_nr += 1
-    elif help_nr == 1:
-        values = [cross_out['value'] for cross_out in technique_result['cross_out']]
-        cells = [cross_out['cell'] for cross_out in technique_result['cross_out']]
-        sudoku_board.remove_candidates(values, cells)
-        help_nr += 1
-    elif help_nr == 2:
-        help_nr = 0
+    print(help_step)
+    errors = sudoku_board.get_errors()
+    if errors:
+        print(errors)
+        emit('showErrors', errors)
+        return
+    if help_step == 0:
+        sudoku_board.update_candidates()
+        technique_result = technique_manager.try_techniques(sudoku_board.board, sudoku_board.candidates)
+        if not technique_result:
+            print("No suitable technique found!")
+            return
+        print("HELP0")
+        print(technique_result['name'])
+        print(technique_result['primary_cells'])
+        print(technique_result['secondary_cells'])
+        emit(f'help0',
+             {'name': technique_result['name'], 'primaryCells': technique_result['primary_cells'],
+              'secondaryCells': technique_result['secondary_cells']})
+    elif help_step == 1:
+        print("HELP1")
+        print(technique_result['cross_outs'])
+        print(technique_result['highlights'])
+        emit(f'help1', {'highlights': technique_result['highlights'], 'crossOuts': technique_result['cross_outs'], 'candidates': sudoku_board.candidates})
+    help_step += 1
+    help_step %= 2
+    print(help_step)
 
 
 def start_game():

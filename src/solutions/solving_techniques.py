@@ -9,8 +9,8 @@ class SolvingTechniques(ABC):
         self.explanation = explanation
         self.board = board
         self.candidates = candidates
-        self.cross_out = []
-        self.highlight = []
+        self.cross_outs = []
+        self.highlights = []
         self.primary_cells = []
         self.secondary_cells = []
 
@@ -55,9 +55,10 @@ class SolvingTechniques(ABC):
         self.update_secondary_cells()
         return {
             "name": self.name,
-            "cross_out": self.cross_out,
             "primary_cells": self.primary_cells,
-            "secondary_cells": self.secondary_cells
+            "secondary_cells": self.secondary_cells,
+            "cross_outs": self.cross_outs,
+            "highlights": self.highlights,
         }
 
     @abstractmethod
@@ -67,26 +68,3 @@ class SolvingTechniques(ABC):
     @abstractmethod
     def execute_technique(self):
         pass
-
-
-'''
-    def update_associated_fields(self):
-        def remove_duplicates():
-            return list(dict.fromkeys(self.associated_fields))
-
-        for field in self.fields:
-            # Add all in row
-            for j in range(9):
-                self.associated_fields.append((field[0], j))
-            # Add all in column
-            for i in range(9):
-                self.associated_fields.append((i, field[1]))
-            # Add all in Box
-            box_x = (field[1] // 3) * 3
-            box_y = (field[0] // 3) * 3
-
-            for i in range(box_y, box_y + 3):
-                for j in range(box_x, box_x + 3):
-                    self.associated_fields.append((i, j))
-        self.associated_fields = remove_duplicates()
-        print(self.associated_fields)'''

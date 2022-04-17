@@ -57,6 +57,7 @@ $(document).on('keydown', function(key) {
     }
     // Space Bar to click cell
     if (pressedKey === 32) {
+        key.preventDefault();
         let id = pointer[0].toString() + pointer[1].toString();
         $(`#${id}`).click();
         return;
@@ -78,6 +79,17 @@ function colorNumbers(coords, color) {
     coords.forEach(coord => {
         let id = coord[0].toString() + coord[1].toString();
         $($(`#${id}`).children('p')[0]).css('color', color);
+    });
+}
+
+function colorCandidates(candidates, color) {
+    console.log("-----------------")
+    console.log(candidates)
+    console.log(color)
+    candidates.forEach(candidate => {
+        let id = candidate['cell'][0].toString() + candidate['cell'][1].toString();
+        id += candidate['value']
+        $(`#${id}`).css('color', color);
     });
 }
 

@@ -50,7 +50,7 @@ class NakedPair(SolvingTechniques):
                 continue
             for pair_value in pair_values:
                 if self.candidates[x][y][pair_value - 1] == 1:
-                    self.cross_out.append(
+                    self.cross_outs.append(
                         {'value': pair_value,
                          'cell': (x, y)})
 

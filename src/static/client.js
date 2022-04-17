@@ -1,6 +1,6 @@
 $(document).ready(function () {
     const socket = io.connect('http://127.0.0.1:5000/');
-    var showCandidates = false;
+    var candidatesVisible = false;
     var startCoords = [];
 
     // Initialize connection
@@ -41,23 +41,24 @@ $(document).ready(function () {
     });
 
     socket.on('showCandidates', function (candidates) {
-        var x = 0;
-        var y = 0;
-        $('.cell').each(function (i, obj) {
-            y = i % 9;
-            x = Math.floor(i / 9);
-            let candidate = candidateFormatter(candidates[x][y]);
-            let child = $($(this).children()[0]);
-            if (!Number(child.text())) {
-                child.replaceWith("<div> <table class='candidates'> <tr> <td>" + candidate[0] + "</td> <td>" + candidate[1] + "</td> <td>" + candidate[2] + "</td> </tr> <tr> <td>" + candidate[3] + "</td> <td>" + candidate[4] + "</td> <td>" + candidate[5] + "</td> </tr> <tr> <td>" + candidate[6] + "</td> <td>" + candidate[7] + "</td> <td>" + candidate[8] + "</td> </tr> </table> </div>\n");
-            }
-        });
+        showCandidates(candidates)
     });
 
-    socket.on('help0', function (result) {
-        alert("Technique: " + result.name);
-        colorCells(result['primaryCells'], 'rgb(255,216,115)');
-        colorCells(result['secondaryCells'], 'rgb(181,216,244)');
+    socket.on('help0', function (technique_result) {
+        alert("Technique: " + technique_result['name']);
+        colorCells(technique_result['primaryCells'], 'rgb(255,216,115)');
+        colorCells(technique_result['secondaryCells'], 'rgb(181,216,244)');
+    });
+
+    socket.on('help1', function (technique_result) {
+        if (!candidatesVisible)
+            candidatesVisible = !candidatesVisible;
+            $('#candidate').css('color', 'red');
+            showCandidates(technique_result['candidates'])
+        console.log(technique_result['crossOuts'])
+        console.log(technique_result['highlights'])
+        colorCandidates(technique_result['crossOuts'], 'red')
+        colorCandidates(technique_result['highlights'], 'lime')
     });
 
     socket.on('update cells', function (data) {
@@ -83,14 +84,14 @@ $(document).ready(function () {
     });
 
     $('#candidate').on('click', function () {
-        showCandidates = !showCandidates;
-        if (showCandidates) {
+        candidatesVisible = !candidatesVisible;
+        if (candidatesVisible) {
             $('#candidate').css('color', 'red');
             updateCandidates();
         } else {
             $('#candidate').css('color', 'black');
             $('.cell').each(function (i, obj) {
-                $($(this).children('div')[0]).replaceWith("<p></p>");
+                $($(this).children('table')[0]).replaceWith("<p></p>");
             });
         }
     });
@@ -112,7 +113,6 @@ $(document).ready(function () {
     });
 
     $('#help').on('click', function () {
-        resetCellColor()
         socket.emit('help');
     });
 
@@ -129,10 +129,10 @@ $(document).ready(function () {
         cells.forEach((id, i) => {
             let text = cellValues[i] === 0 ? "" : cellValues[i];
             let obj = $('#' + id.join(''));
-            $(obj.children('div')[0]).replaceWith("<p></p>");
+            $(obj.children('table')[0]).replaceWith("<p></p>");
             $(obj.children('p')[0]).text(text);
         });
-        if (showCandidates)
+        if (candidatesVisible)
             updateCandidates();
     }
 
@@ -144,6 +144,31 @@ $(document).ready(function () {
         }
     }
 });
+
+function showCandidates (candidates) {
+        var x = 0;
+        var y = 0;
+        $('.cell').each(function (i, obj) {
+            y = i % 9;
+            x = Math.floor(i / 9);
+            let candidate = candidateFormatter(candidates[x][y]);
+            let child = $($(this).children()[0]);
+            let id = $(this).attr('id');
+            if (!Number(child.text())) {
+                let html = "<table class='candidates'>";
+                for (let i = 0; i < 3; i++) {
+                    html += "<tr>";
+                    for (let j = 0; j < 3; j++) {
+                        let index = i * 3 + j
+                        html += "<td id=" + id + (index + 1) + ">" + (candidate[index]) + "</td>";
+                    }
+                    html += "</tr>";
+                }
+                html += "</table>";
+                child.replaceWith(html);
+            }
+        });
+    }
 
 // Returns all checked cells and unchecks them
 function getCheckedCells() {
@@ -168,7 +193,7 @@ function candidateFormatter(candidates) {
     return formattedCandidates;
 }
 
-// Update checked property and cell color
+// Update checked property
 function toggleCell(cell) {
     cell.prop('checked', !cell.prop('checked'));
 }
