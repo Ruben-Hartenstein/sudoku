@@ -17,14 +17,14 @@ class NakedSingle(SolvingTechniques):
                 if sum(self.candidates[i][j]) != 1:
                     continue
                 self.primary_cells.append((i, j))
-                self.cross_outs.append(
+                self.highlights.append(
                     {'value': self.candidates[i][j].index(1) + 1,
                      'cell': self.primary_cells[0]})
                 return True
         return False
 
     def update_secondary_cells(self):
-        cell = self.cross_outs[0]['cell']
+        cell = self.highlights[0]['cell']
         influential_cells = SolvingTechniques.get_influential_cells(cell)
         for key in influential_cells.keys():
             self.secondary_cells.extend(influential_cells[key])

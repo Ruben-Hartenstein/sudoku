@@ -33,7 +33,7 @@ class HiddenSingle(SolvingTechniques):
                             self.primary_cells.append((x, y))
                             candidate_once = True
                     if candidate_once:
-                        self.cross_outs.append(
+                        self.highlights.append(
                             {'value': num,
                              'cell': self.primary_cells[0]})
                         self.unit = key
@@ -41,8 +41,8 @@ class HiddenSingle(SolvingTechniques):
         return False
 
     def update_secondary_cells(self):
-        cell = self.cross_outs[0]['cell']
-        cross_out_value = self.cross_outs[0]['value']
+        cell = self.highlights[0]['cell']
+        highlight_value = self.highlights[0]['value']
         influential_cells = SolvingTechniques.get_influential_cells(cell)
         for i, j in influential_cells[self.unit]:
             if (i, j) == cell:
@@ -60,7 +60,7 @@ class HiddenSingle(SolvingTechniques):
                         continue
                     for x, y in cells[key]:
                         temp_cells.append((x, y))
-                        if self.board[x][y] == cross_out_value:
+                        if self.board[x][y] == highlight_value:
                             num_in_unit = True
                     if num_in_unit:
                         self.secondary_cells.extend(temp_cells)
