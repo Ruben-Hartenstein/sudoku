@@ -4,12 +4,7 @@ from src.solutions.solving_techniques import SolvingTechniques
 class HiddenSingle(SolvingTechniques):
 
     def __init__(self, board, candidates):
-        super().__init__("Hidden Single",
-                         """Every number already entered covers a row, a column and a block.
-                          Therefore, very often there are situations in which there is only
-                           one free field for a given number within a unit * (in block 9, 
-                           the 7 fits only in the green field).""",
-                         board, candidates)
+        super().__init__("Hidden Single", board, candidates)
         self.unit = ""
 
     def execute_technique(self):
@@ -66,3 +61,7 @@ class HiddenSingle(SolvingTechniques):
                         self.secondary_cells.extend(temp_cells)
                         break
         self.secondary_cells = SolvingTechniques.remove_duplicates(self.secondary_cells)
+
+    def update_explanation(self):
+        self.explanation = f"""Every {self.highlights[0]['value']} in the {self.unit}, except one, is blocked.
+        Therefore, {self.highlights[0]['value']} can be put in the only possible field in the {self.unit}, {self.highlights[0]['cell']}."""

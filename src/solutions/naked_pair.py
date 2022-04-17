@@ -4,12 +4,7 @@ from src.solutions.solving_techniques import SolvingTechniques
 class NakedPair(SolvingTechniques):
 
     def __init__(self, board, candidates):
-        super().__init__("Naked Pair",
-                         """If the same two candidate values occupy two squares of a unit,
-                          they divide these two squares, and we at least know that they are
-                          not in the other squares of this unit can occur further. Therefore,
-                          you can remove these two values in the rest of the affected units""",
-                         board, candidates)
+        super().__init__("Naked Pair", board, candidates)
         self.unit = ""
 
     def execute_technique(self):
@@ -60,3 +55,9 @@ class NakedPair(SolvingTechniques):
             if (x, y) in self.primary_cells:
                 continue
             self.secondary_cells.append((x, y))
+
+    def update_explanation(self):
+        self.explanation = f"""If the same two candidate values occupy two squares of a unit,
+        they divide these two squares, and we at least know that they are
+        not in the other squares of this unit can occur further. Therefore,
+        you can remove these two values in the rest of the affected units"""

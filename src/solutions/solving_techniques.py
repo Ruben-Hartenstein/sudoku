@@ -4,11 +4,11 @@ from abc import ABC, abstractmethod
 class SolvingTechniques(ABC):
     solved_board = []
 
-    def __init__(self, name, explanation, board, candidates):
+    def __init__(self, name, board, candidates):
         self.name = name
-        self.explanation = explanation
         self.board = board
         self.candidates = candidates
+        self.explanation = ''
         self.cross_outs = []
         self.highlights = []
         self.primary_cells = []
@@ -53,12 +53,14 @@ class SolvingTechniques(ABC):
 
     def get_result(self):
         self.update_secondary_cells()
+        self.update_explanation()
         return {
             "name": self.name,
             "primary_cells": self.primary_cells,
             "secondary_cells": self.secondary_cells,
             "cross_outs": self.cross_outs,
             "highlights": self.highlights,
+            "explanation": self.explanation
         }
 
     @abstractmethod
@@ -67,4 +69,8 @@ class SolvingTechniques(ABC):
 
     @abstractmethod
     def execute_technique(self):
+        pass
+
+    @abstractmethod
+    def update_explanation(self):
         pass

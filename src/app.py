@@ -110,8 +110,13 @@ def help():
         print(technique_result['cross_outs'])
         print(technique_result['highlights'])
         emit(f'help1', {'highlights': technique_result['highlights'], 'crossOuts': technique_result['cross_outs'], 'candidates': sudoku_board.candidates})
+    elif help_step == 2:
+        print("HELP2")
+        print(technique_result['name'])
+        print(technique_result['explanation'])
+        #emit(f'help1', {'highlights': technique_result['highlights'], 'crossOuts': technique_result['cross_outs'], 'candidates': sudoku_board.candidates})
     help_step += 1
-    help_step %= 2
+    help_step %= 3
     print(help_step)
 
 
