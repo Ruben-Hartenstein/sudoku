@@ -39,6 +39,11 @@ class NakedPair(SolvingTechniques):
             if candidate == 0:
                 continue
             pair_values.append(num + 1)
+        for x, y in self.primary_cells:
+            for pair_value in pair_values:
+                self.highlights.append(
+                    {'value': pair_value,
+                     'cell': (x, y)})
         influential_cells = SolvingTechniques.get_influential_cells(self.primary_cells[0])
         for x, y in influential_cells[self.unit]:
             if (x, y) in self.primary_cells or self.board[x][y] != 0:
@@ -57,7 +62,6 @@ class NakedPair(SolvingTechniques):
             self.secondary_cells.append((x, y))
 
     def update_explanation(self):
-        self.explanation = f"""If the same two candidate values occupy two squares of a unit,
-        they divide these two squares, and we at least know that they are
-        not in the other squares of this unit can occur further. Therefore,
-        you can remove these two values in the rest of the affected units"""
+        self.explanation = f"""The same two candidate values, {self.highlights[0]['value']} and {self.highlights[1]['value']}, occupy two squares of a {self.unit},
+they divide the two squares {self.highlights[0]['cell']} and {self.highlights[2]['cell']}, and we know that they can't occur in other squares of the {self.unit}.
+Therefore, the values {self.highlights[0]['value']} and {self.highlights[1]['value']} can be removed from the rest of the affected fields."""

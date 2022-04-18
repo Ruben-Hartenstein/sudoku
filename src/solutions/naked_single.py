@@ -30,4 +30,4 @@ class NakedSingle(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""Because every other candidate in the field {self.highlights[0]['cell']} is blocked,
-        therefore, the only possibility, {self.highlights[0]['value']}, can be inserted."""
+the only possibility left, {self.highlights[0]['value']}, can be inserted."""

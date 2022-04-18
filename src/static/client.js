@@ -61,6 +61,11 @@ $(document).ready(function () {
         colorCandidates(technique_result['highlights'], 'lime')
     });
 
+    socket.on('help2', function (technique_result) {
+        alert("Technique: " + technique_result['name'] + "\n" +
+            "Explanation: " + technique_result['explanation']);
+    });
+
     socket.on('update cells', function (data) {
         updateCells(data['values'], data['checkedCells']);
     });

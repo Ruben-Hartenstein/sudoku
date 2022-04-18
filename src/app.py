@@ -35,13 +35,17 @@ def handle_message(data):
 
 @socketio.on('start')
 def start():
+    global help_step
     global has_started
+    help_step = 0
     has_started = start_game()
     emit('start', {'hasStarted': has_started, 'startCoords': sudoku_board.start_coords})
 
 
 @socketio.on('connect')
 def test_connect():
+    global help_step
+    help_step = 0
     print('Server Connected')
     emit('server status',
          {'board': sudoku_board.board, 'hasStarted': has_started, 'startCoords': sudoku_board.start_coords})
@@ -50,24 +54,26 @@ def test_connect():
 @socketio.on('numbers')
 def new_numbers(data):
     global help_step
+    help_step = 0
     print(f'Emit: {data}')
     cell_values = sudoku_board.update_numbers(int(data['number']), data['checkedCells'])
     print(cell_values)
-    help_step = 0
     emit('update cells', {'values': cell_values, 'checkedCells': data['checkedCells']})
 
 
 @socketio.on('erase')
 def erase(checked_cells):
     global help_step
+    help_step = 0
     cell_values = sudoku_board.erase_cells(checked_cells)
     print(cell_values)
-    help_step = 0
     emit('update cells', {'values': cell_values, 'checkedCells': checked_cells})
 
 
 @socketio.on('clear')
 def clear(string):
+    global help_step
+    help_step = 0
     print(string)
 
 
@@ -114,7 +120,7 @@ def help():
         print("HELP2")
         print(technique_result['name'])
         print(technique_result['explanation'])
-        #emit(f'help1', {'highlights': technique_result['highlights'], 'crossOuts': technique_result['cross_outs'], 'candidates': sudoku_board.candidates})
+        emit(f'help2', {'name': technique_result['name'], 'explanation': technique_result['explanation']})
     help_step += 1
     help_step %= 3
     print(help_step)
