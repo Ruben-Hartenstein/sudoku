@@ -55,9 +55,7 @@ def test_connect():
 def new_numbers(data):
     global help_step
     help_step = 0
-    print(f'Emit: {data}')
     cell_values = sudoku_board.update_numbers(int(data['number']), data['checkedCells'])
-    print(cell_values)
     emit('update cells', {'values': cell_values, 'checkedCells': data['checkedCells']})
 
 
@@ -66,7 +64,6 @@ def erase(checked_cells):
     global help_step
     help_step = 0
     cell_values = sudoku_board.erase_cells(checked_cells)
-    print(cell_values)
     emit('update cells', {'values': cell_values, 'checkedCells': checked_cells})
 
 
@@ -92,7 +89,6 @@ def candidates():
 def help():
     global help_step
     global technique_result
-    print(help_step)
     errors = sudoku_board.get_errors()
     if errors:
         print(errors)
@@ -104,26 +100,26 @@ def help():
         if not technique_result:
             print("No suitable technique found!")
             return
-        print("HELP0")
-        print(technique_result['name'])
-        print(technique_result['primary_cells'])
-        print(technique_result['secondary_cells'])
         emit(f'help0',
              {'name': technique_result['name'], 'primaryCells': technique_result['primary_cells'],
               'secondaryCells': technique_result['secondary_cells']})
     elif help_step == 1:
-        print("HELP1")
-        print(technique_result['cross_outs'])
-        print(technique_result['highlights'])
-        emit(f'help1', {'highlights': technique_result['highlights'], 'crossOuts': technique_result['cross_outs'], 'candidates': sudoku_board.candidates})
+        candidates()
+        emit(f'help1', {'highlights': technique_result['highlights'], 'crossOuts': technique_result['cross_outs']})
     elif help_step == 2:
-        print("HELP2")
-        print(technique_result['name'])
-        print(technique_result['explanation'])
         emit(f'help2', {'name': technique_result['name'], 'explanation': technique_result['explanation']})
+    elif help_step == 3:
+        if technique_result['name'] in ['Naked Single', 'Hidden Single']:
+            data = {'number': technique_result['highlights'][0]['value'],
+                    'checkedCells': [technique_result['highlights'][0]['cell']]}
+            new_numbers(data)
+            help_step -= 1
+        else:
+            sudoku_board.remove_candidates(technique_result['cross_outs'])
+            candidates()
+        emit(f'help3')
     help_step += 1
-    help_step %= 3
-    print(help_step)
+    help_step %= 4
 
 
 def start_game():

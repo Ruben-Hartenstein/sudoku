@@ -83,9 +83,6 @@ function colorNumbers(coords, color) {
 }
 
 function colorCandidates(candidates, color) {
-    console.log("-----------------")
-    console.log(candidates)
-    console.log(color)
     candidates.forEach(candidate => {
         let id = candidate['cell'][0].toString() + candidate['cell'][1].toString();
         id += candidate['value']

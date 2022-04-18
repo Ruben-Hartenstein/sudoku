@@ -41,7 +41,28 @@ $(document).ready(function () {
     });
 
     socket.on('showCandidates', function (candidates) {
-        showCandidates(candidates)
+        var x = 0;
+        var y = 0;
+        $('.cell').each(function (i, obj) {
+            y = i % 9;
+            x = Math.floor(i / 9);
+            let candidate = candidateFormatter(candidates[x][y]);
+            let child = $($(this).children()[0]);
+            let id = $(this).attr('id');
+            if ((child.prop('tagName') === 'P' && !Number(child.text())) || child.prop('tagName') === 'TABLE') {
+                let html = "<table class='candidates'>";
+                for (let i = 0; i < 3; i++) {
+                    html += "<tr>";
+                    for (let j = 0; j < 3; j++) {
+                        let index = i * 3 + j
+                        html += "<td id=" + id + (index + 1) + ">" + (candidate[index]) + "</td>";
+                    }
+                    html += "</tr>";
+                }
+                html += "</table>";
+                child.replaceWith(html);
+            }
+        });
     });
 
     socket.on('help0', function (technique_result) {
@@ -51,12 +72,10 @@ $(document).ready(function () {
     });
 
     socket.on('help1', function (technique_result) {
-        if (!candidatesVisible)
+        if (!candidatesVisible) {
             candidatesVisible = !candidatesVisible;
             $('#candidate').css('color', 'red');
-            showCandidates(technique_result['candidates'])
-        console.log(technique_result['crossOuts'])
-        console.log(technique_result['highlights'])
+        }
         colorCandidates(technique_result['crossOuts'], 'red')
         colorCandidates(technique_result['highlights'], 'lime')
     });
@@ -64,6 +83,14 @@ $(document).ready(function () {
     socket.on('help2', function (technique_result) {
         alert("Technique: " + technique_result['name'] + "\n" +
             "Explanation: " + technique_result['explanation']);
+    });
+
+    socket.on('help3', function () {
+        if (!candidatesVisible) {
+            candidatesVisible = !candidatesVisible;
+            $('#candidate').css('color', 'red');
+        }
+        resetCellColor()
     });
 
     socket.on('update cells', function (data) {
@@ -82,9 +109,8 @@ $(document).ready(function () {
             'checkedCells': getCheckedCells(),
         }
         // If no cell is selected, take the current pointer position
-        if (!dict['checkedCells'].length) {
+        if (!dict['checkedCells'].length)
             dict['checkedCells'].push(pointer);
-        }
         socket.emit('numbers', dict);
     });
 
@@ -104,6 +130,8 @@ $(document).ready(function () {
     $('#erase').on('click', function () {
         resetCellColor()
         let checkedCells = getCheckedCells();
+        if (checkedCells.length)
+            checkedCells.push(pointer);
         socket.emit('erase', checkedCells);
     });
 
@@ -150,31 +178,6 @@ $(document).ready(function () {
     }
 });
 
-function showCandidates (candidates) {
-        var x = 0;
-        var y = 0;
-        $('.cell').each(function (i, obj) {
-            y = i % 9;
-            x = Math.floor(i / 9);
-            let candidate = candidateFormatter(candidates[x][y]);
-            let child = $($(this).children()[0]);
-            let id = $(this).attr('id');
-            if (!Number(child.text())) {
-                let html = "<table class='candidates'>";
-                for (let i = 0; i < 3; i++) {
-                    html += "<tr>";
-                    for (let j = 0; j < 3; j++) {
-                        let index = i * 3 + j
-                        html += "<td id=" + id + (index + 1) + ">" + (candidate[index]) + "</td>";
-                    }
-                    html += "</tr>";
-                }
-                html += "</table>";
-                child.replaceWith(html);
-            }
-        });
-    }
-
 // Returns all checked cells and unchecks them
 function getCheckedCells() {
     let checkedCells = [];
@@ -192,7 +195,7 @@ function candidateFormatter(candidates) {
     for (let index in candidates) {
         if (candidates[index] === 0)
             formattedCandidates.push(" ");
-         else
+        else
             formattedCandidates.push(Number(index) + 1);
     }
     return formattedCandidates;
