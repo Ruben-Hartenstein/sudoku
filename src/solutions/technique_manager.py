@@ -2,8 +2,9 @@ from src.solutions.solving_techniques import SolvingTechniques
 from src.solutions.naked_single import NakedSingle
 from src.solutions.hidden_single import HiddenSingle
 from src.solutions.naked_pair import NakedPair
+from src.solutions.naked_triple import NakedTriple
 
-techniques = [NakedSingle, HiddenSingle, NakedPair]
+techniques = [NakedTriple]
 
 
 def set_solved_board(board):
