@@ -30,7 +30,8 @@ class NakedPair(SolvingTechniques):
                     if candidate_pair_twice:
                         self.unit = key
                         self.assemble_cross_out(temp_candidates)
-                        return True
+                        if len(self.cross_outs) != 0:
+                            return True
         return False
 
     def assemble_cross_out(self, candidates):

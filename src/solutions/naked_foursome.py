@@ -24,10 +24,10 @@ def candidates_to_values(candidates):
     return values
 
 
-class NakedTriple(SolvingTechniques):
+class NakedFoursome(SolvingTechniques):
 
     def __init__(self, board, candidates):
-        super().__init__("Naked Triple", board, candidates)
+        super().__init__("Naked Foursome", board, candidates)
         self.unit = []
         self.unit_cells = []
         self.combo = []
@@ -49,7 +49,7 @@ class NakedTriple(SolvingTechniques):
                             continue
                         if num + 1 not in occurring_candidates:
                             occurring_candidates.append(num + 1)
-                combos = set(combinations(occurring_candidates, 3))
+                combos = set(combinations(occurring_candidates, 4))
                 for self.combo in combos:
                     matches = []
                     for cell in self.unit_cells:
@@ -57,7 +57,7 @@ class NakedTriple(SolvingTechniques):
                         candidates_num = SolvingTechniques.format_candidates(self.candidates[x][y])
                         if all(c in self.combo for c in candidates_num):
                             matches.append(cell)
-                    if len(matches) >= 3:
+                    if len(matches) >= 4:
                         self.primary_cells = matches
                         self.assemble_cross_out()
                         if len(self.cross_outs) != 0:
@@ -93,6 +93,6 @@ class NakedTriple(SolvingTechniques):
         self.secondary_cells = [cell for cell in self.unit_cells if cell not in self.primary_cells]
 
     def update_explanation(self):
-        self.explanation = f"""Because only three candidates ({self.combo[0]}, {self.combo[1]} and {self.combo[2]}) exist
-in three fields ({self.primary_cells[0]}, {self.primary_cells[1]} and {self.primary_cells[2]}) of a {self.unit},
+        self.explanation = f"""Because only four candidates ({self.combo[0]}, {self.combo[1]}, {self.combo[2]} and {self.combo[3]}) exist
+in four fields ({self.primary_cells[0]}, {self.primary_cells[1]}, {self.primary_cells[2]} and {self.primary_cells[3]}) of a {self.unit},
 these candidates can be eliminated in the remaining fields of the {self.unit}"""
