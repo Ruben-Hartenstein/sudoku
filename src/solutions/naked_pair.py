@@ -1,59 +1,92 @@
 from src.solutions.solving_techniques import SolvingTechniques
+from itertools import combinations
+
+
+def index2box(index):
+    box_coords = {0: (1, 1),
+                  1: (1, 4),
+                  2: (1, 7),
+                  3: (4, 1),
+                  4: (4, 4),
+                  5: (4, 7),
+                  6: (7, 1),
+                  7: (7, 4),
+                  8: (7, 7)}
+    return box_coords[index]
+
+
+def candidates_to_values(candidates):
+    values = []
+    for num, candidate in enumerate(candidates):
+        if candidate == 0:
+            continue
+        values.append(num + 1)
+    return values
 
 
 class NakedPair(SolvingTechniques):
 
     def __init__(self, board, candidates):
         super().__init__("Naked Pair", board, candidates)
-        self.unit = ""
+        self.unit = ''
+        self.unit_cells = []
 
     def execute_technique(self):
-        for j in range(9):
-            for i in range(9):
-                if self.board[i][j] != 0 or sum(self.candidates[i][j]) != 2:
-                    continue
-                temp_candidates = self.candidates[i][j]
-                influential_cells = SolvingTechniques.get_influential_cells((i, j))
-                for key in influential_cells.keys():
-                    candidate_pair_twice = False
-                    for x, y in influential_cells[key]:
-                        if self.board[x][y] != 0 or (x, y) == (i, j) or self.candidates[x][y] != temp_candidates:
+        for self.unit in ['row', 'column', 'box']:
+            for j in range(9):
+                i = j
+                occurring_candidates = []
+                if self.unit == 'box':
+                    j, i = index2box(j)
+                self.unit_cells = SolvingTechniques.get_influential_cells_unit((j, i), self.unit)
+                for cell in self.unit_cells:
+                    x, y = cell
+                    if self.board[x][y] != 0:
+                        continue
+                    for num, candidate in enumerate(self.candidates[x][y]):
+                        if candidate == 0:
                             continue
-                        if candidate_pair_twice:
-                            self.primary_cells = []
-                            candidate_pair_twice = False
-                            break
-                        self.primary_cells.append((i, j))
-                        self.primary_cells.append((x, y))
-                        candidate_pair_twice = True
-
-                    if candidate_pair_twice:
-                        self.unit = key
-                        self.assemble_cross_out(temp_candidates)
+                        if num + 1 not in occurring_candidates:
+                            occurring_candidates.append(num + 1)
+                combos = set(combinations(occurring_candidates, 2))
+                for self.combo in combos:
+                    matches = []
+                    for cell in self.unit_cells:
+                        x, y = cell
+                        candidates_num = SolvingTechniques.format_candidates(self.candidates[x][y])
+                        if all(c in self.combo for c in candidates_num):
+                            matches.append(cell)
+                    if len(matches) >= 2:
+                        self.primary_cells = matches
+                        self.assemble_cross_out()
                         if len(self.cross_outs) != 0:
                             return True
         return False
 
-    def assemble_cross_out(self, candidates):
-        pair_values = []
-        for num, candidate in enumerate(candidates):
-            if candidate == 0:
+    def assemble_cross_out(self):
+        self.highlights = []
+        self.cross_outs = []
+        for cell in self.unit_cells:
+            x, y = cell
+            if self.board[x][y] != 0:
                 continue
-            pair_values.append(num + 1)
-        for x, y in self.primary_cells:
-            for pair_value in pair_values:
-                self.highlights.append(
-                    {'value': pair_value,
-                     'cell': (x, y)})
-        influential_cells = SolvingTechniques.get_influential_cells(self.primary_cells[0])
-        for x, y in influential_cells[self.unit]:
-            if (x, y) in self.primary_cells or self.board[x][y] != 0:
-                continue
-            for pair_value in pair_values:
-                if self.candidates[x][y][pair_value - 1] == 1:
-                    self.cross_outs.append(
-                        {'value': pair_value,
-                         'cell': (x, y)})
+            if cell in self.primary_cells:
+                candidates = self.candidates[x][y]
+                candidates_num = candidates_to_values(candidates)
+                for candidate in candidates_num:
+                    self.highlights.append({
+                        'value': candidate,
+                        'cell': cell
+                    })
+            else:
+                candidates = self.candidates[x][y]
+                candidates_num = candidates_to_values(candidates)
+                for value in self.combo:
+                    if value in candidates_num:
+                        self.cross_outs.append({
+                            'value': value,
+                            'cell': cell
+                        })
 
     def update_secondary_cells(self):
         influential_cells = SolvingTechniques.get_influential_cells(self.primary_cells[0])

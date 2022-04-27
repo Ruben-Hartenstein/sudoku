@@ -28,14 +28,14 @@ class NakedTriple(SolvingTechniques):
 
     def __init__(self, board, candidates):
         super().__init__("Naked Triple", board, candidates)
-        self.unit = []
+        self.unit = ''
         self.unit_cells = []
         self.combo = []
 
     def execute_technique(self):
         for self.unit in ['row', 'column', 'box']:
             for j in range(9):
-                i = 0
+                i = j
                 occurring_candidates = []
                 if self.unit == 'box':
                     j, i = index2box(j)

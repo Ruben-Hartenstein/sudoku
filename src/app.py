@@ -12,15 +12,7 @@ has_started = False
 help_step = 0
 technique_result = None
 
-sudoku_board = sudoku_board.SudokuBoard([[6, 0, 1, 0, 9, 4, 0, 0, 0],
-                                         [0, 7, 5, 0, 1, 0, 6, 0, 0],
-                                         [9, 4, 8, 0, 2, 7, 5, 0, 0],
-                                         [8, 2, 0, 0, 7, 5, 4, 0, 0],
-                                         [0, 0, 9, 0, 0, 0, 0, 5, 3],
-                                         [0, 0, 4, 0, 0, 0, 2, 0, 8],
-                                         [0, 0, 0, 0, 0, 1, 9, 6, 2],
-                                         [4, 0, 2, 0, 3, 0, 1, 0, 5],
-                                         [0, 0, 0, 9, 8, 2, 3, 0, 0]])
+sudoku_board = sudoku_board.SudokuBoard([[0, 0, 0, 9, 8, 0, 6, 0, 0], [4, 6, 0, 0, 2, 0, 1, 8, 9], [0, 9, 0, 0, 1, 6, 0, 0, 2], [0, 0, 3, 7, 5, 9, 0, 0, 0], [0, 5, 0, 2, 4, 1, 9, 0, 3], [0, 0, 0, 6, 3, 8, 0, 1, 0], [7, 0, 0, 0, 0, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 7, 5, 0, 2, 4]])
 
 
 @app.route('/')
@@ -39,6 +31,7 @@ def start():
     global has_started
     help_step = 0
     has_started = start_game()
+    print(sudoku_board.board)
     emit('start', {'hasStarted': has_started, 'startCoords': sudoku_board.start_coords})
 
 
