@@ -24,10 +24,10 @@ def candidates_to_values(candidates):
     return values
 
 
-class NakedTriple(SolvingTechniques):
+class HiddenTriple(SolvingTechniques):
 
     def __init__(self, board, candidates):
-        super().__init__("Naked Triple", board, candidates)
+        super().__init__("Hidden Triple", board, candidates)
         self.unit = ''
         self.unit_cells = []
         self.combo = []
@@ -57,9 +57,9 @@ class NakedTriple(SolvingTechniques):
                         if self.board[x][y] != 0:
                             continue
                         candidates_num = SolvingTechniques.format_candidates(self.candidates[x][y])
-                        if all(c in self.combo for c in candidates_num):
+                        if any(c in self.combo for c in candidates_num):
                             matches.append(cell)
-                    if len(matches) >= 3:
+                    if len(matches) == 3:
                         self.primary_cells = matches
                         self.assemble_cross_out()
                         if len(self.cross_outs) != 0:
@@ -71,21 +71,16 @@ class NakedTriple(SolvingTechniques):
         self.cross_outs = []
         for cell in self.unit_cells:
             x, y = cell
-            if self.board[x][y] != 0:
-                continue
             if cell in self.primary_cells:
                 candidates = self.candidates[x][y]
                 candidates_num = candidates_to_values(candidates)
-                for candidate in candidates_num:
-                    self.highlights.append({
-                        'value': candidate,
-                        'cell': cell
-                    })
-            else:
-                candidates = self.candidates[x][y]
-                candidates_num = candidates_to_values(candidates)
-                for value in self.combo:
-                    if value in candidates_num:
+                for value in candidates_num:
+                    if value in self.combo:
+                        self.highlights.append({
+                            'value': value,
+                            'cell': cell
+                        })
+                    else:
                         self.cross_outs.append({
                             'value': value,
                             'cell': cell
@@ -95,6 +90,6 @@ class NakedTriple(SolvingTechniques):
         self.secondary_cells = [cell for cell in self.unit_cells if cell not in self.primary_cells]
 
     def update_explanation(self):
-        self.explanation = f"""Because only three candidates ({self.combo[0]}, {self.combo[1]} and {self.combo[2]}) exist
-in three fields ({self.primary_cells[0]}, {self.primary_cells[1]} and {self.primary_cells[2]}) of a {self.unit},
-these candidates can be eliminated in the remaining fields of the {self.unit}"""
+        self.explanation = f"""The total of three candidates, ({self.combo[0]}, {self.combo[1]} and {self.combo[2]}),
+occur in exactly three fields ({self.primary_cells[0]}, {self.primary_cells[1]}, {self.primary_cells[2]}) of a {self.unit}.
+Therefore all other candidates in these fields can be removed."""

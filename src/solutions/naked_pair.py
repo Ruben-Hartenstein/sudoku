@@ -30,6 +30,7 @@ class NakedPair(SolvingTechniques):
         super().__init__("Naked Pair", board, candidates)
         self.unit = ''
         self.unit_cells = []
+        self.combo = []
 
     def execute_technique(self):
         for self.unit in ['row', 'column', 'box']:
@@ -53,6 +54,8 @@ class NakedPair(SolvingTechniques):
                     matches = []
                     for cell in self.unit_cells:
                         x, y = cell
+                        if self.board[x][y] != 0:
+                            continue
                         candidates_num = SolvingTechniques.format_candidates(self.candidates[x][y])
                         if all(c in self.combo for c in candidates_num):
                             matches.append(cell)

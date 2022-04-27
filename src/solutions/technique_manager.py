@@ -3,9 +3,10 @@ from src.solutions.naked_single import NakedSingle
 from src.solutions.hidden_single import HiddenSingle
 from src.solutions.naked_pair import NakedPair
 from src.solutions.naked_triple import NakedTriple
+from src.solutions.hidden_triple import HiddenTriple
 from src.solutions.naked_foursome import NakedFoursome
 
-techniques = [NakedSingle, HiddenSingle, NakedPair, NakedTriple, NakedFoursome]
+techniques = [HiddenTriple]
 
 
 def set_solved_board(board):

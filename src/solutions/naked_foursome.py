@@ -54,6 +54,8 @@ class NakedFoursome(SolvingTechniques):
                     matches = []
                     for cell in self.unit_cells:
                         x, y = cell
+                        if self.board[x][y] != 0:
+                            continue
                         candidates_num = SolvingTechniques.format_candidates(self.candidates[x][y])
                         if all(c in self.combo for c in candidates_num):
                             matches.append(cell)
