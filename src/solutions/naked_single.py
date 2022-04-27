@@ -21,7 +21,7 @@ class NakedSingle(SolvingTechniques):
         return False
 
     def update_secondary_cells(self):
-        cell = self.highlights[0]['cell']
+        cell = self.primary_cells[0]
         influential_cells = SolvingTechniques.get_influential_cells(cell)
         for key in influential_cells.keys():
             self.secondary_cells.extend(influential_cells[key])

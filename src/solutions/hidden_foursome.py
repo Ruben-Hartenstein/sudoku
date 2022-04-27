@@ -24,10 +24,10 @@ def candidates_to_values(candidates):
     return values
 
 
-class HiddenTriple(SolvingTechniques):
+class HiddenFoursome(SolvingTechniques):
 
     def __init__(self, board, candidates):
-        super().__init__("Hidden Triple", board, candidates)
+        super().__init__("Hidden Foursome", board, candidates)
         self.unit = ''
         self.unit_cells = []
         self.combo = []
@@ -49,7 +49,7 @@ class HiddenTriple(SolvingTechniques):
                             continue
                         if num + 1 not in occurring_candidates:
                             occurring_candidates.append(num + 1)
-                combos = set(combinations(occurring_candidates, 3))
+                combos = set(combinations(occurring_candidates, 4))
                 for self.combo in combos:
                     matches = []
                     for cell in self.unit_cells:
@@ -59,7 +59,7 @@ class HiddenTriple(SolvingTechniques):
                         candidates_num = SolvingTechniques.format_candidates(self.candidates[x][y])
                         if any(c in self.combo for c in candidates_num):
                             matches.append(cell)
-                    if len(matches) == 3:
+                    if len(matches) == 4:
                         self.primary_cells = matches
                         self.assemble_cross_out()
                         if len(self.cross_outs) != 0:
@@ -90,6 +90,6 @@ class HiddenTriple(SolvingTechniques):
         self.secondary_cells = [cell for cell in self.unit_cells if cell not in self.primary_cells]
 
     def update_explanation(self):
-        self.explanation = f"""The total of three candidates, ({self.combo[0]}, {self.combo[1]} and {self.combo[2]}),
-occur in exactly three fields ({self.primary_cells[0]}, {self.primary_cells[1]} and {self.primary_cells[2]}) of a {self.unit}.
+        self.explanation = f"""The total of four candidates, ({self.combo[0]}, {self.combo[1]}, {self.combo[2]} and {self.combo[3]}),
+occur in exactly four fields ({self.primary_cells[0]}, {self.primary_cells[1]}, {self.primary_cells[2]} and {self.primary_cells[3]}) of a {self.unit}.
 Therefore all other candidates in these fields can be removed."""

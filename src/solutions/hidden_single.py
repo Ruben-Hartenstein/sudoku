@@ -38,28 +38,27 @@ class HiddenSingle(SolvingTechniques):
     def update_secondary_cells(self):
         cell = self.highlights[0]['cell']
         highlight_value = self.highlights[0]['value']
-        influential_cells = SolvingTechniques.get_influential_cells(cell)
-        for i, j in influential_cells[self.unit]:
+        influential_cells = SolvingTechniques.get_influential_cells_unit(cell, self.unit)
+        for i, j in influential_cells:
             if (i, j) == cell:
                 continue
-            if self.board[i][j] != 0:
-                self.secondary_cells.append((i, j))
-            else:
-                cells = SolvingTechniques.get_influential_cells((i, j))
-                keys = list(cells.keys())
-                keys.reverse()
-                for key in keys:
-                    temp_cells = []
-                    num_in_unit = False
-                    if key == self.unit:
-                        continue
-                    for x, y in cells[key]:
-                        temp_cells.append((x, y))
-                        if self.board[x][y] == highlight_value:
-                            num_in_unit = True
-                    if num_in_unit:
-                        self.secondary_cells.extend(temp_cells)
-                        break
+
+            self.secondary_cells.append((i, j))
+            cells = SolvingTechniques.get_influential_cells((i, j))
+            keys = list(cells.keys())
+            keys.reverse()
+            for key in keys:
+                temp_cells = []
+                num_in_unit = False
+                if key == self.unit:
+                    continue
+                for x, y in cells[key]:
+                    temp_cells.append((x, y))
+                    if self.board[x][y] == highlight_value:
+                        num_in_unit = True
+                if num_in_unit:
+                    self.secondary_cells.extend(temp_cells)
+                    break
         self.secondary_cells = SolvingTechniques.remove_duplicates(self.secondary_cells)
 
     def update_explanation(self):

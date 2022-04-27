@@ -92,8 +92,8 @@ class NakedPair(SolvingTechniques):
                         })
 
     def update_secondary_cells(self):
-        influential_cells = SolvingTechniques.get_influential_cells(self.primary_cells[0])
-        for x, y in influential_cells[self.unit]:
+        influential_cells = SolvingTechniques.get_influential_cells_unit(self.primary_cells[0], self.unit)
+        for x, y in influential_cells:
             if (x, y) in self.primary_cells:
                 continue
             self.secondary_cells.append((x, y))
