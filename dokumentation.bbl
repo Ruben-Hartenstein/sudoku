@@ -1,0 +1,193 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{anyt/global//global/global}
+  \entry{FelgenhauerJarvis}{article}{}
+    \name{author}{2}{}{%
+      {{hash=FB}{%
+         family={Felgenhauer},
+         familyi={F\bibinitperiod},
+         given={Bertram},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=JF}{%
+         family={Jarvis},
+         familyi={J\bibinitperiod},
+         given={Frazer},
+         giveni={F\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FBJF1}
+    \strng{fullhash}{FBJF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{FJ06}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{title}{Mathematics of Sudoku I}
+    \field{volume}{39}
+    \field{journaltitle}{Mathematical Spectrum}
+    \field{month}{01}
+    \field{year}{2006}
+  \endentry
+
+  \entry{HerzbergMurty}{article}{}
+    \name{author}{2}{}{%
+      {{hash=HA}{%
+         family={Herzberg},
+         familyi={H\bibinitperiod},
+         given={Agnes},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=MR}{%
+         family={Murty},
+         familyi={M\bibinitperiod},
+         given={Ram},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HAMR1}
+    \strng{fullhash}{HAMR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{HM07}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{title}{Sudoku squares and chromatic polynomials}
+    \field{volume}{54}
+    \field{journaltitle}{Internationale Mathematische Nachrichten}
+    \field{month}{06}
+    \field{year}{2007}
+  \endentry
+
+  \entry{jehne2013mathematische}{book}{}
+    \name{author}{2}{}{%
+      {{hash=JW}{%
+         family={Jehne},
+         familyi={J\bibinitperiod},
+         given={W.},
+         giveni={W\bibinitperiod},
+      }}%
+      {{hash=WH}{%
+         family={Wingen},
+         familyi={W\bibinitperiod},
+         given={H.},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {De Gruyter}%
+    }
+    \strng{namehash}{JWWH1}
+    \strng{fullhash}{JWWH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{JW13}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{isbn}{9783110306811}
+    \field{title}{Eine mathematische Theorie der Sudokus}
+    \verb{url}
+    \verb https://books.google.de/books?id=jiDoBQAAQBAJ
+    \endverb
+    \field{year}{2013}
+  \endentry
+
+  \entry{knott_2017}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=KS}{%
+         family={Knott},
+         familyi={K\bibinitperiod},
+         given={Simon},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KS1}
+    \strng{fullhash}{KS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Kno17}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{title}{Backtracking}
+    \verb{url}
+    \verb https://simonknott.de/articles/backtracking
+    \endverb
+    \field{journaltitle}{simonknott.de}
+    \field{year}{2017}
+    \warn{\item Invalid format of field 'month'}
+  \endentry
+
+  \entry{logofatu2014grundlegende}{book}{}
+    \name{author}{1}{}{%
+      {{hash=LD}{%
+         family={Logof{\u{a}}tu},
+         familyi={L\bibinitperiod},
+         given={D.},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer Fachmedien Wiesbaden}%
+    }
+    \strng{namehash}{LD1}
+    \strng{fullhash}{LD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Log14}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{isbn}{9783834819727}
+    \field{title}{Grundlegende Algorithmen mit Java: Lern- und Arbeitsbuch
+  f{\"u}r Informatiker und Mathematiker}
+    \verb{url}
+    \verb https://books.google.de/books?id=GBcyngEACAAJ
+    \endverb
+    \field{year}{2014}
+  \endentry
+
+  \entry{FAZ}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=ZFA}{%
+         family={Zeitung},
+         familyi={Z\bibinitperiod},
+         given={Frankfurter\bibnamedelima Allgemeine},
+         giveni={F\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Frankfurter Allgemeine Zeitung}%
+    }
+    \strng{namehash}{ZFA1}
+    \strng{fullhash}{ZFA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Zei12}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{title}{Mathematik: Der heilige gral der sudokus}
+    \verb{url}
+    \verb https://www.faz.net/aktuell/wissen/physik-mehr/mathematik-der-heilige
+    \verb -gral-der-sudokus-11682905.html
+    \endverb
+    \field{journaltitle}{FAZ.NET}
+    \field{year}{2012}
+    \warn{\item Invalid format of field 'month'}
+  \endentry
+\enddatalist
+\endinput
