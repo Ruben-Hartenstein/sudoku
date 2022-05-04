@@ -7,8 +7,9 @@ from src.solutions.naked_triple import NakedTriple
 from src.solutions.hidden_triple import HiddenTriple
 from src.solutions.naked_foursome import NakedFoursome
 from src.solutions.hidden_foursome import HiddenFoursome
+from src.solutions.third_eye import ThirdEye
 
-techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome]
+techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, ThirdEye]
 
 
 def set_solved_board(board):
