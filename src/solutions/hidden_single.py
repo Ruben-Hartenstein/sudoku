@@ -25,12 +25,10 @@ class HiddenSingle(SolvingTechniques):
                                 self.primary_cells = []
                                 candidate_once = False
                                 break
-                            self.primary_cells.append((x, y))
+                            self.primary_cells = [(x, y)]
                             candidate_once = True
                     if candidate_once:
-                        self.highlights.append(
-                            {'value': num,
-                             'cell': self.primary_cells[0]})
+                        self.highlights = [{'value': num, 'cell': self.primary_cells[0]}]
                         self.unit = key
                         return True
         return False
