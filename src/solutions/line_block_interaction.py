@@ -65,14 +65,15 @@ class LineBlockInteraction(SolvingTechniques):
                                 break
                     else:
                         self.primary_cells = self.unit_cells
-                        self.assemble_cross_out()
+                        self.configure_highlighting()
                         if len(self.cross_outs) != 0:
                             return True
         return False
 
-    def assemble_cross_out(self):
+    def configure_highlighting(self):
         self.highlights = []
         self.cross_outs = []
+        self.secondary_cells = []
         candidate_cell = 0
         for cell in self.unit_cells:
             x, y = cell
@@ -95,9 +96,6 @@ class LineBlockInteraction(SolvingTechniques):
                     'value': self.candidate,
                     'cell': cell
                 })
-
-    def update_secondary_cells(self):
-        pass
 
     def update_explanation(self):
         self.explanation = f"""Bibedi bubedi"""

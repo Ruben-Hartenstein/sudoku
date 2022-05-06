@@ -55,7 +55,6 @@ class SolvingTechniques(ABC):
                 "box": SolvingTechniques.get_influential_cells_unit(cell, 'box')}
 
     def get_result(self):
-        self.update_secondary_cells()
         self.update_explanation()
         return {
             "name": self.name,
@@ -67,7 +66,7 @@ class SolvingTechniques(ABC):
         }
 
     @abstractmethod
-    def update_secondary_cells(self):
+    def configure_highlighting(self):
         pass
 
     @abstractmethod

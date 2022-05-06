@@ -61,14 +61,16 @@ class NakedPair(SolvingTechniques):
                             matches.append(cell)
                     if len(matches) >= 2:
                         self.primary_cells = matches
-                        self.assemble_cross_out()
+                        self.configure_highlighting()
                         if len(self.cross_outs) != 0:
                             return True
         return False
 
-    def assemble_cross_out(self):
+    def configure_highlighting(self):
         self.highlights = []
         self.cross_outs = []
+        self.secondary_cells = []
+
         for cell in self.unit_cells:
             x, y = cell
             if self.board[x][y] != 0:
@@ -90,13 +92,12 @@ class NakedPair(SolvingTechniques):
                             'value': value,
                             'cell': cell
                         })
-
-    def update_secondary_cells(self):
         influential_cells = SolvingTechniques.get_influential_cells_unit(self.primary_cells[0], self.unit)
         for x, y in influential_cells:
             if (x, y) in self.primary_cells:
                 continue
             self.secondary_cells.append((x, y))
+
 
     def update_explanation(self):
         self.explanation = f"""The same two candidate values, {self.highlights[0]['value']} and {self.highlights[1]['value']}, occupy two squares of a {self.unit},

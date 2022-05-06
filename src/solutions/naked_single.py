@@ -13,20 +13,20 @@ class NakedSingle(SolvingTechniques):
                     continue
                 if sum(self.candidates[i][j]) != 1:
                     continue
-                self.primary_cells.append((i, j))
-                self.highlights.append(
-                    {'value': self.candidates[i][j].index(1) + 1,
-                     'cell': self.primary_cells[0]})
+                self.primary_cells = [(i, j)]
+                self.configure_highlighting()
                 return True
         return False
 
-    def update_secondary_cells(self):
-        cell = self.primary_cells[0]
-        influential_cells = SolvingTechniques.get_influential_cells(cell)
+    def configure_highlighting(self):
+        x, y = self.primary_cells[0]
+        self.highlights = [{'value': self.solved_board[x][y],
+                            'cell': self.primary_cells[0]}]
+        influential_cells = SolvingTechniques.get_influential_cells((x, y))
         for key in influential_cells.keys():
             self.secondary_cells.extend(influential_cells[key])
         self.secondary_cells = SolvingTechniques.remove_duplicates(self.secondary_cells)
-        self.secondary_cells.remove(cell)
+        self.secondary_cells.remove((x, y))
 
     def update_explanation(self):
         self.explanation = f"""Because every other candidate in the field {self.highlights[0]['cell']} is blocked,

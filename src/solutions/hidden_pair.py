@@ -61,14 +61,15 @@ class HiddenPair(SolvingTechniques):
                             matches.append(cell)
                     if len(matches) == 2:
                         self.primary_cells = matches
-                        self.assemble_cross_out()
+                        self.configure_highlighting()
                         if len(self.cross_outs) != 0:
                             return True
         return False
 
-    def assemble_cross_out(self):
+    def configure_highlighting(self):
         self.highlights = []
         self.cross_outs = []
+        self.secondary_cell = []
         for cell in self.unit_cells:
             x, y = cell
             if cell in self.primary_cells:
@@ -85,8 +86,6 @@ class HiddenPair(SolvingTechniques):
                             'value': value,
                             'cell': cell
                         })
-
-    def update_secondary_cells(self):
         self.secondary_cells = [cell for cell in self.unit_cells if cell not in self.primary_cells]
 
     def update_explanation(self):

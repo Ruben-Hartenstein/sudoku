@@ -28,36 +28,21 @@ class HiddenSingle(SolvingTechniques):
                             self.primary_cells = [(x, y)]
                             candidate_once = True
                     if candidate_once:
-                        self.highlights = [{'value': num, 'cell': self.primary_cells[0]}]
                         self.unit = key
+                        self.configure_highlighting()
                         return True
         return False
 
-    def update_secondary_cells(self):
-        cell = self.highlights[0]['cell']
-        highlight_value = self.highlights[0]['value']
-        influential_cells = SolvingTechniques.get_influential_cells_unit(cell, self.unit)
-        for i, j in influential_cells:
-            if (i, j) == cell:
-                continue
+    def configure_highlighting(self):
+        self.highlights = []
+        self.cross_outs = []
+        self.secondary_cells = []
+        x, y = self.primary_cells[0]
+        self.highlights = [{'value': self.solved_board[x][y],
+                            'cell': self.primary_cells[0]}]
+        self.secondary_cells = SolvingTechniques.get_influential_cells_unit((x, y), self.unit)
+        self.secondary_cells.remove((x, y))
 
-            self.secondary_cells.append((i, j))
-            cells = SolvingTechniques.get_influential_cells((i, j))
-            keys = list(cells.keys())
-            keys.reverse()
-            for key in keys:
-                temp_cells = []
-                num_in_unit = False
-                if key == self.unit:
-                    continue
-                for x, y in cells[key]:
-                    temp_cells.append((x, y))
-                    if self.board[x][y] == highlight_value:
-                        num_in_unit = True
-                if num_in_unit:
-                    self.secondary_cells.extend(temp_cells)
-                    break
-        self.secondary_cells = SolvingTechniques.remove_duplicates(self.secondary_cells)
 
     def update_explanation(self):
         self.explanation = f"""Every {self.highlights[0]['value']} in the {self.unit}, except one, is blocked.
