@@ -1,33 +1,4 @@
 from src.solutions.solving_techniques import SolvingTechniques
-from itertools import combinations
-
-
-def index2box(index):
-    box_coords = {0: (1, 1),
-                  1: (1, 4),
-                  2: (1, 7),
-                  3: (4, 1),
-                  4: (4, 4),
-                  5: (4, 7),
-                  6: (7, 1),
-                  7: (7, 4),
-                  8: (7, 7)}
-    return box_coords[index]
-
-
-def candidates_to_values(candidates):
-    values = []
-    for num, candidate in enumerate(candidates):
-        if candidate == 0:
-            continue
-        values.append(num + 1)
-    return values
-
-
-def get_box(cell):
-    box_x = (cell[1] // 3) * 3
-    box_y = (cell[0] // 3) * 3
-    return box_x, box_y
 
 
 class LineBlockInteraction(SolvingTechniques):
@@ -60,8 +31,8 @@ class LineBlockInteraction(SolvingTechniques):
                             continue
                         if self.candidates[x][y][self.candidate - 1]:
                             if not first_box:
-                                first_box = get_box(cell)
-                            elif first_box != get_box(cell):
+                                first_box = SolvingTechniques.get_box(cell)
+                            elif first_box != SolvingTechniques.get_box(cell):
                                 break
                     else:
                         self.primary_cells = self.unit_cells
@@ -98,4 +69,5 @@ class LineBlockInteraction(SolvingTechniques):
                 })
 
     def update_explanation(self):
-        self.explanation = f"""Bibedi bubedi"""
+        self.explanation = f"""All candidates of the number {self.highlights[0]['value']} are within one block in a {self.unit}.
+Therefore all candidates of the number {self.highlights[0]['value']} in the box, that are not in the {self.unit} can be deleted."""

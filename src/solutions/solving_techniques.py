@@ -14,6 +14,17 @@ class SolvingTechniques(ABC):
         self.primary_cells = []
         self.secondary_cells = []
 
+    def get_result(self):
+        self.update_explanation()
+        return {
+            "name": self.name,
+            "primary_cells": self.primary_cells,
+            "secondary_cells": self.secondary_cells,
+            "cross_outs": self.cross_outs,
+            "highlights": self.highlights,
+            "explanation": self.explanation
+        }
+
     @classmethod
     def set_solved_board(cls, board):
         cls.solved_board = board
@@ -31,7 +42,6 @@ class SolvingTechniques(ABC):
         x, y = cell
         influential_cells = []
         if unit == 'row':
-            influential_cells = []
             for j in range(9):
                 influential_cells.append((x, j))
             return influential_cells
@@ -54,16 +64,25 @@ class SolvingTechniques(ABC):
                 "column": SolvingTechniques.get_influential_cells_unit(cell, 'column'),
                 "box": SolvingTechniques.get_influential_cells_unit(cell, 'box')}
 
-    def get_result(self):
-        self.update_explanation()
-        return {
-            "name": self.name,
-            "primary_cells": self.primary_cells,
-            "secondary_cells": self.secondary_cells,
-            "cross_outs": self.cross_outs,
-            "highlights": self.highlights,
-            "explanation": self.explanation
-        }
+    @staticmethod
+    def index2box(index):
+        box_coords = {0: (1, 1),
+                      1: (1, 4),
+                      2: (1, 7),
+                      3: (4, 1),
+                      4: (4, 4),
+                      5: (4, 7),
+                      6: (7, 1),
+                      7: (7, 4),
+                      8: (7, 7)}
+        return box_coords[index]
+
+    @staticmethod
+    def get_box(cell):
+        box_x = (cell[1] // 3) * 3
+        box_y = (cell[0] // 3) * 3
+        return box_x, box_y
+
 
     @abstractmethod
     def configure_highlighting(self):

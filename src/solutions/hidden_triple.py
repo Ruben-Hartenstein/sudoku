@@ -2,28 +2,6 @@ from src.solutions.solving_techniques import SolvingTechniques
 from itertools import combinations
 
 
-def index2box(index):
-    box_coords = {0: (1, 1),
-                  1: (1, 4),
-                  2: (1, 7),
-                  3: (4, 1),
-                  4: (4, 4),
-                  5: (4, 7),
-                  6: (7, 1),
-                  7: (7, 4),
-                  8: (7, 7)}
-    return box_coords[index]
-
-
-def candidates_to_values(candidates):
-    values = []
-    for num, candidate in enumerate(candidates):
-        if candidate == 0:
-            continue
-        values.append(num + 1)
-    return values
-
-
 class HiddenTriple(SolvingTechniques):
 
     def __init__(self, board, candidates):
@@ -38,7 +16,7 @@ class HiddenTriple(SolvingTechniques):
                 i = j
                 occurring_candidates = []
                 if self.unit == 'box':
-                    j, i = index2box(j)
+                    j, i = SolvingTechniques.index2box(j)
                 self.unit_cells = SolvingTechniques.get_influential_cells_unit((j, i), self.unit)
                 for cell in self.unit_cells:
                     x, y = cell
@@ -74,7 +52,7 @@ class HiddenTriple(SolvingTechniques):
             x, y = cell
             if cell in self.primary_cells:
                 candidates = self.candidates[x][y]
-                candidates_num = candidates_to_values(candidates)
+                candidates_num = SolvingTechniques.format_candidates(candidates)
                 for value in candidates_num:
                     if value in self.combo:
                         self.highlights.append({
