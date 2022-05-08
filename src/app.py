@@ -56,6 +56,7 @@ def test_connect():
 def new_numbers(data):
     global help_step
     help_step = 0
+    print(data['checkedCells'])
     cell_values = sudoku_board.update_numbers(int(data['number']), data['checkedCells'])
     emit('update cells', {'values': cell_values, 'checkedCells': data['checkedCells']})
 

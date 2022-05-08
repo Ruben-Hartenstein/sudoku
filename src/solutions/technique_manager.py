@@ -8,10 +8,11 @@ from src.solutions.hidden_triple import HiddenTriple
 from src.solutions.naked_foursome import NakedFoursome
 from src.solutions.hidden_foursome import HiddenFoursome
 from src.solutions.line_block_interaction import LineBlockInteraction
+from src.solutions.block_line_interaction import BlockLineInteraction
 from src.solutions.third_eye import ThirdEye
 
 
-techniques = [ThirdEye]
+techniques = [HiddenSingle, LineBlockInteraction, BlockLineInteraction, ThirdEye]
 
 
 def set_solved_board(board):

@@ -6,7 +6,6 @@ class LineBlockInteraction(SolvingTechniques):
     def __init__(self, board, candidates):
         super().__init__("Line-Block Interaction", board, candidates)
         self.unit = ''
-        self.unit_cells = []
         self.candidate = 0
 
     def execute_technique(self):
@@ -45,18 +44,16 @@ class LineBlockInteraction(SolvingTechniques):
         self.highlights = []
         self.cross_outs = []
         self.secondary_cells = []
-        candidate_cell = 0
-        for cell in self.unit_cells:
+        for cell in self.primary_cells:
             x, y = cell
             if self.board[x][y] != 0:
                 continue
             if self.candidates[x][y][self.candidate - 1]:
-                candidate_cell = cell
                 self.highlights.append({
                     'value': self.candidate,
                     'cell': cell
                 })
-        box_cells = SolvingTechniques.get_influential_cells_unit(candidate_cell, 'box')
+        box_cells = SolvingTechniques.get_influential_cells_unit(self.highlights[0]['cell'], 'box')
         self.secondary_cells = [x for x in box_cells if x not in self.primary_cells]
         for cell in self.secondary_cells:
             x, y = cell
@@ -69,5 +66,5 @@ class LineBlockInteraction(SolvingTechniques):
                 })
 
     def update_explanation(self):
-        self.explanation = f"""All candidates of the number {self.highlights[0]['value']} are within one block in a {self.unit}.
+        self.explanation = f"""All candidates of the number {self.highlights[0]['value']} are within one box in a {self.unit}.
 Therefore all candidates of the number {self.highlights[0]['value']} in the box, that are not in the {self.unit} can be deleted."""
