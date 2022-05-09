@@ -9,10 +9,11 @@ from src.solutions.naked_foursome import NakedFoursome
 from src.solutions.hidden_foursome import HiddenFoursome
 from src.solutions.line_block_interaction import LineBlockInteraction
 from src.solutions.block_line_interaction import BlockLineInteraction
+from src.solutions.x_wing import XWing
 from src.solutions.third_eye import ThirdEye
 
 
-techniques = [HiddenSingle, LineBlockInteraction, BlockLineInteraction, ThirdEye]
+techniques = [XWing]
 
 
 def set_solved_board(board):
