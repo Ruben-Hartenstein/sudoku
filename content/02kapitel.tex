@@ -3,14 +3,18 @@
 \chapter{Rahmenbedingungen}
 Für das Projekt werden verschiedene Rahmenbedingungen festgelegt. Dazu gehört die Programmiersprache, indem der Sudoku Solver programmiert werden soll, ein Webserver auf dem das Programm später laufen wird und ein Framework, dass als Gerüst für das Programm auf dem Webserver fungiert. Wichtig ist, dass das Framework auf die Programmiersprache angepasst ist, um Probleme zu vermeiden. Im Zuge der Recherchen wurden verschiedenen Webserver in Betracht gezogen und besonders die Webserver Apache HTTP Server und Nginx Server aufgrund ihrer Beliebtheit miteinander verglichen. Auch bei den Frameworks wurden zwei besonders in Betracht gezogen und evaluiert, welches besser geeignet ist für die Studienarbeit.
 
-\section{Python}
-Für die Implementierung der Strategien und generell im Backend wurde sich für die Programmiersprache Python entschieden. Python ist eine höhere, universelle Sprache und ist als eine sehr vielseitige Programmiersprache anerkannt. Mit Python kann ein objektorientierter, aspektorientierter oder funktionaler Programmierstil umgesetzt werden und die Typisierung funktioniert dynamisch. Des weiteren wird Python oft bei der Datenanalyse und bei der Verarbeitung größer Datenmenge verwendet. Zusätzlich spielt die Laufzeit zunächst nur eine untergeordnete Rolle ist nicht sicherheitsrelevant, wodurch bei der Nutzung von Python keine größeren Probleme entstehen sollten.
+\section{Programmiersprachen}
+\subsection{Python}
+Für die Implementierung der Strategien und generell im Backend wurde sich für die Programmiersprache Python entschieden. Python ist eine höhere, universelle Sprache und ist als eine sehr vielseitige Programmiersprache anerkannt. Mit Python kann ein objektorientierter, aspektorientierter oder funktionaler Programmierstil umgesetzt werden und die Typisierung funktioniert dynamisch. Des weiteren wird Python oft bei der Datenanalyse und bei der Verarbeitung großer Datenmenge verwendet. Zusätzlich spielt die Laufzeit zunächst nur eine untergeordnete Rolle und ist nicht sicherheitsrelevant, wodurch bei der Nutzung von Python keine größeren Probleme entstehen sollten.
 Ein weiterer Vorteil von Python ist die große Standardbibliothek, die falls nötig durch Module erweitert werden kann. Noch ein Vorteil ist die hohe Kompatibilität mit mehreren Frameworks. Im Laufe des Kapitels werden noch zwei Frameworks vorgestellt, die für das Projekt in Betracht gezogen worden.
 
-Für das Backend ist eine Objektorientierte Umsetzung vorgesehen. die mit Python umgesetzt werden kann. Zudem ist Python einfach zu lesen und klar strukturiert. Auch für Umsetzung der Lösungsstrategien bietet sich Python durch Module für mathematische Berechnungen und Datenwissenschaft an. 
+Für das Backend ist eine Objektorientierte Umsetzung vorgesehen. die mit Python umgesetzt werden kann. Zudem ist Python einfach zu lesen und klar strukturiert. Auch für die Umsetzung der Lösungsstrategien bietet sich Python durch Module für mathematische Berechnungen und Datenwissenschaft an. 
 
 In diesem Projekt wird mit der Version 3.10 von Python gearbeitet. \cite{Python} \cite{DataToolkit}
 
+\subsection{JavaScript}
+
+\subsubsection{jQuery}
 
 
 \section{Webserver}
@@ -22,7 +26,7 @@ Ein Webserver ist in der Lage, die Inhalte auf viele verschiedene Rechner gleich
 \begin{figure}[htbp]
 	\centering
 	\includegraphics{images/StatistikWebserver.png}
-	\caption{Quelle: https://w3techs.com/technologies/overview/web\_server}
+	\caption{Benutzungsstatistiken von Webservern \cite{w3techs}}
 	\label{fig:WebserverStatistik}
 \end{figure}
 
@@ -51,22 +55,25 @@ Die folgende Tabelle \ref{tab:ServerVergleich} zeigt die Unterschiede und Gemein
 
 \newlength{\colWidth}
 \setlength{\colWidth}{0.33\textwidth}
+
 \begin{table}[htbp]
 	\centering
-	\begin{tabular}{p{\colWidth}p{\colWidth} p{\colWidth}}
-		\hline
-		Merkmal & Apache & NGINX \\
-		\hline
-		Funktion & Webserver, Proxy-Server & Webserver, Proxy-Server,\newline E-Mail-Proxy,\newline Load-Balancer \\
-		Betriebssystem & Alle unixoiden Plattformen, Windows & FreeBSD, Linux, Solaris,\newline IBM AIX, HP-UX, \newline macOS, Windows \\
-		Lizenz & Apache License v2.0 & \acs{BSD}-Lizenz \\
-		Entwickler & Apache Software Foundation & Nginx, Inc. \\
-		Statische Webinhalte & Ja & Ja \\
-		Dynamische Webinhalte & Ja & Nein \\
-		Software-Architektur & Prozess-/threadbasiert & Eventgesteuert \\
-		\hline
-	\end{tabular}
-	\caption[Tabelle]{Vergleich der Webserver Apache HTTP Server und Nginx Webserver}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{p{\colWidth}p{\colWidth} p{\colWidth}}
+			\hline
+			Merkmal & Apache & NGINX \\
+			\hline
+			Funktion & Webserver, Proxy-Server & Webserver, Proxy-Server, E-Mail-Proxy, Load-Balancer \\
+			Betriebssystem & Alle unixoiden Plattformen, Windows & FreeBSD, Linux, Solaris, IBM AIX, HP-UX, macOS, Windows \\
+			Lizenz & Apache License v2.0 & \acs{BSD}-Lizenz \\
+			Entwickler & Apache Software Foundation & Nginx, Inc. \\
+			Statische Webinhalte & Ja & Ja \\
+			Dynamische Webinhalte & Ja & Nein \\
+			Software-Architektur & Prozess-/threadbasiert & Eventgesteuert \\
+			\hline
+		\end{tabular}
+	}
+	\caption{Vergleich der Webserver Apache HTTP Server und Nginx Webserver}
 	\label{tab:ServerVergleich}
 \end{table}
 
@@ -94,18 +101,20 @@ Beide Frameworks wären für das Projekt geeignet. Die Django Community ist grö
 
 \begin{table}[htbp]
 	\centering
-	\begin{tabular}{p{\colWidth}p{\colWidth} p{\colWidth}}
-		\hline
-		Merkmal & Django & Flask \\
-		\hline
-		Use cases & mittelgroße bis große Projekte & kleine bis mittelgroße \newline Projekte \\
-		Community & große, aktive Community & kleinere Community \\
-		Packages & built-in Packages & modular \\
-		Performance & gut & gut \\
-
-		\hline
-	\end{tabular}
-	\caption[Tabelle]{Vergleich der Frameworks Django und Flask}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{p{\colWidth}p{\colWidth} p{\colWidth}}
+			\hline
+			Merkmal & Django & Flask \\
+			\hline
+			Use cases & mittelgroße bis große Projekte & kleine bis mittelgroße Projekte \\
+			Community & große, aktive Community & kleinere Community \\
+			Packages & built-in Packages & modular \\
+			Performance & gut & gut \\
+	
+			\hline
+		\end{tabular}
+	}
+	\caption{Vergleich der Frameworks Django und Flask}
 	\label{tab:FrameworkVergleich}
 \end{table}
 
