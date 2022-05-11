@@ -1,25 +1,25 @@
 %!TEX root = ../dokumentation.tex
 
 \chapter{Rahmenbedingungen}
-Für das Projekt werden verschiedene Rahmenbedingungen festgelegt. Dazu gehört die Programmiersprache, indem der Sudoku Solver programmiert werden soll, ein Webserver auf dem das Programm später laufen wird und ein Framework, dass als Gerüst für das Programm auf dem Webserver fungiert. Wichtig ist, dass das Framework auf die Programmiersprache angepasst ist, um Probleme zu vermeiden. Im Zuge der Recherchen wurden verschiedenen Webserver in Betracht gezogen und besonders die Webserver Apache HTTP Server und Nginx Server aufgrund ihrer Beliebtheit miteinander verglichen. Auch bei den Frameworks wurden zwei besonders in Betracht gezogen und evaluiert, welches besser geeignet ist für die Studienarbeit.
+Für das Projekt werden verschiedene Rahmenbedingungen festgelegt. Dazu gehört die Programmiersprache, indem der Sudoku Solver programmiert werden soll, ein Webserver auf dem das Programm später laufen wird und ein Framework, dass als Gerüst für das Programm auf dem Webserver fungiert. Wichtig ist, dass das Framework auf die Programmiersprache angepasst ist, um Probleme zu vermeiden. Im Zuge der Recherchen wurden verschiedenen Webserver in Betracht gezogen und besonders die Webserver Apache HTTP Server und Nginx Server aufgrund ihrer Beliebtheit miteinander verglichen. Auch bei den Frameworks gab es mehrere Optionen, von denen zwei insbesondere in Betracht gezogen und evaluiert wurden. Im Folgenden werden die Pros und Kontras  der genannten Server und Frameworks aufgezählt und die schlussendliche Entscheidung begründet.
 
 \section{Programmiersprachen}
 \subsection{Python}
-Für die Implementierung der Strategien und generell im Backend wurde sich für die Programmiersprache Python entschieden. Python ist eine höhere, universelle Sprache und ist als eine sehr vielseitige Programmiersprache anerkannt. Mit Python kann ein objektorientierter, aspektorientierter oder funktionaler Programmierstil umgesetzt werden und die Typisierung funktioniert dynamisch. Des weiteren wird Python oft bei der Datenanalyse und bei der Verarbeitung großer Datenmenge verwendet. Zusätzlich spielt die Laufzeit zunächst nur eine untergeordnete Rolle und ist nicht sicherheitsrelevant, wodurch bei der Nutzung von Python keine größeren Probleme entstehen sollten.
+Für die Implementierung der Strategien und generell im Backend wurde sich für die Programmiersprache Python entschieden. Python ist eine höhere, universelle Sprache und ist als eine sehr vielseitige Programmiersprache anerkannt. Mit Python kann ein objektorientierter, aspektorientierter oder funktionaler Programmierstil umgesetzt werden und die Typisierung funktioniert dynamisch. Des Weiteren wird Python oft bei der Datenanalyse und bei der Verarbeitung großer Datenmenge verwendet. Zusätzlich spielt die Laufzeit zunächst nur eine untergeordnete Rolle und ist nicht sicherheitsrelevant, wodurch bei der Nutzung von Python keine größeren Probleme entstehen sollten.
 Ein weiterer Vorteil von Python ist die große Standardbibliothek, die falls nötig durch Module erweitert werden kann. Noch ein Vorteil ist die hohe Kompatibilität mit mehreren Frameworks. Im Laufe des Kapitels werden noch zwei Frameworks vorgestellt, die für das Projekt in Betracht gezogen worden.
 
-Für das Backend ist eine Objektorientierte Umsetzung vorgesehen. die mit Python umgesetzt werden kann. Zudem ist Python einfach zu lesen und klar strukturiert. Auch für die Umsetzung der Lösungsstrategien bietet sich Python durch Module für mathematische Berechnungen und Datenwissenschaft an. 
+Für das Backend ist eine objektorientierte Umsetzung vorgesehen, die mit Python umgesetzt werden kann. Zudem ist Python einfach zu lesen und klar strukturiert. Auch für die Umsetzung der Lösungsstrategien bietet sich Python durch Module für mathematische Berechnungen und Datenwissenschaft an. 
 
 In diesem Projekt wird mit der Version 3.10 von Python gearbeitet. \cite{Python} \cite{DataToolkit}
 
 \subsection{JavaScript}
-Im Frontend wurde sich für JavaScript mit jQuery entschieden. JavaScript ist eine der meist verwendeten Programmiersprachen der Welt. Als JavaScript erfunden wurde, ging man davon aus, dass es für kurze Codeschnipsel verwendet wird eingebettet in eine Webseite. Es ist eine Skriptsprache und wurde für die Benutzerinteraktion entwickelt. Mithilfe von JavaScript lassen sich Inhalte verändern oder neu generieren. Für das Projekt ist die Interaktion mit dem Benutzer von entscheidender Bedeutung, da er ständig neue Zahlen oder Kandidaten eingeben kann. 
+Im Frontend wurde sich für JavaScript mit jQuery entschieden. JavaScript ist eine der meist verwendeten Programmiersprachen der Welt. Als JavaScript erfunden wurde, ging man davon aus, dass es für kurze Codeschnipsel verwendet wird, eingebettet in eine Webseite. Es ist eine Skriptsprache und wurde für die Benutzerinteraktion entwickelt. Mithilfe von JavaScript lassen sich Inhalte verändern oder neu generieren. Für das Projekt ist die Interaktion mit dem Benutzer von entscheidender Bedeutung, da er ständig neue Zahlen oder Kandidaten eingeben kann. 
 
 Diese Anforderungen lassen sich mit JavaScript umsetzten. Daher wurde sich beim Frontenddevolpment für JavaScript mit der Erweiterung von jQuery entschieden. 
 
 
 \subsubsection{jQuery}
-Neben JavaScript wird die freie Programmbibliothek jQuery für das Frontend verwendet. jQuery bietet die Funktionalität der Document Object Model Navigation und Manipulation sowie ein erweitertes Event-System. Mit jQuery wird die JavaScript Programmierung vereinfacht und viele Methoden können in einer einzlenen Zeile von Code umgesetzt werden. Ein weiterer Vorteil ist, dass auch jQuery einfach erweitert werden kann und sehr populär ist. https://www.w3schools.com/jquery/jquery\_intro.asp
+Neben JavaScript wird die freie Programmbibliothek jQuery für das Frontend verwendet. jQuery bietet die Funktionalität der Document Object Model Navigation und Manipulation sowie ein erweitertes Event-System. Mit jQuery wird die JavaScript-Programmierung vereinfacht und viele Methoden können in einer einzelnen Zeile von Code umgesetzt werden. Ein weiterer Vorteil ist, dass auch jQuery einfach erweitert werden kann und sehr populär ist. https://www.w3schools.com/jquery/jquery\_intro.asp
 
 
 \section{Webserver}
@@ -35,11 +35,11 @@ Ein Webserver ist in der Lage, die Inhalte auf viele verschiedene Rechner gleich
 	\label{fig:WebserverStatistik}
 \end{figure}
 
-Am verbreiteten sind unter anderem die Webserver Apache HTTP Server und nginx, wie in die Statistik \ref{fig:WebserverStatistik} dargestellt. Beide Programme sind freie Software und wurden daher für das Projekt in Betracht gezogen. Im Folgenden werden diese beide Programme verglichen.
+Am meisten verbreitet sind unter anderem die Webserver Apache HTTP Server und Nginx, wie in die Statistik \ref{fig:WebserverStatistik} dargestellt. Beide Programme sind freie Software und wurden daher für das Projekt in Betracht gezogen. Im Folgenden werden diese beide Programme verglichen.
 
 
 \subsection{Apache HTTP Server}
-Der Apache Webserver wurde erstmals 1195 veröffentlicht und hat sich schnell zu einem der beliebtesten Webserver entwickelt. Er unterstützt neben Unix und Linux noch eine Vielzahl an weiteren Betriebssystemen.
+Der Apache Webserver wurde erstmals 1995 veröffentlicht und hat sich schnell zu einem der beliebtesten Webserver entwickelt. Er unterstützt neben Unix und Linux noch eine Vielzahl an weiteren Betriebssystemen.
 
 Der Apache Server ist modular aufgebaut, wodurch benötigte Funktionen, die der Server nicht nativ bereitstellt, durch Module importiert werden können. Das Erstellen dynamischer Webseiten wird mittels serverseitiger Skriptsprachen bewerkstelligt. Über ein Modul kann der entsprechende Interpreter in den Server integriert werden.
 
@@ -56,7 +56,7 @@ Dieser Server zeichnet sich durch eine hohe Performance aus. Dabei können eine 
 
 
 \subsection{Fazit}
-Die folgende Tabelle \ref{tab:ServerVergleich} zeigt die Unterschiede und Gemeinsamkeiten der beiden Webserver auf. Der ausschlaggebende Grund warum sich für einen Apache Server entschieden wurde, ist das Merkmal der dynamischen Webinhalte.
+Die folgende Tabelle \ref{tab:ServerVergleich} zeigt die Unterschiede und Gemeinsamkeiten der beiden Webserver auf.
 
 \newlength{\colWidth}
 \setlength{\colWidth}{0.33\textwidth}
@@ -97,9 +97,9 @@ Django ist ein kostenloses Open Source Webframework und kann plattformübergreif
 Ein weiterer Vorteil von Django ist die große und aktive Community, wodurch viel Fragen schnell beantwortet werden können und es gibt es eine ausführliche Dokumentation zu dem Framework. 
 
 \subsection{Flask}
-Webseiten die Flask als Framework nutzten sind meistens einseitige Anwendungen. Flask ist im Gegensatz zu Django modular und eher minimalistisch aufgebaut. Daher muss in der Entwicklung eher mit externen Bibliotheken gearbeitet werden. Man nennt Flask deshalb auch ein Mikroframework. Für die Sicherheit der Website gibt es die Flask-Security Bibliothek, die dieselben Mechanismen wie Django beinhaltet.
+Webseiten, die Flask als Framework nutzen, sind meistens Single-Page-Webanwendungen. Flask ist im Gegensatz zu Django modular und eher minimalistisch aufgebaut. Daher muss in der Entwicklung tendenziell mit externen Bibliotheken gearbeitet werden. Man nennt Flask deshalb auch ein Mikroframework. Für die Sicherheit der Website gibt es die Flask-Security Bibliothek, die dieselben Mechanismen wie Django beinhaltet.
 
-Aus diesen Gründen ist Flask eher für kleinere Projekte geeignet, die benutzerdefinierte Komponenten erfordern oder für das Prototyping. Die Anzahl der Webseiten, die Flask als Framework nutzen, steigt stetig weiter. Der Vorteil, warum Flask immer beliebter wird ist die Kontrolle, die man über das Projekt bekommt, indem die Komponenten selbst bestimmt.
+Aus diesen Gründen ist Flask eher für kleinere Projekte geeignet, die benutzerdefinierte Komponenten erfordern oder für das Prototyping. Die Anzahl der Webseiten, die Flask als Framework nutzen, steigt stetig weiter. Der Vorteil, warum Flask immer beliebter wird ist die Kontrolle, die man über das Projekt bekommt, indem man die Komponenten selbst bestimmen kann.
 
 \subsection{Fazit}
 Beide Frameworks wären für das Projekt geeignet. Die Django Community ist größer und aktiver als die von Flask. Daher gibt es mehr Informationen über Django. Jedoch wird Flask mittlerweile in mehreren Projekten genutzt. In der Tabelle \ref{tab:FrameworkVergleich} sind die wichtigsten Eigenschaften nochmals gegenübergestellt. 
@@ -123,14 +123,14 @@ Beide Frameworks wären für das Projekt geeignet. Die Django Community ist grö
 	\label{tab:FrameworkVergleich}
 \end{table}
 
-Aufgrund der Leichtigkeit wurde sich bei den Frameworks für Flask entschieden. Da es bei der Performance keine großen Unterschiede zwischen Django und Flask gibt, ist es als Merkmal für die Entscheidung eines Frameworks nicht relevant. Für den Sudoku Solver wird nur eine einseitige Anwendung ohne Datenbankanbindung benötigt, wodurch Flask das geeignetere Framework ist. Auch der modulare Aufbau spricht für Flask, da nur wenige zusätzliche Pakete genutzt werden. 
+Aufgrund der Leichtigkeit wurde sich bei den Frameworks für Flask entschieden. Da es bei der Performance keine großen Unterschiede zwischen Django und Flask gibt, ist es als Merkmal für die Entscheidung eines Frameworks nicht relevant. Für den \textbf{Sudoku Helper} wird nur eine einseitige Anwendung ohne Datenbankanbindung benötigt, wodurch Flask das geeignetere Framework ist. Auch der modulare Aufbau spricht für Flask, da nur wenige zusätzliche Pakete genutzt werden. 
 
 Das Entwurfsmuster \ac{MVC} wird im Framework Flask übernommen.
 
 \section{Entwurfsmuster}
 Wie im Abschnitt der Frameworks schon erwähnt, wird in diesem Projekt eine bestimmte Softwarearchitektur verwendet. Damit wird einem Projekt die grundlegenden Komponenten und das Zusammenspiel dieser visualisiert. Damit ist es einfacher nicht-funktionale Eigenschaften wie die Modifizierbarkeit, Wartbarkeit oder Sicherheit darzustellen und zu verstehen.
 
-Das Framework Django arbeitet immer mit dem \ac{MVC} Architekturmuster. Da aber Flask als Framework genutzt wird, muss diese Architektur selbst implementiert werden. Im Folgenden wird das Architekturmuster mit seinen drei Komponenten kurz beschrieben \textit{(und wie es in der Studienarbeit umgesetzt wurde)}.
+Das Framework Django arbeitet immer mit dem \ac{MVC} Architekturmuster. Da aber Flask als Framework genutzt wird, muss diese Architektur selbst implementiert werden. Im Folgenden wird das Architekturmuster mit seinen drei Komponenten kurz beschrieben.
 
 \subsection{\acl{MVC}}
 Das Ziel dieser Entwurfsarchitektur ist es, spätere Änderungen oder Erweiterungen zu vereinfachen und die Wiederverwendbarkeit der einzelnen Komponenten zu steigern. In der Abbildung \ref{fig:MVC} ist die Architektur visualisiert. Durchgezogene Linien stehen hierbei für eine direkte Assoziation und gestichelte für eine indirekte Assoziation.  

@@ -6,10 +6,10 @@ Nachdem in der Einleitung schon kurz auf das Spielfeld eines Sudokus und die Reg
 
 
 \section{Spielfeld Aufteilung}
-Das Spielfeld auf dem ein Sudoku gespielt wird besteht aus einem 9x9 Gitter und damit aus 81 einzelnen Zellen. Diese Gitter lässt sich nochmal aufteilen mit drei verschiedenen \textbf{Units}. Jede \textbf{Unit} besteht immer aus 9 Zellen. Damit kann ein Sudoku also nochmal in 27 verschiedene Zellen aufgeteilt werden. Wie diese \text{Units} 
+Das Spielfeld, auf dem ein Sudoku gespielt wird, besteht aus einem 9x9 Gitter und damit aus 81 einzelnen Zellen. Diese Gitter wird weiterhin in je 9 Zeilen, Spalten und 3x3 Blöcke aufgeteilt. Jede Aufteilung, weiterhin auch Unit genannt, besteht immer aus 9 Zellen. Damit kann ein Sudoku also nochmal in 27 verschiedene Units aufgeteilt werden. Wie diese Units aussehen, wird im Folgenden gezeigt.
 
 \subsection{Zeile}
-Eine Zeile in einem Sudokuspielfeld sind Zellen die horizontal zueinander ausgerichtet sind. In der Abbildung \ref{fig:SudokugitterZeile} wurde die oberste Zeile beispielhaft markiert.
+Eine Zeile in einem Sudokuspielfeld sind Zellen, die horizontal zueinander ausgerichtet sind. In der Abbildung \ref{fig:SudokugitterZeile} wurde die oberste Zeile beispielhaft markiert.
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.3\textwidth]{images/sudokugitterZeile.jpg}
@@ -18,7 +18,7 @@ Eine Zeile in einem Sudokuspielfeld sind Zellen die horizontal zueinander ausger
 \end{figure}
 
 \subsection{Spalte}
-Analog zu einer Reihe sind Spalten Zellen die vertikal zueinander ausgerichtet sind. In der Abbildung \ref{fig:SudokugitterSpalte} wurde beispielhaft eine Spalte markiert.
+Analog zu einer Reihe sind Spalten Zellen, die vertikal zueinander ausgerichtet sind. In der Abbildung \ref{fig:SudokugitterSpalte} wurde beispielhaft die erste Spalte markiert.
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.3\textwidth]{images/sudokugitterSpalte.jpg}
@@ -27,7 +27,7 @@ Analog zu einer Reihe sind Spalten Zellen die vertikal zueinander ausgerichtet s
 \end{figure}
 
 \subsection{Box/Block}
-Boxen bestehen aus 3x3 Zellen. Boxen können aber nicht einfach so an jeder beliebigen Stelle eines Sudokus erstellt werden. Der rechte untere Wert einer Box muss sowohl in der x-Achse durch drei teilbar sein, wie in der y-Achse. In der Abbildung \ref{fig:SudokugitterBox} wurde eine Box markiert. Die markierten Zellen können kein Teil einer weiteren Box mehr sein. Wie in der Abbildung \ref{fig:SudokugitterBox} zu erkennen ist sind die Boxen auch im Frontend durch dickere Linien voneinander abgegrenzt. 
+Boxen bestehen aus 3x3 Zellen. Die 3x3 Boxen sind im Sudokufeld so angeordnet, dass jede Zelle in genau einer Box liegt und, dass es 9 Boxen geben kann. In der Abbildung \ref{fig:SudokugitterBox} wurde eine Box markiert. Wie zu erkennen ist, sind die Boxen auch im Frontend durch dickere Linien voneinander abgegrenzt. 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.3\textwidth]{images/sudokugitterBox.jpg}
@@ -36,17 +36,18 @@ Boxen bestehen aus 3x3 Zellen. Boxen können aber nicht einfach so an jeder beli
 \end{figure}
 
 \section{Regeln}
-Für die Regeln ergeben sich einfache Bedingungen wenn man die Aufteilung des Spielfeldes kennt. In jeder Zeile dürfen die Zahlen eins bis neun nur einmal vorkommen. Genau dieselbe Bedingung gibt es für eine Spalte und für einen Block.
+Die Regeln ergeben sich durch einfache Bedingungen, wenn man die Aufteilung des Spielfeldes kennt. In jeder Zeile, Spalte und Box dürfen und müssen die Zahlen von eins bis neun nur einmal vorkommen.
 
-Am Ende kommen die Zahlen eins bis neun also jeweils neunmal auf dem gesamten Sudokugitter vor und in jedem Block, jeder Zeile und jeder Zeile genau einmal.
+Am Ende kommen die Zahlen von eins bis neun also jeweils neunmal auf dem gesamten Sudokugitter vor, ohne dass sie sich gegenseitig sehen, also sich keine Zahl doppelt in einer Zeile, Spalte oder Box befindet.
 
-Damit man das Sudokugitter ausfüllen kann sind zu Spielbeginn einige Ziffern vorgegeben. Mithilfe dieser Ziffern ist es möglich mit den gerade erklärten Regeln das ganze Sudokugitter zu füllen. \cite{sudopedia_2022}
+Damit man das Sudokugitter ausfüllen kann und es nur eine mögliche Lösung gibt, sind zu Spielbeginn einige Ziffern vorgegeben. Mithilfe dieser Ziffern ist es möglich, mit den gerade erklärten Regeln das ganze Sudokugitter durch Logik und Deduktionen zu füllen. \cite{sudopedia_2022}
 
 \section{Strategie}
-Um ein Sudoku zu lösen können verschiedene Strategien umgesetzt werden. Das Ziel einer Strategie ist es hierbei eine passende Zahl in das Sudoku einzufügen oder mögliche Kandidaten zu eliminieren. Es gibt zwei Strategien um direkt Zahlen einfügen zu können, nämlich den Hidden Single und den Naked Single. Beide Strategien können oft intuitiv und ohne eine große Erklärung anwenden. Weitere leichte Strategien wie ein Hidden Double oder ein Naked Double können mithilfe der Kandidaten-Notation gefunden und angewendet werden.
+Um ein Sudoku zu lösen, können verschiedene Strategien eingesetzt werden. Das Ziel einer Strategie ist es hierbei eine passende Zahl in das Sudoku einzufügen oder mögliche Kandidaten zu eliminieren. Es gibt zwei grundlegende Strategien, um Zahlen direkt einzufügen: den Hidden Single und den Naked Single. Beide Strategien können oft intuitiv und ohne eine große Erklärung gefunden und umgesetzt werden. Weitere leichte Strategien wie ein Hidden Double oder ein Naked Double, bei denen Kandidaten eliminiert werden können, sind mithilfe der Kandidaten-Notation leicht gefunden.
 
-Insgesamt gibt es über 20 Strategien die bei schweren Sudokus angewendet werden können. Zum Teil sind die Strategien für das menschliche Auge schwer zu entdecken und auch schwer zu erläutern. Wichtig bei diesen schweren Strategien ist eine gewissenhafte Ausführung der Kandidaten-Notation.\cite{martin}
+Insgesamt gibt es über 30 gebräuchliche Strategien, die zur Unterstützung bei schweren Sudokus angewendet werden können. Oftmals sind anspruchsvollere Strategien für das menschliche Auge schwer zu entdecken. Wichtig bei diesen komplexeren Strategien ist eine gewissenhafte Ausführung der Kandidaten-Notation.\cite{martin}
+
 \subsection{Lösungshilfen: Kandidaten-Notation}
-Kandidaten sind Zahlen in einer Zelle des Sudokugitters, die die Möglichkeit besitzen in diese Zelle eingetragen zu werden. Das Problem liegt aber dabei, dass mehrere Zahlen in diese Zelle können, weil es noch nicht genügend andere feste Zahlen gibt, die bereits eingetragen wurden. Wenn man dabei jede Zelle einzeln betrachtet geben die Kandidaten keinen weiteren Nutzen. Jedoch, wenn die Kandidaten mehrerer Zellen in Bezug zueinander angeschaut werden, lassen sich Zusammenhänge erkennen. Aufgrund dieser Erkenntnisse wurden weitere Strategien entwickelt. 
+Kandidaten sind Zahlen in einer Zelle des Sudokugitters, die, mit dem aktuellen Informationsstand, als feste Zahl noch infrage kommen. Das Problem liegt dabei, dass meistens mehrere Zahlen in eine Zelle können. Kandidaten können durch das Eintragen von weiteren Zahlen oder das Anwenden von Strategien eliminiert werden. Wenn man dabei jede Zelle einzeln betrachtet, geben die Kandidaten keinen weiteren Nutzen. Wenn die Kandidaten jedoch über mehrerer Zellen in Bezug zueinander angeschaut werden, lassen sich Zusammenhänge erkennen. Die meisten Strategien basieren auf diesen Zusammenhängen. 
 
-Sobald eine Zahl mittels des Hidden Single oder des Naked Single eingetragen wird, müssen die Kandidaten aktualisiert werden. Es besteht die Möglichkeit, dass man einige Kandidaten die denselben Wert haben wie die neu eingetragene Zahl und in Zellen stehen, die eine Verbindung über eine Reihe, Spalte oder einen Block haben zu der Zelle in der die Zahl eingetragen wurde, herausgestrichen werden können. 
+Sobald eine Zahl eingetragen wird, müssen die Kandidaten aktualisiert werden. Wenn eine Zahl eingetragen wird, kann jeder gleichwertiger Kandidat, der diese Zahl sieht, gestrichen werden.
