@@ -11,9 +11,10 @@ from src.solutions.line_block_interaction import LineBlockInteraction
 from src.solutions.block_line_interaction import BlockLineInteraction
 from src.solutions.x_wing import XWing
 from src.solutions.third_eye import ThirdEye
+from src.solutions.skyscraper import SkyScraper
 
 
-techniques = [XWing]
+techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, ThirdEye, SkyScraper]
 
 
 def set_solved_board(board):
