@@ -1,13 +1,16 @@
 table.board {
+    width: 100%;
     border-collapse: collapse;
     aspect-ratio: 1/1;
-    width: 100%
+    table-layout:fixed;
+    min-width: 330px;
 }
 
 td.board {
     height: calc(100% / 9);
     width: calc(100% / 9);
     min-width: 60px;
+    aspect-ratio: 1/1;
     border: 1px solid;
 }
 
@@ -33,14 +36,14 @@ tr:nth-child(3n).board {
 
 .cell p{
     text-align: center;
-    font-size: 40px;
+    font-size: clamp(20px, 2vw, 90px);
 }
 
 table.candidates {
     border-collapse: collapse;
     aspect-ratio: 1/1;
     width: 100%;
-    font-size: 12px;
+    font-size: clamp(6px, 0.6vw, 90px);
     text-align: center;
 }
 
@@ -52,30 +55,73 @@ table.candidates {
 .flex-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content:flex-start;
+    gap: 10px;
+    flex-direction: row;
 }
 
 .flex-item {
     margin: auto;
+    flex: 0 0 30%;
+    background-color: deepskyblue;
+}
+
+.flex-item2 {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: rebeccapurple;
+}
+
+.technique-description{
+    width: 20vw;
+    min-width: 200px;
+    font-size: clamp(10px, 1.5vw, 20px);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: lightcoral;
+}
+
+.buttons {
+    min-width: 5vw;
+    align-items: center;
+    background-color: burlywood;
+}
+
+.keyboard {
+    align-items: center;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
 }
 
 #keyboard button {
     float: left;
-    margin: 0 5px 5px 0;
-    width: 100px;
-    height: 100px;
-    font-size: 40px;
-    line-height: 60px;
+    margin: 0 0.5vw 0.5vw 0;
+    width: 5vw;
+    height: 5vw;
+    min-height: 35px;
+    max-height: 100px;
+    min-width: 35px;
+    max-width: 100px;
+    font-size: clamp(12px, 2vw, 20px);
     background: white;
     border: 1px solid black;
     border-radius: 5px;
+    background-color: aqua;
 }
 
 #help button{
-    width: 310px;
+    width: 8vw;
 }
 
 #keyboard button:active {
-    font-size: 50px;
+    font-size: clamp(10px, 1.5vw, 20px);
     border: 2px solid black;
 }
 

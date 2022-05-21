@@ -66,7 +66,8 @@ $(document).ready(function () {
     });
 
     socket.on('help0', function (technique_result) {
-        alert("Technique: " + technique_result['name']);
+        $("#technique-name").text(technique_result['name']);
+        $("#technique-explanation").text("");
         colorCells(technique_result['primaryCells'], 'rgb(255,216,115)');
         colorCells(technique_result['secondaryCells'], 'rgb(181,216,244)');
     });
@@ -81,8 +82,7 @@ $(document).ready(function () {
     });
 
     socket.on('help2', function (technique_result) {
-        alert("Technique: " + technique_result['name'] + "\n" +
-            "Explanation: " + technique_result['explanation']);
+         $("#technique-explanation").text(technique_result['explanation']);
     });
 
     socket.on('help3', function () {
@@ -90,6 +90,8 @@ $(document).ready(function () {
             candidatesVisible = !candidatesVisible;
             $('#candidate').css('color', 'red');
         }
+        $("#technique-name").text("");
+        $("#technique-explanation").text("");
         resetCellColor()
     });
 

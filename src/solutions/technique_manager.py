@@ -12,6 +12,7 @@ from src.solutions.block_line_interaction import BlockLineInteraction
 from src.solutions.x_wing import XWing
 from src.solutions.third_eye import ThirdEye
 from src.solutions.skyscraper import SkyScraper
+from src.solutions.turbot import Turbot
 
 
 techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, ThirdEye, SkyScraper]
