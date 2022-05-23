@@ -32,11 +32,10 @@ class Turbot(SolvingTechniques):
                         for i in range(2):
                             influential_cells_orthogonal = self.get_cells_with_candidate(SolvingTechniques.get_influential_cells_unit(relevant_cells[i], orthogonal_unit[1-index]), self.candidate)
                             influential_cells_orthogonal.remove(relevant_cells[i])
-                            # Überprüfung nicht notwendig, wegen Hidden Single?
-                            if not influential_cells_orthogonal:
-                                break
+                            relevant_box = SolvingTechniques.get_box(relevant_cells[i])
                             for cell in influential_cells_orthogonal:
-                                removable_cells = []
+                                if SolvingTechniques.get_box(cell) == relevant_box:
+                                    continue
                                 influential_cells_box = self.get_cells_with_candidate(SolvingTechniques.get_influential_cells_unit(cell, 'box'), self.candidate)
                                 influential_cells_box.remove(cell)
                                 removable_cells = list(set(influential_cells_orthogonal).intersection(influential_cells_box))

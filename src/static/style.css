@@ -63,7 +63,6 @@ table.candidates {
 .flex-item {
     margin: auto;
     flex: 0 0 30%;
-    background-color: deepskyblue;
 }
 
 .flex-item2 {
@@ -74,7 +73,6 @@ table.candidates {
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-    background-color: rebeccapurple;
 }
 
 .technique-description{
@@ -84,13 +82,11 @@ table.candidates {
     text-align: center;
     align-items: center;
     justify-content: center;
-    background-color: lightcoral;
 }
 
 .buttons {
     min-width: 5vw;
     align-items: center;
-    background-color: burlywood;
 }
 
 .keyboard {
@@ -113,7 +109,6 @@ table.candidates {
     background: white;
     border: 1px solid black;
     border-radius: 5px;
-    background-color: aqua;
 }
 
 #help button{
