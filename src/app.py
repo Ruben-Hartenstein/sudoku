@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 from copy import deepcopy
-import sudoku_board as sudoku
+import sudoku_board as sudoku_board
 from src.solutions import technique_manager
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ socketio = SocketIO(app)
 has_started = False
 help_step = 0
 technique_result = None
-sudoku_board = sudoku.SudokuBoard()
+sudoku = sudoku_board.SudokuBoard()
 
 
 # HIDDEN TRIPLE: [[0, 0, 0, 7, 4, 0, 0, 0, 8], [4, 9, 6, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 0, 0, 4, 0], [0, 0, 0, 0, 5, 7, 6, 0, 0], [8, 0, 0, 0, 0, 0, 0, 2, 1], [0, 0, 3, 4, 0, 0, 0, 0, 0], [0, 0, 0, 3, 0, 0, 0, 0, 0], [1, 2, 4, 0, 7, 0, 0, 5, 0], [0, 0, 0, 0, 0, 0, 7, 0, 0]]
@@ -46,8 +46,8 @@ def start():
     global has_started
     help_step = 0
     has_started = start_game()
-    print(sudoku_board.board)
-    emit('start', {'hasStarted': has_started, 'startCoords': sudoku_board.start_coords})
+    print(sudoku.board)
+    emit('start', {'hasStarted': has_started, 'startCoords': sudoku.start_coords})
 
 
 @socketio.on('connect')
@@ -55,24 +55,26 @@ def test_connect():
     global help_step
     help_step = 0
     print('Server Connected')
-    emit('server status',
-         {'board': sudoku_board.board, 'hasStarted': has_started, 'startCoords': sudoku_board.start_coords})
+    emit('serverStatus', {'board': sudoku.board, 'hasStarted': has_started, 'startCoords': sudoku.start_coords})
 
 
 @socketio.on('numbers')
 def new_numbers(data):
     global help_step
     help_step = 0
-    print(data['checkedCells'])
-    cell_values = sudoku_board.update_numbers(int(data['number']), data['checkedCells'])
+    cell_values = sudoku.update_numbers(int(data['number']), data['checkedCells'])
     emit('update cells', {'values': cell_values, 'checkedCells': data['checkedCells']})
+    print("new Number")
+    if has_started and sudoku.is_finished():
+        print("victory")
+        emit('victory')
 
 
 @socketio.on('erase')
 def erase(checked_cells):
     global help_step
     help_step = 0
-    cell_values = sudoku_board.erase_cells(checked_cells)
+    cell_values = sudoku.erase_cells(checked_cells)
     emit('update cells', {'values': cell_values, 'checkedCells': checked_cells})
 
 
@@ -81,76 +83,73 @@ def reset():
     global has_started
     global help_step
     global technique_result
-    global sudoku_board
+    global sudoku
     has_started = False
     help_step = 0
     technique_result = None
-    sudoku_board = sudoku.SudokuBoard()
-    emit('server status',
-         {'board': sudoku_board.board, 'hasStarted': has_started, 'startCoords': sudoku_board.start_coords})
+    sudoku = sudoku_board.SudokuBoard()
+    emit('serverStatus', {'board': sudoku.board, 'hasStarted': has_started, 'startCoords': sudoku.start_coords})
 
 
 @socketio.on('getCandidates')
 def candidates():
-    errors = sudoku_board.get_errors()
+    errors = sudoku.get_errors()
     if errors:
         print(errors)
         emit('showErrors', errors)
     else:
-        sudoku_board.update_candidates()
-        emit('showCandidates', sudoku_board.candidates)
+        sudoku.update_candidates()
+        emit('showCandidates', sudoku.candidates)
 
 
 @socketio.on('help')
 def help():
     global help_step
     global technique_result
-    errors = sudoku_board.get_errors()
+    errors = sudoku.get_errors()
     if errors:
         print(errors)
         emit('showErrors', errors)
         return
     if help_step == 0:
-        sudoku_board.update_candidates()
-        technique_result = technique_manager.try_techniques(sudoku_board.board, sudoku_board.candidates)
+        sudoku.update_candidates()
+        technique_result = technique_manager.try_techniques(sudoku.board, sudoku.candidates)
         if not technique_result:
             print("No suitable technique found!")
             return
-        emit(f'help0',
+        emit('help0',
              {'name': technique_result['name'], 'primaryCells': technique_result['primary_cells'],
               'secondaryCells': technique_result['secondary_cells']})
     elif help_step == 1:
         candidates()
-        emit(f'help1', {'highlights': technique_result['highlights'], 'crossOuts': technique_result['cross_outs']})
+        emit('help1', {'highlights': technique_result['highlights'], 'crossOuts': technique_result['cross_outs']})
     elif help_step == 2:
-        emit(f'help2', {'name': technique_result['name'], 'explanation': technique_result['explanation']})
+        emit('help2', {'name': technique_result['name'], 'explanation': technique_result['explanation']})
     elif help_step == 3:
         if technique_result['name'] in ['Naked Single', 'Hidden Single', 'Third Eye']:
             data = {'number': technique_result['highlights'][0]['value'],
                     'checkedCells': [technique_result['highlights'][0]['cell']]}
+            emit('help3')
             new_numbers(data)
             help_step -= 1
         else:
-            sudoku_board.remove_candidates(technique_result['cross_outs'])
+            sudoku.remove_candidates(technique_result['cross_outs'])
             candidates()
-        emit(f'help3')
+            emit('help3')
     help_step += 1
     help_step %= 4
 
 
 def start_game():
-    if not sudoku_board.is_board_valid():
-        print("not valid")
+    if not sudoku.is_board_valid():
         return False
-    sudoku_board.solved = deepcopy(sudoku_board.board)
-    if not sudoku_board.solve(board=sudoku_board.solved):
-        print("not solvable")
+    sudoku.solved = deepcopy(sudoku.board)
+    if not sudoku.solve(board=sudoku.solved):
         return False
-    if not sudoku_board.is_uniquely_solvable():
-        print("not unique")
+    if not sudoku.is_uniquely_solvable():
         return False
-    sudoku_board.calculate_start_coords()
-    technique_manager.set_solved_board(sudoku_board.solved)
+    sudoku.calculate_start_coords()
+    technique_manager.set_solved_board(sudoku.solved)
     return True
 
 

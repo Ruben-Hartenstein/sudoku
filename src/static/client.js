@@ -27,7 +27,7 @@ $(document).ready(function () {
     });
 
     // Get current status of server after (re-)connecting
-    socket.on('server status', function (status) {
+    socket.on('serverStatus', function (status) {
         updateBoard(status['board']);
         if (status['hasStarted']) {
             $('#start').hide();
@@ -95,6 +95,11 @@ $(document).ready(function () {
         resetCellColor();
     });
 
+    socket.on('victory', function () {
+        console.log("VICTORY")
+        $("#technique-name").text("Victory");
+    });
+
     socket.on('update cells', function (data) {
         updateCells(data['values'], data['checkedCells']);
     });
@@ -139,9 +144,10 @@ $(document).ready(function () {
     });
 
     $('#reset').on('click', function () {
-        console.log("reset")
         candidatesVisible = false;
         startCoords = [];
+        $("#technique-name").text("");
+        $("#technique-explanation").text("");
         resetCellColor();
         hideCandidates();
         socket.emit('reset');

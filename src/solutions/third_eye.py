@@ -19,17 +19,17 @@ class ThirdEye(SolvingTechniques):
                     self.occurring_candidates = SolvingTechniques.format_candidates(self.candidates[i][j])
                 else:
                     return False
-
+        if not self.primary_cells:
+            return False
         self.configure_highlighting()
         if len(self.cross_outs) != 0:
             return True
         return False
 
-
     def configure_highlighting(self):
         self.highlights = []
         self.cross_outs = []
-        self.secondary_cell = []
+        self.secondary_cells = []
 
         for unit in ['row', 'column', 'box']:
             unit_cells = SolvingTechniques.get_influential_cells_unit(self.primary_cells[0], unit)

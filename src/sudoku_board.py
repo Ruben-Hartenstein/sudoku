@@ -154,6 +154,9 @@ class SudokuBoard:
                         errors.append((i, j))
         return errors
 
+    def is_finished(self):
+        return self.solved == self.board
+
     def update_candidates(self):
         for i in range(SIZE):
             for j in range(SIZE):

@@ -25,7 +25,6 @@ $(document).ready(function () {
 // Backspace = 8
 $(document).keydown(function(e) {
    let pressedKey = e.keyCode;
-    console.log(pressedKey);
     // Numpad to press numbers
     if (97 <= pressedKey && pressedKey <= 105) {
         let digit = pressedKey - 96;
