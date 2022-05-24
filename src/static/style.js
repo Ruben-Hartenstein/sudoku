@@ -12,20 +12,31 @@ $(document).ready(function () {
 });
 
 // Simulate button click on keypress
-// 0..9 = 96..105
+// 1..9 = 97..105
+// 1..9 = 49..57
 // Left arrow = 37
 // Up arrow = 38
 // Right arrow = 39
 // Down arrow = 40
 // Shift = 16
 // Space = 32
-$(document).on('keydown', function(key) {
-    let pressedKey = key.which;
+// Tab = 9
+// Delete = 46
+// Backspace = 8
+$(document).keydown(function(e) {
+   let pressedKey = e.keyCode;
+    console.log(pressedKey);
     // Numpad to press numbers
-    if (96 <= pressedKey && pressedKey <= 105) {
+    if (97 <= pressedKey && pressedKey <= 105) {
         let digit = pressedKey - 96;
         $(`#${digit}`).click();
-        return;
+        return false;
+    }
+    // Number bar to press numbers
+    if (49 <= pressedKey && pressedKey <= 57) {
+        let digit = pressedKey - 48;
+        $(`#${digit}`).click();
+        return false;
     }
     // Arrow Keys to move pointer
     if (37 <= pressedKey && pressedKey <= 40) {
@@ -53,20 +64,42 @@ $(document).on('keydown', function(key) {
                 break;
         }
         toggleCellHighlighting(pointer, true);
-        return;
+        return false;
     }
     // Space Bar to click cell
     if (pressedKey === 32) {
-        key.preventDefault();
         let id = pointer[0].toString() + pointer[1].toString();
         $(`#${id}`).click();
-        return;
+        return false;
     }
     // Shift Key to toggle Note
     if (pressedKey === 16) {
         $('#candidate').click();
+        return false;
+    }
+    // Tab to move pointer to next cell (with linebreak)
+    if(pressedKey === 9){
+        pointer2nextCell();
+        return false;
+    }
+    // Delete
+    if(pressedKey === 46 || pressedKey === 8){
+        $('#erase').click()
+        return false;
     }
 });
+
+function pointer2nextCell(){
+    toggleCellHighlighting(pointer, false);
+    pointer[1] += 1;
+    if (pointer[1] === 9){
+        pointer[1] = 0;
+        pointer[0] += 1;
+        if (pointer[0] === 9)
+            pointer[0] = 0
+    }
+    toggleCellHighlighting(pointer, true);
+}
 
 function toggleCellHighlighting(coord, isOn) {
     let id = coord[0].toString() + coord[1].toString();

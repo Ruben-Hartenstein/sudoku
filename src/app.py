@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 from copy import deepcopy
-import sudoku_board
+import sudoku_board as sudoku
 from src.solutions import technique_manager
 
 app = Flask(__name__)
@@ -11,6 +11,9 @@ socketio = SocketIO(app)
 has_started = False
 help_step = 0
 technique_result = None
+sudoku_board = sudoku.SudokuBoard()
+
+
 # HIDDEN TRIPLE: [[0, 0, 0, 7, 4, 0, 0, 0, 8], [4, 9, 6, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 0, 0, 4, 0], [0, 0, 0, 0, 5, 7, 6, 0, 0], [8, 0, 0, 0, 0, 0, 0, 2, 1], [0, 0, 3, 4, 0, 0, 0, 0, 0], [0, 0, 0, 3, 0, 0, 0, 0, 0], [1, 2, 4, 0, 7, 0, 0, 5, 0], [0, 0, 0, 0, 0, 0, 7, 0, 0]]
 # NAKED TRIPLE: [[0, 7, 0, 0, 0, 0, 8, 0, 0], [0, 2, 0, 8, 0, 0, 9, 5, 0], [0, 0, 0, 0, 0, 9, 6, 0, 2], [0, 0, 0, 3, 0, 4, 2, 8, 9], [0, 0, 3, 9, 0, 0, 1, 6, 4], [4, 0, 0, 6, 1, 0, 5, 0, 0], [0, 4, 0, 2, 9, 6, 0, 1, 5], [0, 0, 0, 0, 0, 0, 0, 9, 6], [0, 0, 0, 5, 3, 0, 4, 2, 8]]
 # FOURSOME: [[0, 0, 0, 7, 1, 0, 2, 5, 0], [0, 3, 1, 6, 0, 0, 0, 0, 8], [0, 5, 7, 9, 0, 0, 0, 1, 0], [0, 0, 0, 0, 4, 0, 0, 0, 0], [0, 7, 0, 0, 6, 2, 1, 0, 5], [0, 0, 6, 0, 9, 7, 8, 0, 2], [0, 0, 9, 2, 0, 1, 0, 6, 0], [0, 0, 0, 0, 7, 9, 3, 2, 1], [0, 0, 0, 0, 0, 6, 0, 8, 9]]
@@ -21,13 +24,10 @@ technique_result = None
 # LBI : [[1, 2, 0, 0, 5, 6, 0, 8, 0], [0, 0, 5, 9, 0, 1, 0, 0, 6], [0, 0, 6, 0, 0, 2, 1, 0, 5], [0, 1, 2, 0, 0, 0, 4, 0, 7], [0, 3, 0, 1, 0, 0, 0, 0, 0], [7, 6, 9, 0, 2, 0, 0, 1, 3], [0, 0, 7, 0, 1, 8, 0, 9, 0], [0, 0, 0, 2, 0, 0, 0, 0, 0], [0, 0, 0, 0, 4, 3, 0, 7, 0]]
 # XWING: [[1, 0, 0, 0, 0, 0, 0, 8, 0], [8, 0, 0, 1, 0, 0, 0, 2, 4], [7, 0, 0, 0, 0, 3, 1, 5, 0], [0, 0, 0, 0, 4, 1, 6, 9, 2], [0, 9, 0, 6, 7, 0, 4, 1, 3], [4, 1, 6, 2, 3, 9, 8, 7, 5], [9, 0, 1, 0, 6, 2, 5, 0, 8], [0, 0, 0, 3, 0, 0, 9, 0, 1], [0, 5, 0, 9, 1, 0, 2, 0, 7]]
 # SKYSCRAPER: [[0, 0, 0, 0, 2, 0, 0, 0, 0], [3, 8, 6, 0, 0, 0, 0, 5, 2], [5, 0, 0, 0, 0, 3, 0, 0, 0], [0, 1, 0, 0, 0, 8, 0, 9, 0], [4, 0, 8, 9, 0, 0, 6, 0, 7], [2, 0, 9, 0, 0, 4, 0, 0, 0], [8, 0, 0, 7, 0, 0, 3, 6, 0], [9, 0, 0, 3, 0, 1, 0, 4, 0], [0, 0, 0, 0, 5, 0, 0, 0, 0]]
-# TURBOT: [[0, 6, 0, 0, 0, 8, 1, 4, 0], [0, 5, 0, 0, 0, 6, 9, 8, 0], [4, 8, 0, 0, 3, 0, 6, 0, 5], [0, 2, 6, 0, 8, 0, 3, 0, 4], [0, 1, 4, 6, 0, 3, 7, 0, 8], [3, 7, 8, 0, 0, 9, 5, 6, 0], [6, 4, 5, 3, 0, 2, 8, 0, 0], [1, 9, 2, 8, 7, 5, 4, 3, 6], [8, 3, 7, 0, 6, 4, 2, 5, 0]]
-# sudoku_board = sudoku_board.SudokuBoard([[0, 6, 0, 0, 0, 8, 1, 4, 0], [0, 5, 0, 0, 0, 6, 9, 8, 0], [4, 8, 0, 0, 3, 0, 6, 0, 5], [0, 2, 6, 0, 8, 0, 3, 0, 4], [0, 1, 4, 6, 0, 3, 7, 0, 8], [3, 7, 8, 0, 0, 9, 5, 6, 0], [6, 4, 5, 3, 0, 2, 8, 0, 0], [1, 9, 2, 8, 7, 5, 4, 3, 6], [8, 3, 7, 0, 6, 4, 2, 5, 0]])
+# TURBOT: [[0, 6, 0, 0, 0, 8, 1, 4, 0], [0, 5, 0, 0, 0, 6, 9, 8, 0], [4, 8, 0, 0, 3, 0, 6, 0, 5], [0, 2, 6, 0, 8, 0, 3, 0, 4], [0, 1, 4, 6, 0, 3, 7, 0, 8], [3, 7, 8, 0, 0, 9, 5, 6, 0], [6, 4, 5, 3, 0, 2, 8, 0, 0], [1, 9, 2, 8, 7, 5, 4, 3, 6], [8, 3, 7, 0, 6, 4, 2, 5, 0]
 # Turbot: [[9, 0, 6, 3, 0, 5, 8, 7, 1], [8, 0, 1, 7, 0, 6, 3, 0, 9], [0, 7, 0, 8, 9, 1, 2, 0, 6], [0, 0, 0, 0, 8, 7, 9, 1, 5], [0, 0, 8, 9, 1, 0, 0, 0, 7], [1, 9, 7, 0, 5, 0, 0, 8, 0], [6, 8, 0, 0, 7, 9, 1, 0, 0], [7, 3, 4, 1, 6, 2, 5, 9, 8], [0, 1, 9, 0, 3, 8, 7, 6, 0]]
 # example hard: [[0, 0, 0, 0, 0, 0, 0, 4, 0], [3, 4, 0, 8, 0, 0, 7, 2, 0], [0, 5, 6, 4, 0, 0, 8, 9, 0], [0, 3, 0, 6, 8, 5, 4, 7, 0], [0, 0, 0, 7, 3, 4, 0, 6, 2], [7, 6, 4, 2, 1, 9, 5, 3, 8], [0, 0, 0, 3, 4, 0, 0, 8, 0], [6, 8, 3, 0, 0, 0, 2, 5, 4], [4, 0, 0, 5, 0, 8, 0, 1, 0]]
 # DRAGON: [[6, 4, 0, 8, 5, 3, 0, 9, 0], [9, 0, 0, 6, 4, 1, 8, 5, 0], [1, 5, 8, 7, 2, 9, 6, 4, 3], [3, 2, 5, 1, 6, 7, 9, 8, 4], [4, 0, 1, 9, 8, 2, 3, 0, 5], [8, 9, 0, 4, 3, 5, 0, 2, 0], [2, 0, 9, 5, 1, 8, 4, 0, 0], [7, 1, 0, 2, 9, 4, 5, 0, 8], [5, 8, 4, 3, 7, 6, 2, 1, 9]]
-sudoku_board = sudoku_board.SudokuBoard([[6, 4, 0, 8, 5, 3, 0, 9, 0], [9, 0, 0, 6, 4, 1, 8, 5, 0], [1, 5, 8, 7, 2, 9, 6, 4, 3], [3, 2, 5, 1, 6, 7, 9, 8, 4], [4, 0, 1, 9, 8, 2, 3, 0, 5], [8, 9, 0, 4, 3, 5, 0, 2, 0], [2, 0, 9, 5, 1, 8, 4, 0, 0], [7, 1, 0, 2, 9, 4, 5, 0, 8], [5, 8, 4, 3, 7, 6, 2, 1, 9]])
-
 
 
 @app.route('/')
@@ -76,11 +76,18 @@ def erase(checked_cells):
     emit('update cells', {'values': cell_values, 'checkedCells': checked_cells})
 
 
-@socketio.on('clear')
-def clear(string):
+@socketio.on('reset')
+def reset():
+    global has_started
     global help_step
+    global technique_result
+    global sudoku_board
+    has_started = False
     help_step = 0
-    print(string)
+    technique_result = None
+    sudoku_board = sudoku.SudokuBoard()
+    emit('server status',
+         {'board': sudoku_board.board, 'hasStarted': has_started, 'startCoords': sudoku_board.start_coords})
 
 
 @socketio.on('getCandidates')
@@ -133,11 +140,14 @@ def help():
 
 def start_game():
     if not sudoku_board.is_board_valid():
+        print("not valid")
         return False
     sudoku_board.solved = deepcopy(sudoku_board.board)
     if not sudoku_board.solve(board=sudoku_board.solved):
+        print("not solvable")
         return False
     if not sudoku_board.is_uniquely_solvable():
+        print("not unique")
         return False
     sudoku_board.calculate_start_coords()
     technique_manager.set_solved_board(sudoku_board.solved)

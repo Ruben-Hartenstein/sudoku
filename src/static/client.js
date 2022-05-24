@@ -17,7 +17,7 @@ $(document).ready(function () {
         if (status['hasStarted']) {
             $('#start').hide();
             $('.started').show();
-            startCoords = status['startCoords']
+            startCoords = status['startCoords'];
             colorNumbers(startCoords, 'mediumblue');
         } else {
             $('#start').show();
@@ -32,7 +32,7 @@ $(document).ready(function () {
         if (status['hasStarted']) {
             $('#start').hide();
             $('.started').show();
-            startCoords = status['startCoords']
+            startCoords = status['startCoords'];
             colorNumbers(startCoords, 'mediumblue');
         } else {
             $('#start').show();
@@ -54,7 +54,7 @@ $(document).ready(function () {
                 for (let i = 0; i < 3; i++) {
                     html += "<tr>";
                     for (let j = 0; j < 3; j++) {
-                        let index = i * 3 + j
+                        let index = i * 3 + j;
                         html += "<td id=" + id + (index + 1) + ">" + (candidate[index]) + "</td>";
                     }
                     html += "</tr>";
@@ -77,8 +77,8 @@ $(document).ready(function () {
             candidatesVisible = !candidatesVisible;
             $('#candidate').css('color', 'red');
         }
-        colorCandidates(technique_result['crossOuts'], 'red')
-        colorCandidates(technique_result['highlights'], 'lime')
+        colorCandidates(technique_result['crossOuts'], 'red');
+        colorCandidates(technique_result['highlights'], 'lime');
     });
 
     socket.on('help2', function (technique_result) {
@@ -92,7 +92,7 @@ $(document).ready(function () {
         }
         $("#technique-name").text("");
         $("#technique-explanation").text("");
-        resetCellColor()
+        resetCellColor();
     });
 
     socket.on('update cells', function (data) {
@@ -105,45 +105,50 @@ $(document).ready(function () {
 
     // Send number with every checked Cell everytime a number is clicked
     $('.number').on('click', function () {
-        resetCellColor()
+        resetCellColor();
         let dict = {
             'number': $(this).attr('id'),
             'checkedCells': getCheckedCells(),
         }
-        // If no cell is selected, take the current pointer position
-        if (!dict['checkedCells'].length)
-            dict['checkedCells'].push(pointer);
         socket.emit('numbers', dict);
+        pointer2nextCell();
     });
 
     $('#candidate').on('click', function () {
+        if(!startCoords.length)
+            return;
         candidatesVisible = !candidatesVisible;
         if (candidatesVisible) {
             $('#candidate').css('color', 'red');
             updateCandidates();
         } else {
-            $('#candidate').css('color', 'black');
-            $('.cell').each(function (i, obj) {
-                $($(this).children('table')[0]).replaceWith("<p></p>");
-            });
+            hideCandidates();
         }
     });
 
+    function hideCandidates(){
+        $('#candidate').css('color', 'black');
+        $('.cell').each(function (i, obj) {
+            $($(this).children('table')[0]).replaceWith("<p></p>");
+        });
+    }
+
     $('#erase').on('click', function () {
-        resetCellColor()
-        let checkedCells = getCheckedCells();
-        if (checkedCells.length)
-            checkedCells.push(pointer);
-        socket.emit('erase', checkedCells);
+        resetCellColor();
+        socket.emit('erase', getCheckedCells());
     });
 
-    $('#clear').on('click', function () {
-        resetCellColor()
-        socket.emit('clear', "test");
+    $('#reset').on('click', function () {
+        console.log("reset")
+        candidatesVisible = false;
+        startCoords = [];
+        resetCellColor();
+        hideCandidates();
+        socket.emit('reset');
     });
 
     $('#start').on('click', function () {
-        resetCellColor()
+        resetCellColor();
         socket.emit('start');
     });
 
@@ -189,6 +194,9 @@ function getCheckedCells() {
             toggleCell($(this));
         }
     });
+    // If no cell is selected, take the current pointer position
+    if (!checkedCells.length)
+        checkedCells.push(pointer);
     return checkedCells;
 }
 

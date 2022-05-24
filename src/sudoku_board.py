@@ -4,7 +4,7 @@ SIZE = 9
 
 
 class SudokuBoard:
-    def __init__(self, board=[]):
+    def __init__(self, board=None):
         """
         Initializes the sudoku board with numbers
         """
@@ -17,6 +17,7 @@ class SudokuBoard:
             self.init_board()
 
     def init_board(self):
+        self.board = []
         for i in range(SIZE):
             self.board.append([])
             for j in range(SIZE):
