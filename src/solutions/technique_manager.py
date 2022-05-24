@@ -15,10 +15,11 @@ from src.solutions.third_eye import ThirdEye
 from src.solutions.skyscraper import SkyScraper
 # hier fehlt noch der Schwertfisch
 from src.solutions.dragon import Dragon
+from src.solutions.forbidden_rectangle_type1 import ForbiddenRectangleType1
 
-# techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper]
+# techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Dragon, ForbiddenRectangleType1]
 
-techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Dragon]
+techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Dragon, ForbiddenRectangleType1]
 
 
 def set_solved_board(board):

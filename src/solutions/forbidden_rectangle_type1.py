@@ -1,11 +1,16 @@
 from src.solutions.solving_techniques import SolvingTechniques
 
 
-class HiddenSingle(SolvingTechniques):
+def get_cross_cells(cell1, cell2):
+    return [(cell1[0], cell2[1]), (cell2[0], cell1[1])]
+
+
+class ForbiddenRectangleType1(SolvingTechniques):
 
     def __init__(self, board, candidates):
         super().__init__("Forbidden Rectangle Type 1", board, candidates)
-        self.unit = ""
+        self.candidate_pair_values = None
+        self.fourth_cell = None
 
     def execute_technique(self):
         # Look for only one occurrence of candidate in unit
@@ -13,40 +18,53 @@ class HiddenSingle(SolvingTechniques):
             for i in range(9):
                 if self.board[i][j] != 0:
                     continue
-                num = SolvingTechniques.solved_board[i][j]
-                influential_cells = SolvingTechniques.get_influential_cells((i, j))
-                for key in influential_cells.keys():
-                    candidate_once = False
-                    for x, y in influential_cells[key]:
-                        if self.board[x][y] != 0:
-                            continue
-                        if self.candidates[x][y][num - 1] == 1:
-                            if candidate_once:
-                                self.primary_cells = []
-                                candidate_once = False
+                self.primary_cells = []
+                if sum(self.candidates[i][j]) == 2:
+                    self.primary_cells.append((i, j))
+                    candidate_pair = self.candidates[i][j]
+                    for unit in ['row', 'column']:
+                        unit_cells = SolvingTechniques.get_influential_cells_unit((i, j), unit)
+                        for cell in unit_cells:
+                            x, y = cell
+                            if self.board[x][y] != 0 or (x, y) == (i, j):
+                                continue
+                            if self.candidates[x][y] == candidate_pair:
+                                self.primary_cells.append(cell)
                                 break
-                            self.primary_cells = [(x, y)]
-                            candidate_once = True
-                    if candidate_once:
-                        self.unit = key
+                    if len(self.primary_cells) == 3:
+                        cross_cells = get_cross_cells(self.primary_cells[1], self.primary_cells[2])
+                        self.fourth_cell = list(set(cross_cells) - set(self.primary_cells))[0]
+                        x, y = self.fourth_cell
+                        self.candidate_pair_values = SolvingTechniques.format_candidates(candidate_pair)
+                        fourth_cell_values = SolvingTechniques.format_candidates(self.candidates[x][y])
+                        if not all(elem in fourth_cell_values for elem in self.candidate_pair_values):
+                            break
                         self.configure_highlighting()
-                        return True
+                        if len(self.cross_outs) != 0:
+                            return True
         return False
-
-    def get_squares(self, cell):
-        
 
     def configure_highlighting(self):
         self.highlights = []
         self.cross_outs = []
         self.secondary_cells = []
-        x, y = self.primary_cells[0]
-        self.highlights = [{'value': self.solved_board[x][y],
-                            'cell': self.primary_cells[0]}]
-        self.secondary_cells = SolvingTechniques.get_influential_cells_unit((x, y), self.unit)
-        self.secondary_cells.remove((x, y))
 
+        for cell in self.primary_cells:
+            x, y = cell
+            for candidate in SolvingTechniques.format_candidates(self.candidates[x][y]):
+                self.highlights.append({
+                    'value': candidate,
+                    'cell': cell
+                })
+        self.primary_cells.append(self.fourth_cell)
+        x, y = self.fourth_cell
+        for candidate in SolvingTechniques.format_candidates(self.candidates[x][y]):
+            if candidate in self.candidate_pair_values:
+                self.cross_outs.append({
+                    'value': candidate,
+                    'cell': self.fourth_cell
+                })
 
     def update_explanation(self):
-        self.explanation = f"""Every {self.highlights[0]['value']} in the {self.unit}, except one, is blocked.
-Therefore, {self.highlights[0]['value']} can be put in the only possible field in the {self.unit}, {self.highlights[0]['cell']}."""
+        self.explanation = f"""Because the candidates {self.candidate_pair_values[0]} and {self.candidate_pair_values[1]} are the only candidates in 3 out of 4 fields of the rectangle,
+the fourth field, {self.fourth_cell}, cannot possibly be one of those 2 candidates, and they can be removed"""
