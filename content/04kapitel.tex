@@ -1,20 +1,44 @@
 %!TEX root = ../dokumentation.tex
 
 \chapter{Die Mathematik hinter Sudoku}
-In diesem Kapitel sollen einige mathematische Fragen über Sudokus geklärt werden. Dazu gehören Fragen zur eindeutigen Lösbarkeit und wie diese bewiesen werden kann oder wie viele mögliche fertige Sudokus es denn überhaupt gibt.
+
+In diesem Kapitel sollen einige mathematische Fragen über Sudokus geklärt werden. Dazu gehören Fragen zur eindeutigen Lösbarkeit und wie diese bewiesen werden kann oder wie viele mögliche fertige Sudokus es denn überhaupt gibt. Zudem wird eine mathematische Beschreibung eines Sudokus gegeben und eine algorithmische Lösungsmethode, die ohne das Anwenden von Strategien, eine Lösung für ein Sudoku findet, falls es eine Lösung gibt.
 
 \section{Abzählfragen}
+In diesem Abschnitt soll geklärt werden wie viele mögliche Lösungen für ein vollständig ausgefülltes Sudokugitter existieren. Dabei werden zwei verschiedene Ansätze beschrieben. Besonders der Ansatz von Jarvis und Felgenhauer wird genauer angeschaut.
+
 Ein trivialer Ansatz, um die Frage zu beantworten, wie viele vollständig ausgefüllten 9×9 Standard-Sudokus es gibt, könnte sein zeilenweise von links nach rechts oder spaltenweise von oben nach unten Zahlen einzutragen. Damit würden sich pro Zeile, Spalte oder Block $ 9! $ Möglichkeiten ergeben. Daraus ergeben sich
 \begin{equation}\formelentry{Möglichkeiten vollständig ausgefüllte 9×9 Standard-Sudokus}
-	(9!)9 = 1,1\cdot10^{50} 
+	(9!)^{9} = 1,1\cdot10^{50} 
 \end{equation} 
 Möglichkeiten, ein Sudokugitter auszufüllen. Von diesen ausgefüllten Gittern entsprechen aber nicht alle der Konvention, dass in den Zeilen, Reihen und Boxen jede Zahl von 1 bis 9 nur einmal vorkommen darf. 
 
-Felgenhauer und Jarvis hatten dieselbe Herangehensweise. Als Nächstes haben sie sich immer drei Reihen nebeneinander, oder drei Zeilen untereinander angeschaut. Im Grunde haben Sie die möglichen Lösungen von drei linear verbundenen Blöcken errechnet. Dabei gibt es 
-\begin{equation}\formelentry{Anzahl an Ergänzungen zu der ersten Reihe}
-	2 \cdot (3!)6 + 18 \cdot 3 \cdot (3!)^{6} = 56 \cdot (3!)^{6} = 2612736
+Felgenhauer und Jarvis hatten für eine einzelne Unit dieselbe Herangehensweise. Anschließend haben Sie die möglichen Lösungen von drei linear verbundenen Blöcken errechnet, wie in Abbildung \ref{fig:SudokugitterTheorie} dargestellt. Für die Erklärungen werden im weiteren Verlauf exemplarisch die Blöcke I, II und III verwendet. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{images/SudokuTheorie.jpg}
+	\caption{Markierung von drei linear verbundenen Blöcken}
+	\label{fig:SudokugitterTheorie}
+\end{figure}
+
+Als Ausgangspunkt setzten Felgenhauer und Jarvis die Box I als ausgefüllt voraus. Zunächst berechnen sie die Anzahl von Möglichkeiten den Rest der obere Reihe mit zwei Sets aus jeweils drei Zahlen auszufüllen. So ein Dreier Set in das die Zahlen eingetragen werden sollen ist in Abbildung \ref{fig:SudokuDreierSet} markiert. Jedes Set aus drei Zahlen kann in $ 3! = 6 $ verschiedenen Anordnungen in die oberste Zeile eingetragen werden. Dabei müssen alle sechs Sets, die die Blöcke II und III formieren mit in Betracht gezogen werden. Dasselbe gilt für die Vertauschung der Anordnung der Sets der obersten Reihe. Dadurch ist der erste Teil $ 2 \cdot (3!)^{6} $ der folgenden Formel erklärt. 
+
+Alle anderen 18 Möglichkeiten zwei dieser dreier Sets auszufüllen verhalten sich anders. Nachdem die obere Reihe in Block II und III ausgefüllt wurde, können Zahlen in den übrigen vier Sets aufgrund von fehlenden Einschränkungen vertauscht werden. Damit haben Felgenhauer und Jarvis für den zweiten Teil der Gleichung, $ 18 \cdot 3 \cdot (3!)^{6} $ argumentiert. Insgesamt gibt es also 56 Konfigurationen die sechs Dreier Sets weiter auszufüllen.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.3\textwidth]{images/SudokuDreierSet.png}
+	\caption{Markierung eines Dreier Sets als Kombination aus Block und Zeile}
+	\label{fig:SudokuDreierSet}
+\end{figure}
+
+Damit gibt es 
+\begin{equation}
+	\formelentry{Anzahl an Ergänzungen zu der ersten Reihe}
+	2 \cdot (3!)^{6} + 18 \cdot 3 \cdot (3!)^{6} = 56 \cdot (3!)^{6} = 2612736
 \end{equation} 
-mögliche Erweiterungen einer bereits ausgefüllten Reihe.  
+mögliche Erweiterungen einer bereits ausgefüllten Unit zu drei linear verbundenen Blöcken.  
+
+Da es für eine vollständig ausgefüllte Unit aber $ 9! $ unterschiedliche Ausführungen gibt, muss man die die Möglichkeiten eine Unit auszufüllen mit den möglichen Ergänzungen multiplizieren.
 
 Damit gibt es
 \begin{equation}\formelentry{Anzahl an Möglichkeiten zu den obersten drei Reihen}
@@ -31,11 +55,15 @@ Nach den Reduktionen bleiben 44 Möglichkeiten, die Zeilen zwei und drei auszuf�
 Felgenhauer und Jarvis haben in ihrer Veröffentlichung von 2006 die These aufgestellt, dass es 6.670.903.752.021.072.936.960, also ca. 6,7 Trilliarden  verschiedene, vollständig ausgefüllte Standard-Sudokus Rätsel gibt. Nach der Reduktion von symmetrischen Lösungen bleiben nur noch 5.5 Milliarden Lösungen. \cite{FelgenhauerJarvis}
 
 \section{Komplexität}
+Das folgende Unterkapitel gibt eine mathematische Definition eines Sudoku. Dabei wird eine allgemeine Beschreibung gegeben, die auf Sudokus die ein Problem n-ter Ordnung sind, angewendet werden kann.
+
 Bei Sudokus, die in den Medien veröffentlicht werden, und immer eindeutig lösbar sein müssen, kann durch logische Schlussfolgerung das Sudokurätsel gelöst werden. Durch die eindeutige Lösbarkeit ist es nicht notwendig Fallunterscheidungen zu treffen, also auszuprobieren.
 
 Mathematisch gesehen ist ein Sudoku ein Problem n-ter Ordnung. Dabei ist n eine natürliche Zahl. Auf einem $N\cdot N$ Gitter, wobei $N=n^2$ gilt, sind die Zahlen $1$ bis $N$ in das Gitter einzufügen. Dabei soll in jeder $1\cdot n$ Zeile, $n\cdot 1$ Spalte und $n\cdot n$ Block, jede der Zahlen $1$ bis $N$ genau einmal vorkommen. $N^2$ Felder des Gitters können dabei vorbelegt sein. Ein $9\cdot9$ Sudoku ist damit ein Problem 3-ter Ordnung.
 
 \section{Eindeutige Lösbarkeit}
+Eine wichtige Eigenschaft von Sudokurätseln ist die eindeutige Lösbarkeit. In diesem Abschnitt wird erklärt was genau unter eindeutiger Lösbarkeit gemeint ist und wie viele Ziffern vorgegeben sein müssen um das zu erreichen.
+
 Für ein Sudokugitter ohne vorgegebene Ziffern gibt es 5.472.730.538 (5,5 Milliarden) unterschiedliche, richtige Lösungen. Auch wenn nur eine oder zwei Ziffern vorgegeben werden, gibt es immer noch eine sehr große Anzahl an Lösungen für dieses Sudoku. 
 
 Sudokus, die in irgendeiner Form veröffentlicht werden, sind normalerweise mit der Vorgabe einer eindeutigen Lösung erstellt. Sobald ein Sudoku nur eine korrekte Vervollständigung hat, ist es eindeutig lösbar. Daraus lässt sich folgern, dass in eindeutigen Sudokus in jede freie Zelle nur eine einzige Ziffer eingetragen werden kann, ohne die Regeln zu brechen.
@@ -46,6 +74,8 @@ Als notwendiges Kriterium für ein eindeutig lösbares Sudoku, müssen unter den
 Es gibt die Vermutung, dass die minimale Anzahl an vorgegebenen Ziffern 17 ist. Mittels Brute-Force Methoden wurden eindeutige Sudokus mit nur 17 vorgegebenen Zahlen gesucht. Daran wurde 2011 von einem Forschungsteam von Gary McGuire geforscht. Es gibt jedoch noch keinen mathematischen Beweis für die Vermutung. Diese Vermutung basiert also hauptsächlich auf dem Generieren und Ausprobieren von vielen unterschiedlichen Sudokurätseln mit nur 17 Ziffern und einer eindeutigen Lösung. \cite{FAZ}
 
 \section{Algorithmische Lösungsmethode: Backtracking}
+Um die eindeutige Lösbarkeit beweisen zu können muss ein Sudokurätsel gelöst werden. In der Studienarbeit wird das Überprüfen der eindeutigen Lösbarkeit mittels der algorithmischen Lösungsmethode des Backtracking bewiesen. Dieser Algorithmus wird im Verlaufe des Abschnitts erklärt und wie damit der Beweis der eindeutigen Lösbarkeit umgesetzt werden kann.
+
 Backtracking ist eine Problemlösungsstrategie und mit der Rekursion verwandt. Es werden alle möglichen Lösungen ausprobiert und in jedem Schritt nach einer Abbruchbedingung überprüft. Die Bedingungen an das Problem, dass mit Backtracking gelöst werden sollen sind die Folgenden: 
 \begin{enumerate}
 	\item Das Problem ist in endlich vielen Teilschritten lösbar

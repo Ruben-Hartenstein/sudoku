@@ -1,16 +1,20 @@
 %!TEX root = ../dokumentation.tex
 
-\chapter{Rahmenbedingungen}
-Für das Projekt werden verschiedene Rahmenbedingungen festgelegt. Dazu gehört die Programmiersprache, indem der Sudoku Solver programmiert werden soll, ein Webserver auf dem das Programm später laufen wird und ein Framework, dass als Gerüst für das Programm auf dem Webserver fungiert. Wichtig ist, dass das Framework auf die Programmiersprache angepasst ist, um Probleme zu vermeiden. Im Zuge der Recherchen wurden verschiedenen Webserver in Betracht gezogen und besonders die Webserver Apache HTTP Server und Nginx Server aufgrund ihrer Beliebtheit miteinander verglichen. Auch bei den Frameworks gab es mehrere Optionen, von denen zwei insbesondere in Betracht gezogen und evaluiert wurden. Im Folgenden werden die Pros und Kontras  der genannten Server und Frameworks aufgezählt und die schlussendliche Entscheidung begründet.
+\part{Wissenschaftliche Vertiefung}
 
-\section{Programmiersprachen}
+\chapter{Rahmenbedingungen}
+Für das Projekt werden verschiedene Rahmenbedingungen festgelegt. Dazu gehört die Programmiersprache, indem der \textbf{Sudoku Solver} programmiert werden soll, ein Webserver auf dem das Programm später laufen wird und ein Framework, dass als Gerüst für das Programm auf dem Webserver fungiert. Wichtig ist, dass das Framework auf die Programmiersprache angepasst ist, um Probleme zu vermeiden. Im Zuge der Recherchen wurden verschiedenen Webserver in Betracht gezogen und besonders die Webserver Apache HTTP Server und Nginx Server aufgrund ihrer Beliebtheit miteinander verglichen. Auch bei den Frameworks gab es mehrere Optionen, von denen zwei insbesondere in Betracht gezogen und evaluiert wurden. Im Folgenden werden die Pros und Kontras  der genannten Server und Frameworks aufgezählt und die schlussendliche Entscheidung begründet.
+
+\section{Programmiersprache}
+In den Folgenden Abschnitten werden die genutzten Programmiersprachen vorgestellt und die Entscheidungen für diese erläutert. Neben Python für das Backend, wird für das Frontend JavaScript mit der Erweiterung von jQuery verwendet.
+
 \subsection{Python}
 Für die Implementierung der Strategien und generell im Backend wurde sich für die Programmiersprache Python entschieden. Python ist eine höhere, universelle Sprache und ist als eine sehr vielseitige Programmiersprache anerkannt. Mit Python kann ein objektorientierter, aspektorientierter oder funktionaler Programmierstil umgesetzt werden und die Typisierung funktioniert dynamisch. Des Weiteren wird Python oft bei der Datenanalyse und bei der Verarbeitung großer Datenmenge verwendet. Zusätzlich spielt die Laufzeit zunächst nur eine untergeordnete Rolle und ist nicht sicherheitsrelevant, wodurch bei der Nutzung von Python keine größeren Probleme entstehen sollten.
 Ein weiterer Vorteil von Python ist die große Standardbibliothek, die falls nötig durch Module erweitert werden kann. Noch ein Vorteil ist die hohe Kompatibilität mit mehreren Frameworks. Im Laufe des Kapitels werden noch zwei Frameworks vorgestellt, die für das Projekt in Betracht gezogen worden.
 
 Für das Backend ist eine objektorientierte Umsetzung vorgesehen, die mit Python umgesetzt werden kann. Zudem ist Python einfach zu lesen und klar strukturiert. Auch für die Umsetzung der Lösungsstrategien bietet sich Python durch Module für mathematische Berechnungen und Datenwissenschaft an. 
 
-In diesem Projekt wird mit der Version 3.10 von Python gearbeitet. \cite{Python} \cite{DataToolkit}
+In diesem Projekt wird mit der Version 3.9 von Python gearbeitet. \cite{Python} \cite{DataToolkit}
 
 \subsection{JavaScript}
 Im Frontend wurde sich für JavaScript mit jQuery entschieden. JavaScript ist eine der meist verwendeten Programmiersprachen der Welt. Als JavaScript erfunden wurde, ging man davon aus, dass es für kurze Codeschnipsel verwendet wird, eingebettet in eine Webseite. Es ist eine Skriptsprache und wurde für die Benutzerinteraktion entwickelt. Mithilfe von JavaScript lassen sich Inhalte verändern oder neu generieren. Für das Projekt ist die Interaktion mit dem Benutzer von entscheidender Bedeutung, da er ständig neue Zahlen oder Kandidaten eingeben kann. 
@@ -23,6 +27,8 @@ Neben JavaScript wird die freie Programmbibliothek jQuery für das Frontend verw
 
 
 \section{Webserver}
+Die Studienarbeit soll zum Schluss auf einem Webserver laufen. In diesem Kapitel wird beschreiben welchen Anforderungen ein Webserver gerecht werden muss. Danach werden mit dem Apache HTTP Server und dem Nginx Webserver zwei beliebte Webserver vorgestellt und verglichen. Zuletzt wird die Designentscheidung aufgrund des Vergleichs begründet.
+
 Ein Webserver ist in der Regel ein Server, der zur Verbreitung von Webinhalten im Inter- oder Intranet dient. Die jeweiligen Informationen und Dokumentationen können demnach weltweit oder firmenintern erreicht werden. Damit eine Website jederzeit erreichbar sein kann, muss der Webserver permanent online sein.
 Der Rechner, auf dem der Webserver läuft, wird als Host bezeichnet. Der Webserver ist für die zuverlässige Übertragung von statischen, wie beispielsweise von unveränderlichen \ac{HTML}-Dateien, aber auch von dynamischen Dateien verantwortlich. Für dynamische Dateien muss der Webserver vor der Antwort Programmcode ausführen. Dieser Programmcode wird in diesem Fall in der Programmiersprache Python geschrieben. Mittels einer \ac{CSS} Datei können die Inhalte der dynamischen Dateien weitestgehend von den Darstellungsvorgaben getrennt werden. In der \ac{HTML} Datei wird folglich nur die inhaltliche Gliederung definiert und in der \ac{CSS} Datei die Darstellung, wie etwa Farben oder Layout.
 Für die Übermittlung wird das Übertragungsprotokoll \ac{HTTP} oder die verschlüsselte Variante \ac{HTTPS} verwendet.
@@ -35,8 +41,7 @@ Ein Webserver ist in der Lage, die Inhalte auf viele verschiedene Rechner gleich
 	\label{fig:WebserverStatistik}
 \end{figure}
 
-Am meisten verbreitet sind unter anderem die Webserver Apache HTTP Server und Nginx, wie in die Statistik \ref{fig:WebserverStatistik} dargestellt. Beide Programme sind freie Software und wurden daher für das Projekt in Betracht gezogen. Im Folgenden werden diese beide Programme verglichen.
-
+Am meisten verbreitet sind unter anderem die Webserver Apache HTTP Server und Nginx, wie in die Statistik \ref{fig:WebserverStatistik} dargestellt. Beide Programme sind freie Software und wurden daher für das Projekt in Betracht gezogen. 
 
 \subsection{Apache HTTP Server}
 Der Apache Webserver wurde erstmals 1995 veröffentlicht und hat sich schnell zu einem der beliebtesten Webserver entwickelt. Er unterstützt neben Unix und Linux noch eine Vielzahl an weiteren Betriebssystemen.
@@ -44,7 +49,6 @@ Der Apache Webserver wurde erstmals 1995 veröffentlicht und hat sich schnell zu
 Der Apache Server ist modular aufgebaut, wodurch benötigte Funktionen, die der Server nicht nativ bereitstellt, durch Module importiert werden können. Das Erstellen dynamischer Webseiten wird mittels serverseitiger Skriptsprachen bewerkstelligt. Über ein Modul kann der entsprechende Interpreter in den Server integriert werden.
 
 Beim Apache-Webserver wird ein Ansatz verfolgt, bei dem jede Clientanfrage von einem separaten Prozess oder Thread bearbeitet wird. Dadurch werden Prozesse, die Schreib- oder Leseoperationen erfordern, nacheinander abgearbeitet und es kann passieren, dass ein Request in der Warteschlange verweilen muss, bis der vorherige Request durchgeführt werden konnte. Damit man dieses Problem umgehen kann, gibt es die Möglichkeit, mehrere Single-Threading-Prozesse gleichzeitig zu starten. Diese Strategie ist jedoch mit einem hohen Ressourcenaufwand verbunden. Um dies zu vermeiden, kommen Multi-Threading-Mechanismen zum Einsatz. Für die parallele Abfrage von Clientanfragen gibt es verschiedene Multi-Processing-Module, die integriert werden können.
-
 
 
 \subsection{Nginx Webserver}
@@ -87,6 +91,8 @@ Der ausschlaggebende Grund, warum sich in diesem Projekt für den Apache HTTP Se
 
 
 \section{Framework}
+Dieser Abschnitt stellt zwei verschiedene Frameworks vor, die für die Studienarbeit in Frage kommen. Auch hier wird zunächst erläutert was ein Framework ist und anschließend zwei vorgestellt, verglichen und die Nutzungsentscheidung darauf basierend begründet. 
+
 Ein Framework ist ein Programmiergerüst. Es wird insbesondere bei komponentenbasierten und bei der objektorientierten Softwareentwicklung verwendet. Ein Framework ist kein fertiges Programm, sondern stellt den Rahmen, in der eine Anwendung erstellt werden soll, zur Verfügung. Frameworks lassen sich in Typen gliedern, wobei es nicht immer eine strikte Trennung gibt. Zu diesen Typen gehören beispielsweise  Application Frameworks oder Webframeworks.
 
 Die beiden Frameworks, Django und Flask, die für das Projekt in Betracht gezogen wurden, gehören zu den beliebtesten Webframeworks für Python und sind für die Entwicklung von dynamischen Webanwendungen ausgelegt. 
@@ -128,7 +134,7 @@ Aufgrund der Leichtigkeit wurde sich bei den Frameworks für Flask entschieden. 
 Das Entwurfsmuster \ac{MVC} wird im Framework Flask übernommen.
 
 \section{Entwurfsmuster}
-Wie im Abschnitt der Frameworks schon erwähnt, wird in diesem Projekt eine bestimmte Softwarearchitektur verwendet. Damit wird einem Projekt die grundlegenden Komponenten und das Zusammenspiel dieser visualisiert. Damit ist es einfacher nicht-funktionale Eigenschaften wie die Modifizierbarkeit, Wartbarkeit oder Sicherheit darzustellen und zu verstehen.
+Wie im Abschnitt der Frameworks schon erwähnt, wird in diesem Projekt eine bestimmte Softwarearchitektur verwendet, damit der Programmcode eine gewisse Übersichtlichkeit behält. Damit werden in einem Projekt die grundlegenden Komponenten und das Zusammenspiel dieser visualisiert. Damit ist es einfacher nicht-funktionale Eigenschaften wie die Modifizierbarkeit, Wartbarkeit oder Sicherheit darzustellen und zu verstehen. 
 
 Das Framework Django arbeitet immer mit dem \ac{MVC} Architekturmuster. Da aber Flask als Framework genutzt wird, muss diese Architektur selbst implementiert werden. Im Folgenden wird das Architekturmuster mit seinen drei Komponenten kurz beschrieben.
 
