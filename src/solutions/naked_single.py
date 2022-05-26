@@ -19,6 +19,10 @@ class NakedSingle(SolvingTechniques):
         return False
 
     def configure_highlighting(self):
+        self.highlights = []
+        self.cross_outs = []
+        self.secondary_cells = []
+
         x, y = self.primary_cells[0]
         self.highlights = [{'value': self.solved_board[x][y],
                             'cell': self.primary_cells[0]}]

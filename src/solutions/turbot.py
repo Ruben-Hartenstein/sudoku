@@ -1,5 +1,14 @@
 from src.solutions.solving_techniques import SolvingTechniques
 
+
+def check_same_height(cells, index):
+    height = [el[1 - index] for el in cells]
+    if len(set(height)) == 1:
+        return True
+    else:
+        return False
+
+
 class Turbot(SolvingTechniques):
 
     def __init__(self, board, candidates):
@@ -30,27 +39,37 @@ class Turbot(SolvingTechniques):
                         self.primary_cells = relevant_cells
 
                         for i in range(2):
-                            influential_cells_orthogonal = self.get_cells_with_candidate(SolvingTechniques.get_influential_cells_unit(relevant_cells[i], orthogonal_unit[1-index]), self.candidate)
+                            influential_cells_orthogonal = self.get_cells_with_candidate(
+                                SolvingTechniques.get_influential_cells_unit(relevant_cells[i],
+                                                                             orthogonal_unit[1 - index]),
+                                self.candidate)
                             influential_cells_orthogonal.remove(relevant_cells[i])
                             relevant_box = SolvingTechniques.get_box(relevant_cells[i])
                             for cell in influential_cells_orthogonal:
                                 if SolvingTechniques.get_box(cell) == relevant_box:
                                     continue
-                                influential_cells_box = self.get_cells_with_candidate(SolvingTechniques.get_influential_cells_unit(cell, 'box'), self.candidate)
+                                influential_cells_box = self.get_cells_with_candidate(
+                                    SolvingTechniques.get_influential_cells_unit(cell, 'box'), self.candidate)
                                 influential_cells_box.remove(cell)
-                                removable_cells = list(set(influential_cells_orthogonal).intersection(influential_cells_box))
+                                removable_cells = list(
+                                    set(influential_cells_orthogonal).intersection(influential_cells_box))
                                 for removable_cell in removable_cells:
                                     influential_cells_box.remove(removable_cell)
                                 if not influential_cells_box:
                                     break
-                                elif not self.check_same_height(influential_cells_box, index):
+                                elif not check_same_height(influential_cells_box, index):
                                     break
 
-                                coordinate_chain = influential_cells_box[0][1-index]
-                                coordinate_box = cell[1-index]
+                                coordinate_chain = influential_cells_box[0][1 - index]
+                                coordinate_box = cell[1 - index]
                                 if coordinate_box != coordinate_chain:
-                                    self.other_cell = self.get_cells_with_candidate(SolvingTechniques.get_influential_cells_unit(relevant_cells[1-i], orthogonal_unit[1-index]), self.candidate)
-                                    influential_cells_chain = self.get_cells_with_candidate(SolvingTechniques.get_influential_cells_unit(influential_cells_box[0], self.unit), self.candidate)
+                                    self.other_cell = self.get_cells_with_candidate(
+                                        SolvingTechniques.get_influential_cells_unit(relevant_cells[1 - i],
+                                                                                     orthogonal_unit[1 - index]),
+                                        self.candidate)
+                                    influential_cells_chain = self.get_cells_with_candidate(
+                                        SolvingTechniques.get_influential_cells_unit(influential_cells_box[0],
+                                                                                     self.unit), self.candidate)
                                     self.other_cell = list(set(influential_cells_chain).intersection(self.other_cell))
                                     if not self.other_cell:
                                         break
@@ -90,29 +109,9 @@ class Turbot(SolvingTechniques):
         self.secondary_cells.remove(self.primary_cells[0])
         self.secondary_cells.remove(self.primary_cells[1])
 
-
-
-
     def update_explanation(self):
         self.explanation = f"""The candidate {self.candidate} appears only twice in a {self.unit}, but in different blocks.
 The target object is in a field that is logically reached by both of these initial candidates, in this case {self.cross_outs[0]['cell']}. 
-Regardless of which of the two candidates in the starting {self.unit} is correct, we can eliminate the {self.candidate} in the orthogonal target field {self.cross_outs[0]['cell']}, 
-because the elimination is either directly or via a small chain {self.primary_cells[2]} and {self.primary_cells[3]}.
+Regardless which of the two candidates in the starting {self.unit} is correct, we can eliminate the {self.candidate} in the target field {self.cross_outs[0]['cell']}, 
+because the elimination occurs either directly or via a small chain {self.primary_cells[2]} and {self.primary_cells[3]}.
 """
-
-    def get_cells_with_candidate(self, cells, candidate):
-        candidate_cells = []
-        for cell in cells:
-            x, y = cell
-            if self.board[x][y] != 0:
-                continue
-            if self.candidates[x][y][candidate - 1]:
-                candidate_cells.append(cell)
-        return candidate_cells
-
-    def check_same_height(self, cells, index):
-        height = [el[1-index] for el in cells]
-        if len(set(height)) == 1:
-            return True
-        else:
-            return False

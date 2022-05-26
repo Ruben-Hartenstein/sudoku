@@ -25,6 +25,16 @@ class SolvingTechniques(ABC):
             "explanation": self.explanation
         }
 
+    def get_cells_with_candidate(self, cells, candidate):
+        candidate_cells = []
+        for cell in cells:
+            x, y = cell
+            if self.board[x][y] != 0:
+                continue
+            if self.candidates[x][y][candidate - 1]:
+                candidate_cells.append(cell)
+        return candidate_cells
+
     @classmethod
     def set_solved_board(cls, board):
         cls.solved_board = board
@@ -82,7 +92,6 @@ class SolvingTechniques(ABC):
         box_x = (cell[1] // 3) * 3
         box_y = (cell[0] // 3) * 3
         return box_x, box_y
-
 
     @abstractmethod
     def configure_highlighting(self):

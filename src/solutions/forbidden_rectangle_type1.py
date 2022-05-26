@@ -13,7 +13,6 @@ class ForbiddenRectangleType1(SolvingTechniques):
         self.fourth_cell = None
 
     def execute_technique(self):
-        # Look for only one occurrence of candidate in unit
         for j in range(9):
             for i in range(9):
                 if self.board[i][j] != 0:

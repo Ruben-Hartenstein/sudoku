@@ -82,12 +82,3 @@ class Dragon(SolvingTechniques):
     def update_explanation(self):
         self.explanation = f"""The candidate {self.candidate}"""
 
-    def get_cells_with_candidate(self, cells, candidate):
-        candidate_cells = []
-        for cell in cells:
-            x, y = cell
-            if self.board[x][y] != 0:
-                continue
-            if self.candidates[x][y][candidate - 1]:
-                candidate_cells.append(cell)
-        return candidate_cells

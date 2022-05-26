@@ -81,13 +81,3 @@ class XWing(SolvingTechniques):
         self.explanation = f"""The candidate {self.candidate} only exists twice in two separate {self.unit}s and all 4 fields appear only in two {orthogonal_unit[0]}s.
 Because {self.candidate} has to be placed twice in those 4 fields, their place in the {self.unit}s can be restricted to those two {orthogonal_unit[0]}s and 
 any other candidate with the value {self.candidate} can be removed from the two {orthogonal_unit[0]}s."""
-
-    def get_cells_with_candidate(self, cells, candidate):
-        candidate_cells = []
-        for cell in cells:
-            x, y = cell
-            if self.board[x][y] != 0:
-                continue
-            if self.candidates[x][y][candidate - 1]:
-                candidate_cells.append(cell)
-        return candidate_cells

@@ -1,5 +1,5 @@
 from src.solutions.solving_techniques import SolvingTechniques
-from itertools import chain, combinations, count
+from itertools import combinations
 
 
 class SkyScraper(SolvingTechniques):
@@ -89,7 +89,6 @@ class SkyScraper(SolvingTechniques):
                     'value': self.candidate,
                     'cell': cell
                 })
-        print(self.primary_cells)
 
     def update_explanation(self):
         orthogonal_unit = ['row', 'column']
@@ -98,15 +97,3 @@ class SkyScraper(SolvingTechniques):
         self.explanation = f"""The candidate {self.candidate} only exists twice in two separate {self.unit}s. 
 Two of those fields are in the same row and see each other and the other two aren't. 
 Thus, a {self.candidate} has to be in one of the cells {self.uneven_cell_pair[0]} and {self.uneven_cell_pair[1]} and all candidates  {self.candidate} in fields that are seen by both of these cells can be removed for certain."""
-
-
-    def get_cells_with_candidate(self, cells, candidate):
-        candidate_cells = []
-        for cell in cells:
-            x, y = cell
-            if self.board[x][y] != 0:
-                continue
-            if self.candidates[x][y][candidate - 1]:
-                candidate_cells.append(cell)
-        return candidate_cells
-
