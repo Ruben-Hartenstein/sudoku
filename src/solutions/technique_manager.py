@@ -13,14 +13,14 @@ from src.solutions.x_wing import XWing
 from src.solutions.turbot import Turbot
 from src.solutions.third_eye import ThirdEye
 from src.solutions.skyscraper import SkyScraper
-# hier fehlt noch der Schwertfisch
+from src.solutions.swordfish import Swordfish
 from src.solutions.dragon import Dragon
 from src.solutions.forbidden_rectangle_type1 import ForbiddenRectangleType1
 from src.solutions.forbidden_rectangle_type2 import ForbiddenRectangleType2
 
 # techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Dragon, ForbiddenRectangleType1, ForbiddenRectangleType2]
 
-techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Dragon, ForbiddenRectangleType1, ForbiddenRectangleType2]
+techniques = [Swordfish]
 
 
 def set_solved_board(board):

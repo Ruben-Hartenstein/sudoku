@@ -40,6 +40,18 @@ class SolvingTechniques(ABC):
         cls.solved_board = board
 
     @staticmethod
+    def flatten(lst):
+        def flatten(lst):
+            for item in lst:
+                if isinstance(item, list) or isinstance(item, tuple):
+                    for element in flatten(item):
+                        yield element
+                else:
+                    yield item
+
+        return list(flatten(lst))
+
+    @staticmethod
     def remove_duplicates(cells):
         return list(dict.fromkeys(cells))
 
