@@ -1,10 +1,6 @@
 from src.solutions.solving_techniques import SolvingTechniques
 
 
-def get_cross_cells(cell1, cell2):
-    return [(cell1[0], cell2[1]), (cell2[0], cell1[1])]
-
-
 class ForbiddenRectangleType2(SolvingTechniques):
 
     def __init__(self, board, candidates):
@@ -52,8 +48,11 @@ class ForbiddenRectangleType2(SolvingTechniques):
                         if not all(elem in candidate_triple_value for elem in self.candidate_pair_values):
                             continue
                         self.remaining_value = list(set(candidate_triple_value) - set(self.candidate_pair_values))[0]
-                        cross_cells = get_cross_cells(self.primary_cells[1], (k, l))
-                        self.fourth_cell = list(set(cross_cells) - set(self.primary_cells))[0]
+                        cross_cells = self.get_cross_cells(self.primary_cells[1], (k, l))
+                        self.fourth_cell = list(set(cross_cells) - set(self.primary_cells))
+                        if not self.fourth_cell:
+                            continue
+                        self.fourth_cell = self.fourth_cell[0]
                         if self.candidates[self.fourth_cell[0]][self.fourth_cell[1]] == self.candidates[k][l]:
                             primary_cells_copy = self.primary_cells[:]
                             self.primary_cells.append(orthogonal_cell)

@@ -55,21 +55,15 @@ class Turbot(SolvingTechniques):
                                     set(influential_cells_orthogonal).intersection(influential_cells_box))
                                 for removable_cell in removable_cells:
                                     influential_cells_box.remove(removable_cell)
-                                if not influential_cells_box:
-                                    break
-                                elif not check_same_height(influential_cells_box, index):
+                                if not influential_cells_box or not check_same_height(influential_cells_box, index):
                                     break
 
                                 coordinate_chain = influential_cells_box[0][1 - index]
                                 coordinate_box = cell[1 - index]
                                 if coordinate_box != coordinate_chain:
                                     self.other_cell = self.get_cells_with_candidate(
-                                        SolvingTechniques.get_influential_cells_unit(relevant_cells[1 - i],
-                                                                                     orthogonal_unit[1 - index]),
-                                        self.candidate)
-                                    influential_cells_chain = self.get_cells_with_candidate(
-                                        SolvingTechniques.get_influential_cells_unit(influential_cells_box[0],
-                                                                                     self.unit), self.candidate)
+                                        SolvingTechniques.get_influential_cells_unit(relevant_cells[1 - i], orthogonal_unit[1 - index]), self.candidate)
+                                    influential_cells_chain = self.get_cells_with_candidate(SolvingTechniques.get_influential_cells_unit(influential_cells_box[0], self.unit), self.candidate)
                                     self.other_cell = list(set(influential_cells_chain).intersection(self.other_cell))
                                     if not self.other_cell:
                                         break

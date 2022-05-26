@@ -35,6 +35,9 @@ class SolvingTechniques(ABC):
                 candidate_cells.append(cell)
         return candidate_cells
 
+    def get_cross_cells(self, cell1, cell2):
+        return [(x, y) for x, y in [(cell1[0], cell2[1]), (cell2[0], cell1[1])] if self.board[x][y] == 0]
+
     @classmethod
     def set_solved_board(cls, board):
         cls.solved_board = board
