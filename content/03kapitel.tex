@@ -9,7 +9,7 @@ Nachdem in der Einleitung schon kurz auf das Spielfeld eines Sudokus und die Reg
 \section{Spielfeld Aufteilung}
 Zunächst wird die Aufteilung des Spielfelds erläutert und die Units vorgestellt. Jede Unit bekommt einen eindeutigen Identitiver, auf den im weiteren Verlauf der Arbeit referenziert werden kann.
 
-Das Spielfeld, auf dem ein Sudoku gespielt wird, besteht aus einem 9x9 Gitter und damit aus 81 einzelnen Zellen. Diese Gitter wird weiterhin in je neun Zeilen, Spalten und 3x3 Blöcke aufgeteilt. Jede Aufteilung, weiterhin auch Unit genannt, besteht immer aus neun Zellen. Damit kann ein Sudoku also nochmal in 27 verschiedene Units aufgeteilt werden. Wie diese Units aussehen, wird im Folgenden gezeigt.
+Das Spielfeld, auf dem ein Sudoku gespielt wird, besteht aus einem 9x9 Gitter und damit aus 81 einzelnen Zellen. Diese Gitter wird weiterhin in je neun Zeilen, Spalten und 3x3 Blöcke aufgeteilt. Jede Aufteilung, weiterhin auch Unit genannt, besteht immer aus neun Zellen. Damit kann ein Sudoku also nochmal in 27 verschiedene Units aufgeteilt werden. Wie diese Units aussehen, wird im Folgenden gezeigt. \cite{sudopedia_2022}
 
 \subsection{Zeile}
 Eine Zeile in einem Sudokuspielfeld sind Zellen, die horizontal zueinander ausgerichtet sind. In der Abbildung \ref{fig:SudokugitterZeile} wurde die oberste Zeile beispielhaft markiert.
@@ -48,16 +48,16 @@ Die Regeln ergeben sich durch einfache Bedingungen, wenn man die Aufteilung des 
 
 Am Ende kommen die Zahlen von eins bis neun also jeweils neunmal auf dem gesamten Sudokugitter vor, ohne dass sie sich gegenseitig sehen, also sich keine Zahl doppelt in einer Zeile, Spalte oder Box befindet.
 
-Damit man das Sudokugitter ausfüllen kann und es nur eine mögliche Lösung gibt, sind zu Spielbeginn einige Ziffern vorgegeben. Mithilfe dieser Ziffern ist es möglich, mit den gerade erklärten Regeln das ganze Sudokugitter durch Logik und Deduktionen zu füllen. \cite{sudopedia_2022}
+Damit man das Sudokugitter ausfüllen kann und es nur eine mögliche Lösung gibt, sind zu Spielbeginn einige Ziffern vorgegeben. Mithilfe dieser Ziffern ist es möglich, mit den gerade erklärten Regeln das ganze Sudokugitter durch Logik und Deduktionen zu füllen. \cite{sudopedia_2022} \cite{martin}
 
 \section{Strategie}
 In diesem Abschnitt wird die Bedeutung von Strategien im Sinne des Lösens eines Sudokus beschrieben. Es werden zwei verschiedene Arten von Strategien angesprochen. In diesem Sinne wird das Hilfsmittel der Kandidaten-Notation gebraucht und daher erläutert.
 
 Um ein Sudoku zu lösen, können verschiedene Strategien eingesetzt werden. Das Ziel einer Strategie ist es hierbei eine passende Zahl in das Sudoku einzufügen oder mögliche Kandidaten zu eliminieren. Es gibt zwei grundlegende Strategien, um Zahlen direkt einzufügen: den Hidden Single und den Naked Single. Beide Strategien können oft intuitiv und ohne eine große Erklärung gefunden und umgesetzt werden. Weitere leichte Strategien wie ein Hidden Double oder ein Naked Double, bei denen Kandidaten eliminiert werden können, sind mithilfe der Kandidaten-Notation leicht gefunden.
 
-Insgesamt gibt es über 30 gebräuchliche Strategien, die zur Unterstützung bei schweren Sudokus angewendet werden können. Oftmals sind anspruchsvollere Strategien für das menschliche Auge schwer zu entdecken. Wichtig bei diesen komplexeren Strategien ist eine gewissenhafte Ausführung der Kandidaten-Notation.\cite{martin}
+Insgesamt gibt es über 30 gebräuchliche Strategien, die zur Unterstützung bei schweren Sudokus angewendet werden können. Oftmals sind anspruchsvollere Strategien für das menschliche Auge schwer zu entdecken. Wichtig bei diesen komplexeren Strategien ist eine gewissenhafte Ausführung der Kandidaten-Notation.\cite{martin} \cite[9]{zambon2015sudoku}
 
 \subsection{Lösungshilfen: Kandidaten-Notation}
 Kandidaten sind Zahlen in einer Zelle des Sudokugitters, die, mit dem aktuellen Informationsstand, als feste Zahl noch infrage kommen. Das Problem liegt dabei, dass meistens mehrere Zahlen in eine Zelle können. Kandidaten können durch das Eintragen von weiteren Zahlen oder das Anwenden von Strategien eliminiert werden. Wenn man dabei jede Zelle einzeln betrachtet, geben die Kandidaten keinen weiteren Nutzen. Wenn die Kandidaten jedoch über mehrerer Zellen in Bezug zueinander angeschaut werden, lassen sich Zusammenhänge erkennen. Die meisten Strategien basieren auf diesen Zusammenhängen. 
 
-Sobald eine Zahl eingetragen wird, müssen die Kandidaten aktualisiert werden. Wenn eine Zahl eingetragen wird, kann jeder gleichwertiger Kandidat, der diese Zahl sieht, gestrichen werden.
+Sobald eine Zahl eingetragen wird, müssen die Kandidaten aktualisiert werden. Wenn eine Zahl eingetragen wird, kann jeder gleichwertiger Kandidat, der diese Zahl sieht, gestrichen werden. \cite[85\psq]{althofer2014spiele} \cite{martin} \cite[4]{zambon2015sudoku}

@@ -5,7 +5,7 @@ In vielen Zeitungen ist eine Vielzahl von Logikrätseln gedruckt. Darunter eines
 In der üblichen Version ist es das Ziel, ein 9×9-Gitter mit den Ziffern 1 bis 9 zu füllen. Dabei kann das Gitter in drei unterschiedliche Einheiten aufgeteilt werden. Diese Einheiten sind die Spalten, Zeilen und Blöcke des Gitters. Ein Block ist ein 3×3-Unterquadrat des Gitters. In jeder Einheit darf jede Ziffer genau einmal vorkommen.
 Ausgangspunkt ist ein Gitter, in dem bereits mehrere Ziffern vorgegeben sind, damit das Sudoku eindeutig lösbar ist. Sudokus gibt es in unterschiedlichen Schwierigkeitsgraden. 
 
-In der Studienarbeit soll ein \textbf{Sudoku Helper} entwickelt werden. Ziel ist es dem Nutzer verschiedene Strategien unterschiedlicher Schwierigkeitsstufen anhand eines realen Beispiels zu erklären und so den Lösungsweg für schwere Sudokus zu erläutern.
+In der Studienarbeit soll ein \textbf{Sudoku Helper} entwickelt werden. Ziel ist es dem Nutzer verschiedene Strategien unterschiedlicher Schwierigkeitsstufen anhand eines realen Beispiels zu erklären und so den Lösungsweg für schwere Sudokus zu erläutern. \cite{FAZ} \cite{sudopedia_2022}
 
 Im Verlaufe der Arbeit wird zunächst die Motivation und Aufgabenstellung der Studienarbeit beschrieben. 
 
@@ -13,13 +13,13 @@ Danach werdend die Rahmenbedingungen, wie beispielsweise die Wahl der Programmie
 
 Der nächste größere Teil der Studienarbeit ist die Implementierung. Hierbei werden Designentscheidungen für Front- und Backend erläutert, sowie deren technische Umsetzung. Im Zug der Implementierung werden auch die Testing- und Validierungsstrategien beschrieben.
 
-Am Schluss der Arbeit steht ein Fazit mit den Ergebnissen und Erfahrungen, sowie ein Ausblick wie das Projekt noch verbessert und erweitert werden könnte
+Am Schluss der Arbeit steht ein Fazit mit den Ergebnissen und Erfahrungen, sowie ein Ausblick wie das Projekt noch verbessert und erweitert werden könnte.
  
 
 \section{Motivation}
 Sudokus gibt es mittlerweile in vielen verschiedenen Varianten, mit modifizierten Regeln. In dieser Arbeit und für den \textbf{Sudoku Helper} wird jedoch nur das klassische Sudoku, wie es in der Einleitung beschrieben wurde, betrachtet. Es gibt verschiedene Schwierigkeitsstufen von Sudokus. Meistens werden Sudokus mit vielen vorgegebenen Zahlen als einfach eingestuft und Sudokus mit wenigen vorgegebenen Zahlen als schwierig. Ein weiterer Punkt, der Einfluss auf die Schwierigkeitsstufe eines Sudokus hat, ist die Anordnung der vorgegebenen Ziffern.
 
-Wer schon einmal versucht hat ein schweres Sudoku  zu lösen, ist vielleicht auch bereits an seine Grenzen gekommen. Gerade bei schwierige Sudokus mit wenigen vorgebenden Zahlen kann es schwierig sein selbst eine passende Lösungsstrategie für das Sudoku zu finden. Oft sind anwendbare Lösungsstrategien schwierig zu erkennen und es lassen sich damit meist nur Kandidaten eliminieren. Einfachen Sudokus lassen sich oft durch simple logische Schlussfolgerungen lösen und Lösungsstrategien werden meist unbewusst und intuitiv eingesetzt. 
+Wer schon einmal versucht hat ein schweres Sudoku  zu lösen, ist vielleicht auch bereits an seine Grenzen gekommen. Gerade bei schwierige Sudokus mit wenigen vorgebenden Zahlen kann es schwierig sein selbst eine passende Lösungsstrategie für das Sudoku zu finden. Oft sind anwendbare Lösungsstrategien schwierig zu erkennen und es lassen sich damit meist nur Kandidaten eliminieren. Einfachen Sudokus lassen sich oft durch simple logische Schlussfolgerungen lösen und Lösungsstrategien werden meist unbewusst und intuitiv eingesetzt. \cite{martin}
 
 In dieser Studienarbeit soll ein \textbf{Sudoku Helper} entwickelt werden, der Lösungsstrategien programmatisch erkennt und dem Benutzer bei dem Finden eines Lösungsschrittes unterstützt. Diese Unterstützung erfolgt dabei in mehreren Stufen, von der Visualisierung, über die Erklärung bis zur automatischen Umsetzung der Strategie.
 

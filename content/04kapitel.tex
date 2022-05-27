@@ -52,14 +52,14 @@ Auf diese 2612736 Möglichkeiten haben Jarvis und Felgenhauer drei möglichen Re
 
 Nach den Reduktionen bleiben 44 Möglichkeiten, die Zeilen zwei und drei auszufüllen. Danach muss herausgefunden werden, wie viele Konfigurationen eines Sudokus es gibt, das Gitter zu vervollständigen. 
 
-Felgenhauer und Jarvis haben in ihrer Veröffentlichung von 2006 die These aufgestellt, dass es 6.670.903.752.021.072.936.960, also ca. 6,7 Trilliarden  verschiedene, vollständig ausgefüllte Standard-Sudokus Rätsel gibt. Nach der Reduktion von symmetrischen Lösungen bleiben nur noch 5.5 Milliarden Lösungen. \cite{FelgenhauerJarvis}
+Felgenhauer und Jarvis haben in ihrer Veröffentlichung von 2006 die These aufgestellt, dass es 6.670.903.752.021.072.936.960, also ca. 6,7 Trilliarden  verschiedene, vollständig ausgefüllte Standard-Sudokus Rätsel gibt. Nach der Reduktion von symmetrischen Lösungen bleiben nur noch 5.5 Milliarden Lösungen. \cite{FelgenhauerJarvis} \cite[90\psqq]{althofer2014spiele}
 
 \section{Komplexität}
 Das folgende Unterkapitel gibt eine mathematische Definition eines Sudoku. Dabei wird eine allgemeine Beschreibung gegeben, die auf Sudokus die ein Problem n-ter Ordnung sind, angewendet werden kann.
 
 Bei Sudokus, die in den Medien veröffentlicht werden, und immer eindeutig lösbar sein müssen, kann durch logische Schlussfolgerung das Sudokurätsel gelöst werden. Durch die eindeutige Lösbarkeit ist es nicht notwendig Fallunterscheidungen zu treffen, also auszuprobieren.
 
-Mathematisch gesehen ist ein Sudoku ein Problem n-ter Ordnung. Dabei ist n eine natürliche Zahl. Auf einem $N\cdot N$ Gitter, wobei $N=n^2$ gilt, sind die Zahlen $1$ bis $N$ in das Gitter einzufügen. Dabei soll in jeder $1\cdot n$ Zeile, $n\cdot 1$ Spalte und $n\cdot n$ Block, jede der Zahlen $1$ bis $N$ genau einmal vorkommen. $N^2$ Felder des Gitters können dabei vorbelegt sein. Ein $9\cdot9$ Sudoku ist damit ein Problem 3-ter Ordnung.
+Mathematisch gesehen ist ein Sudoku ein Problem n-ter Ordnung. Dabei ist n eine natürliche Zahl. Auf einem $N\cdot N$ Gitter, wobei $N=n^2$ gilt, sind die Zahlen $1$ bis $N$ in das Gitter einzufügen. Dabei soll in jeder $1\cdot n$ Zeile, $n\cdot 1$ Spalte und $n\cdot n$ Block, jede der Zahlen $1$ bis $N$ genau einmal vorkommen. $N^2$ Felder des Gitters können dabei vorbelegt sein. Ein $9\cdot9$ Sudoku ist damit ein Problem 3-ter Ordnung. \cite{HerzbergMurty} 
 
 \section{Eindeutige Lösbarkeit}
 Eine wichtige Eigenschaft von Sudokurätseln ist die eindeutige Lösbarkeit. In diesem Abschnitt wird erklärt was genau unter eindeutiger Lösbarkeit gemeint ist und wie viele Ziffern vorgegeben sein müssen um das zu erreichen.
@@ -68,19 +68,19 @@ Für ein Sudokugitter ohne vorgegebene Ziffern gibt es 5.472.730.538 (5,5 Millia
 
 Sudokus, die in irgendeiner Form veröffentlicht werden, sind normalerweise mit der Vorgabe einer eindeutigen Lösung erstellt. Sobald ein Sudoku nur eine korrekte Vervollständigung hat, ist es eindeutig lösbar. Daraus lässt sich folgern, dass in eindeutigen Sudokus in jede freie Zelle nur eine einzige Ziffer eingetragen werden kann, ohne die Regeln zu brechen.
 
-Als notwendiges Kriterium für ein eindeutig lösbares Sudoku, müssen unter den vorgegebenen Zahlen mindestens acht unterschiedliche Zahlen von 1 bis 9 vorkommen. Dieses Kriterium ist gegeben durch den Fakt, dass bei nur sieben vorgegebenen unterschiedlichen Ziffern die beiden übrigen in der zugehörigen Lösung vertauscht werden können. \cite{HerzbergMurty}
+Als notwendiges Kriterium für ein eindeutig lösbares Sudoku, müssen unter den vorgegebenen Zahlen mindestens acht unterschiedliche Zahlen von 1 bis 9 vorkommen. Dieses Kriterium ist gegeben durch den Fakt, dass bei nur sieben vorgegebenen unterschiedlichen Ziffern die beiden übrigen in der zugehörigen Lösung vertauscht werden können. \cite{HerzbergMurty} \cite[95\psqq]{althofer2014spiele}
 
 \subsection{Anzahl vorgegebene Ziffern für ein eindeutiges Sudoku}  
-Es gibt die Vermutung, dass die minimale Anzahl an vorgegebenen Ziffern 17 ist. Mittels Brute-Force Methoden wurden eindeutige Sudokus mit nur 17 vorgegebenen Zahlen gesucht. Daran wurde 2011 von einem Forschungsteam von Gary McGuire geforscht. Es gibt jedoch noch keinen mathematischen Beweis für die Vermutung. Diese Vermutung basiert also hauptsächlich auf dem Generieren und Ausprobieren von vielen unterschiedlichen Sudokurätseln mit nur 17 Ziffern und einer eindeutigen Lösung. \cite{FAZ}
+Es gibt die Vermutung, dass die minimale Anzahl an vorgegebenen Ziffern 17 ist. Mittels Brute-Force Methoden wurden eindeutige Sudokus mit nur 17 vorgegebenen Zahlen gesucht. Daran wurde 2011 von einem Forschungsteam von Gary McGuire geforscht. Es gibt jedoch noch keinen mathematischen Beweis für die Vermutung. Diese Vermutung basiert also hauptsächlich auf dem Generieren und Ausprobieren von vielen unterschiedlichen Sudokurätseln mit nur 17 Ziffern und einer eindeutigen Lösung. \cite{FAZ} \cite[95\psqq]{althofer2014spiele}
 
 \section{Algorithmische Lösungsmethode: Backtracking}
 Um die eindeutige Lösbarkeit beweisen zu können muss ein Sudokurätsel gelöst werden. In der Studienarbeit wird das Überprüfen der eindeutigen Lösbarkeit mittels der algorithmischen Lösungsmethode des Backtracking bewiesen. Dieser Algorithmus wird im Verlaufe des Abschnitts erklärt und wie damit der Beweis der eindeutigen Lösbarkeit umgesetzt werden kann.
 
 Backtracking ist eine Problemlösungsstrategie und mit der Rekursion verwandt. Es werden alle möglichen Lösungen ausprobiert und in jedem Schritt nach einer Abbruchbedingung überprüft. Die Bedingungen an das Problem, dass mit Backtracking gelöst werden sollen sind die Folgenden: 
 \begin{enumerate}
-	\item Das Problem ist in endlich vielen Teilschritten lösbar
-	\item Jeder der Teilschritte besitzt Abbruchbedingungen
-	\item Jeder der Schritte hat eine endliche Anzahl Lösungsmöglichkeiten
+	\item Ein Problem kann in endlich viele Teilschritte aufgeteilt werden
+	\item Ein Teilschritt besitzt eine Abbruchbedingung
+	\item Ein Teilschritt hat endlich viele Lösungsmöglichkeiten
 \end{enumerate}
 
 Für jedes Element des Problems, in diesem Fall für jede freie Zelle, werden alle möglichen Zustände ausprobiert. Die Zustände sind im Fall des Sudokus die Zahlen von eins bis neun. Wenn ein Zustand zulässig ist, also in der Zeile, Reihe oder Box die Zahl nicht bereits eingetragen ist, so wird rekursiv überprüft, ob es für den aktuellen Zustand eine Lösung gibt. Wenn es diese nicht gibt, wird der vorherige Schritt rückgängig gemacht und eine neue Lösung gesucht. 
@@ -93,7 +93,7 @@ Bei $z$ möglichen Verzweigungen jeder Teillösung und einem möglichen Verzweig
 
 Wenn mittels des Backtrackings keine Lösung für das Sudoku gefunden wurde, gibt es keine Lösung. Wenn jedoch eine Lösung gefunden wurde, so ist noch nicht bewiesen, dass diese Lösung eindeutig ist. Um eine eindeutige Lösbarkeit zu garantieren, wird mittels Backtracking überprüft, dass keine weitere Lösung existiert.
 
-Da es für das Lösen eines Sudokus keinen effizienteren Algorithmus gibt und bereits vor der Anwendung der Lösungsstrategie überprüft werden soll, ob es eine eindeutige Lösbarkeit gibt, ist dieser Ansatz am sinnvollsten. \cite[209 \psqq]{logofatu2014grundlegende} 
+Da es für das Lösen eines Sudokus keinen effizienteren Algorithmus gibt und bereits vor der Anwendung der Lösungsstrategie überprüft werden soll, ob es eine eindeutige Lösbarkeit gibt, ist dieser Ansatz am sinnvollsten. \cite[209\psqq]{logofatu2014grundlegende} \cite{knott_2017}
 
 \subsection{Backtracking mit Brute-Force-Methode}
 Backtracking mit der Brute-Force Methode funktioniert wie oben beschrieben auf dem Prinzip des Backtracking mit dem Ausprobieren aller möglichen Fällen. Mit dem ersten freien Feld probiert man mit der 1 beginnend, ob man zu einer Lösung kommt. Als Abbruchbedingung ist das nicht singuläre Auftreten der neu eingefügten Zahl in Reihe, Zeile und Box implementiert. 
