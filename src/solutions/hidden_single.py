@@ -43,7 +43,6 @@ class HiddenSingle(SolvingTechniques):
         self.secondary_cells = SolvingTechniques.get_influential_cells_unit((x, y), self.unit)
         self.secondary_cells.remove((x, y))
 
-
     def update_explanation(self):
         self.explanation = f"""Every {self.highlights[0]['value']} in the {self.unit}, except one, is blocked.
 Therefore, {self.highlights[0]['value']} can be put in the only possible field in the {self.unit}, {self.highlights[0]['cell']}."""

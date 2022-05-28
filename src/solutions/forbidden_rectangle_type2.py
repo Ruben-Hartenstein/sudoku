@@ -49,6 +49,7 @@ class ForbiddenRectangleType2(SolvingTechniques):
                             continue
                         self.remaining_value = list(set(candidate_triple_value) - set(self.candidate_pair_values))[0]
                         cross_cells = self.get_cross_cells(self.primary_cells[1], (k, l))
+                        cross_cells = [cross_cell for cross_cell in cross_cells if self.board[cross_cell[0]][cross_cell[1]] == 0]
                         self.fourth_cell = list(set(cross_cells) - set(self.primary_cells))
                         if not self.fourth_cell:
                             continue

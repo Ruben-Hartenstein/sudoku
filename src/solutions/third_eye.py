@@ -11,19 +11,14 @@ class ThirdEye(SolvingTechniques):
         three_candidates_once = False
         for i in range(9):
             for j in range(9):
-                print((i, j))
                 if self.board[i][j] != 0 or sum(self.candidates[i][j]) == 2:
-                    print("Number or two candidates")
                     continue
                 elif sum(self.candidates[i][j]) == 3 and not three_candidates_once:
-                    print("First time 3 candidates")
                     three_candidates_once = True
                     self.primary_cells = [(i, j)]
                     self.occurring_candidates = SolvingTechniques.format_candidates(self.candidates[i][j])
                 else:
-                    print("Wrong number of candidates, or to often 3 candidates")
                     return False
-        print(self.primary_cells)
         if not self.primary_cells:
             return False
         self.configure_highlighting()
@@ -40,14 +35,9 @@ class ThirdEye(SolvingTechniques):
             unit_cells = SolvingTechniques.get_influential_cells_unit(self.primary_cells[0], unit)
             candidates = self.occurring_candidates[:]
             for candidate in self.occurring_candidates:
-                print(candidate)
-                print(self.get_cells_with_candidate(unit_cells, candidate))
-                print(len(self.get_cells_with_candidate(unit_cells, candidate)))
                 if len(self.get_cells_with_candidate(unit_cells, candidate)) == 3:
-                    print()
                     self.highlights = [{'value': candidate, 'cell': self.primary_cells[0]}]
                     candidates.remove(candidate)
-                    print(candidates)
                     self.cross_outs = [{'value': candidates[0], 'cell': self.primary_cells[0]},
                                        {'value': candidates[1], 'cell': self.primary_cells[0]}]
                     influential_cells = SolvingTechniques.get_influential_cells(self.primary_cells[0])
@@ -55,10 +45,6 @@ class ThirdEye(SolvingTechniques):
                         self.secondary_cells.extend(influential_cells[key])
                     self.secondary_cells = SolvingTechniques.remove_duplicates(self.secondary_cells)
                     self.secondary_cells.remove(self.primary_cells[0])
-                    print(self.primary_cells)
-                    print(self.secondary_cells)
-                    print(self.highlights)
-                    print(self.cross_outs)
                     return
 
     def update_explanation(self):

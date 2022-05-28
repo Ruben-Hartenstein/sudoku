@@ -28,6 +28,7 @@ class ForbiddenRectangleType1(SolvingTechniques):
                                 break
                     if len(self.primary_cells) == 3:
                         cross_cells = self.get_cross_cells(self.primary_cells[1], self.primary_cells[2])
+                        cross_cells = [cross_cell for cross_cell in cross_cells if self.board[cross_cell[0]][cross_cell[1]] == 0]
                         self.fourth_cell = list(set(cross_cells) - set(self.primary_cells))
                         if not self.fourth_cell:
                             continue

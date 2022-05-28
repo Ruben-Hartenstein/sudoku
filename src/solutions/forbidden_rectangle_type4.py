@@ -45,6 +45,7 @@ class ForbiddenRectangleType4(SolvingTechniques):
                         if not all(elem in candidate_multiple_value for elem in self.candidate_pair_values):
                             continue
                         cross_cells = self.get_cross_cells(self.primary_cells[1], (k, l))
+                        cross_cells = [cross_cell for cross_cell in cross_cells if self.board[cross_cell[0]][cross_cell[1]] == 0]
                         self.fourth_cell = list(set(cross_cells) - set(self.primary_cells))
                         if not self.fourth_cell:
                             continue

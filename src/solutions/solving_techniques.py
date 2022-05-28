@@ -35,12 +35,19 @@ class SolvingTechniques(ABC):
                 candidate_cells.append(cell)
         return candidate_cells
 
-    def get_cross_cells(self, cell1, cell2):
-        return [(x, y) for x, y in [(cell1[0], cell2[1]), (cell2[0], cell1[1])] if self.board[x][y] == 0]
-
     @classmethod
     def set_solved_board(cls, board):
         cls.solved_board = board
+
+    @staticmethod
+    def get_cross_cells(cell1, cell2):
+        return [(cell1[0], cell2[1]), (cell2[0], cell1[1])]
+
+    @staticmethod
+    def get_overlap_cells(cell1, cell2):
+        influential_cells1 = SolvingTechniques.get_unique_influential_cells(cell1)
+        influential_cells2 = SolvingTechniques.get_unique_influential_cells(cell2)
+        return list(set(influential_cells1) & set(influential_cells2))
 
     @staticmethod
     def flatten(lst):
@@ -51,7 +58,6 @@ class SolvingTechniques(ABC):
                         yield element
                 else:
                     yield item
-
         return list(flatten(lst))
 
     @staticmethod
@@ -88,6 +94,16 @@ class SolvingTechniques(ABC):
         return {"row": SolvingTechniques.get_influential_cells_unit(cell, 'row'),
                 "column": SolvingTechniques.get_influential_cells_unit(cell, 'column'),
                 "box": SolvingTechniques.get_influential_cells_unit(cell, 'box')}
+
+    @staticmethod
+    def get_unique_influential_cells(cell):
+        unique_cells = []
+        influential_cells = SolvingTechniques.get_influential_cells(cell)
+        for key in influential_cells.keys():
+            for influential_cell in influential_cells[key]:
+                if influential_cell not in unique_cells:
+                    unique_cells.append(influential_cell)
+        return unique_cells
 
     @staticmethod
     def index2box(index):
