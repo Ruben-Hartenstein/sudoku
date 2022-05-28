@@ -55,9 +55,17 @@ In diesem Abschnitt wird die Bedeutung von Strategien im Sinne des Lösens eines
 
 Um ein Sudoku zu lösen, können verschiedene Strategien eingesetzt werden. Das Ziel einer Strategie ist es hierbei eine passende Zahl in das Sudoku einzufügen oder mögliche Kandidaten zu eliminieren. Es gibt zwei grundlegende Strategien, um Zahlen direkt einzufügen: den Hidden Single und den Naked Single. Beide Strategien können oft intuitiv und ohne eine große Erklärung gefunden und umgesetzt werden. Weitere leichte Strategien wie ein Hidden Double oder ein Naked Double, bei denen Kandidaten eliminiert werden können, sind mithilfe der Kandidaten-Notation leicht gefunden.
 
-Insgesamt gibt es über 30 gebräuchliche Strategien, die zur Unterstützung bei schweren Sudokus angewendet werden können. Oftmals sind anspruchsvollere Strategien für das menschliche Auge schwer zu entdecken. Wichtig bei diesen komplexeren Strategien ist eine gewissenhafte Ausführung der Kandidaten-Notation.\cite{martin} \cite[9]{zambon2015sudoku}
+Insgesamt gibt es über 30 gebräuchliche Strategien, die zur Unterstützung bei schweren Sudokus angewendet werden können. Oftmals sind anspruchsvollere Strategien für das menschliche Auge schwer zu entdecken. Wichtig bei diesen komplexeren Strategien ist eine gewissenhafte Ausführung der Kandidaten-Notation. \cite{martin} \cite[9]{zambon2015sudoku}
 
 \subsection{Lösungshilfen: Kandidaten-Notation}
 Kandidaten sind Zahlen in einer Zelle des Sudokugitters, die, mit dem aktuellen Informationsstand, als feste Zahl noch infrage kommen. Das Problem liegt dabei, dass meistens mehrere Zahlen in eine Zelle können. Kandidaten können durch das Eintragen von weiteren Zahlen oder das Anwenden von Strategien eliminiert werden. Wenn man dabei jede Zelle einzeln betrachtet, geben die Kandidaten keinen weiteren Nutzen. Wenn die Kandidaten jedoch über mehrerer Zellen in Bezug zueinander angeschaut werden, lassen sich Zusammenhänge erkennen. Die meisten Strategien basieren auf diesen Zusammenhängen. 
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.3\textwidth]{images/BeispielKandidatennotation.png}
+	\caption{Beispiel Rätsel mit Kandidatennotation}
+	\label{fig:SudokugitterKandidaten}
+\end{figure}
+
 Sobald eine Zahl eingetragen wird, müssen die Kandidaten aktualisiert werden. Wenn eine Zahl eingetragen wird, kann jeder gleichwertiger Kandidat, der diese Zahl sieht, gestrichen werden. \cite[85\psq]{althofer2014spiele} \cite{martin} \cite[4]{zambon2015sudoku}
+

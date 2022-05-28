@@ -102,7 +102,15 @@ Bei der Brute-Force Methode wird für jede freie Zelle von 1 bis 9 überprüft, 
 
 Die Laufzeit des Algorithmus hängt von der Anzahl der freien Zellen ab und damit auch von der Anzahl der vorgegebenen Zahlen. Wenn viele Zahlen vorgegeben sind, dann ist die Tiefe $N$ des Verzweigungsbaums und damit auch die Laufzeit geringer. 
 
-\begin{lstlisting}
+
+\lstset{
+	frame=single,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green},
+	numbers=left,
+}
+
+\begin{lstlisting}[language=Python, caption={Funktion zum Lösen des Sudokurätsel}, label={lst:solve}]
 	def solve(self, numbers=(1, SIZE + 1), board=None):
 		"""
 		Solves the SudokuBoard recursively via backtracking
@@ -127,7 +135,7 @@ Die Laufzeit des Algorithmus hängt von der Anzahl der freien Zellen ab und dami
 
 \subsubsection{Abbruchbedingung}
 Die Abbruchbedingung für das Backtracking ist mit einer eigenen Funktion \textit{is\_valid} umgesetzt.
-\begin{lstlisting}
+\begin{lstlisting}[language=Python, caption={Abbruchbedingung durch Validierung der Lösungsvariante}, label={lst:valid}]
 	def is_valid(self, number, position, board=None):
 		...
 		# Check row
@@ -153,7 +161,7 @@ Der Algorithmus des Backtrackings bricht nach dem Finden einer vollständigen L�
 
 Um die Eindeutigkeit eines Sudoku Rätsels zu beweisen, wird nach dem Finden einer Lösung das Backtracking nochmals von hinten begonnen. Damit ist gemeint, dass bei der ersten Lösungssuche in den freien Zellen die Zahlen von 1 bis 9 eingetragen werden und nach dem Abbruchkriterium überprüft wird. Beim Suchen nach einer zweiten Lösung beziehungsweise bei dem Beweis der Eindeutigkeit wird das Backtracking nochmals ausgeführt, dabei aber die Zahlen von 9 bis 1 in die freien Zellen eingetragen.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Python, caption={Überprüfen ob ein Sudokurätsel eine eindeutige Lösung hat}, label={lst:uniquesolve}]
 	def is_uniquely_solvable(self):
 		temp_board = deepcopy(self.board)
 		self.solve(numbers=(9, 0, -1), board=temp_board)

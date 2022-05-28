@@ -1,9 +1,65 @@
 %!TEX root = ../dokumentation.tex
+\lstset{
+	frame=single,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green},
+	numbers=left,
+}
 
 \part{Implementierung}
 
 \chapter{Frontend}
 
-\section{Aufteilung Board, NumPad und Erklärung der Strategie}
+\section{\ac{UI}}
+\todo{Responsiv scheiß}
 
-\section{Markierungen}
+\section{\ac{UX}}
+
+
+\section{Abstufungen der Hilfestellungen}
+Die Anforderung an die verschiedenen Abstufungen der Hilfestellung wird hauptsächlich über das Frontend geregelt. 
+
+\subsection{Erste Hilfestellung}
+
+\begin{lstlisting}[caption={Erste Hilfestellung}, label={lst:help0}]
+	 socket.on('help0', function (technique_result) {
+		$("#technique-name").text(technique_result['name']);
+		$("#technique-explanation").text("");
+		colorCells(technique_result['primaryCells'], 'rgb(255,216,115)');
+		colorCells(technique_result['secondaryCells'], 'rgb(181,216,244)');
+	});
+\end{lstlisting}
+
+\subsection{Zweite Hilfestellung}
+\begin{lstlisting}[caption={Zweite Hilfestellung}, label={lst:help1}]
+	socket.on('help1', function (technique_result) {
+		if (!candidatesVisible) {
+			candidatesVisible = !candidatesVisible;
+			$('#candidate').css('color', 'red');
+		}
+		colorCandidates(technique_result['crossOuts'], 'red');
+		colorCandidates(technique_result['highlights'], 'lime');
+	});
+\end{lstlisting}
+
+\subsection{Dritte Hilfestellung}
+\begin{lstlisting}[caption={Dritte Hilfestellung}, label={lst:help2}]
+	socket.on('help2', function (technique_result) {
+		$("#technique-explanation").text(technique_result['explanation']);
+	});
+\end{lstlisting}
+
+\subsection{Vierte Hilfestellung}
+\begin{lstlisting}[caption={Vierte Hilfestellung}, label={lst:help3}]
+	socket.on('help3', function () {
+		if (!candidatesVisible) {
+			candidatesVisible = !candidatesVisible;
+			$('#candidate').css('color', 'red');
+		}
+		$("#technique-name").text("");
+		$("#technique-explanation").text("");
+		resetCellColor();
+	});
+\end{lstlisting}
+
+\section{Fertig gelöstes Sudoku}
