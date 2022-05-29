@@ -8,8 +8,8 @@ class SudokuBoard:
         """
         Initializes the sudoku board with numbers
         """
-        self.solved = None
-        self.start_coords = None
+        self.solved = []
+        self.start_coords = []
         self.candidates = []
         self.board = board
         self.init_candidates()

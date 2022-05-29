@@ -4,6 +4,10 @@ from copy import deepcopy
 import sudoku_board as sudoku_board
 from src.solutions import technique_manager
 
+from engineio.payload import Payload
+
+Payload.max_decode_packets = 500
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
@@ -11,7 +15,7 @@ socketio = SocketIO(app)
 has_started = False
 help_step = 0
 technique_result = None
-sudoku = sudoku_board.SudokuBoard()
+sudoku = sudoku_board.SudokuBoard([[0, 2, 3, 0, 6, 5, 0, 8, 9], [9, 0, 0, 0, 0, 4, 0, 0, 5], [5, 0, 0, 0, 0, 0, 0, 0, 0], [6, 0, 0, 3, 0, 0, 0, 1, 8], [3, 8, 0, 5, 9, 0, 0, 0, 2], [0, 0, 0, 0, 8, 6, 3, 0, 0], [2, 3, 0, 0, 0, 0, 0, 0, 6], [8, 0, 7, 0, 2, 0, 0, 0, 3], [0, 9, 6, 0, 5, 3, 8, 2, 0]])
 
 # HIDDEN TRIPLE: [[0, 0, 0, 7, 4, 0, 0, 0, 8], [4, 9, 6, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 0, 0, 4, 0], [0, 0, 0, 0, 5, 7, 6, 0, 0], [8, 0, 0, 0, 0, 0, 0, 2, 1], [0, 0, 3, 4, 0, 0, 0, 0, 0], [0, 0, 0, 3, 0, 0, 0, 0, 0], [1, 2, 4, 0, 7, 0, 0, 5, 0], [0, 0, 0, 0, 0, 0, 7, 0, 0]]
 # NAKED TRIPLE: [[0, 7, 0, 0, 0, 0, 8, 0, 0], [0, 2, 0, 8, 0, 0, 9, 5, 0], [0, 0, 0, 0, 0, 9, 6, 0, 2], [0, 0, 0, 3, 0, 4, 2, 8, 9], [0, 0, 3, 9, 0, 0, 1, 6, 4], [4, 0, 0, 6, 1, 0, 5, 0, 0], [0, 4, 0, 2, 9, 6, 0, 1, 5], [0, 0, 0, 0, 0, 0, 0, 9, 6], [0, 0, 0, 5, 3, 0, 4, 2, 8]]
@@ -99,6 +103,8 @@ def reset():
 
 @socketio.on('getCandidates')
 def candidates():
+    if not has_started:
+        return
     errors = sudoku.get_errors()
     if errors:
         print(errors)

@@ -1,5 +1,5 @@
 from src.solutions.solving_techniques import SolvingTechniques
-from src.solutions.domino import Domino
+from src.solutions.chains import Chain
 
 
 class XYWing(SolvingTechniques):
@@ -14,7 +14,7 @@ class XYWing(SolvingTechniques):
             for j in range(9):
                 if self.board[i][j] != 0 or sum(self.candidates[i][j]) != 2:
                     continue
-                domino = Domino(self, (i, j), self.board, self.candidates, 3)
+                domino = Chain(self.board, self.candidates, (i, j), 3)
                 candidates = SolvingTechniques.format_candidates(self.candidates[i][j])
                 for candidate in candidates:
                     domino.calculate_all_chains(1, candidate)
@@ -44,7 +44,10 @@ class XYWing(SolvingTechniques):
                                         'cell': (x, y)})
         for i, cell in enumerate(self.chain):
             if i % 2 == 0:
-                self.highlights.append({'value': self.candidate,
+                candidates = SolvingTechniques.format_candidates(self.candidates[cell[0]][cell[1]])
+                candidates.remove(self.candidate)
+                candidate = candidates[0]
+                self.highlights.append({'value': candidate,
                                         'cell': cell})
             else:
                 for candidate in SolvingTechniques.format_candidates(self.candidates[cell[0]][cell[1]]):
