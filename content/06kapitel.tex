@@ -66,18 +66,19 @@
 
 
 \section{Technique Manager}
-\todo{Reihenfolge der Techniken nach einfach zu schwer, tequniqe ist ein Liste von Klassenrepräsentationen umgesetzter Techniken}
-In der Datei \textit{technique\_manager.py} wird das Aufrufen der Techniken geregelt. Die Techniken sind in einer Liste gespeichert. Über diese Liste wird drüber iteriert und das Board und die Kandidaten übergeben. Danach wird die abstrakte Methode \textit{execute\_technique()} für die Lösungstechnik ausgeführt. Der Returnwert dieser Methode ist True, wenn sich etwas an dem Board oder an den Kandidaten verändert. In diesem Fall wird die Methode \textit{get\_result()} aufgerufen, mit der die Änderungen durchgeführt werden können.
+In der Datei \textit{technique\_manager.py} wird das Aufrufen der Techniken geregelt. Alle Lösungsstrategien sind als Klassenrepräsentation der umgesetzten Technik in einer Liste gespeichert. Über diese Liste wird drüber iteriert und das Board und die Kandidaten übergeben. Danach wird die abstrakte Methode \textit{execute\_technique()} für die Lösungstechnik ausgeführt. Der Returnwert dieser Methode ist True, wenn sich etwas an dem Board oder an den Kandidaten verändert. In diesem Fall wird die Methode \textit{get\_result()} aufgerufen, mit der die Änderungen durchgeführt werden können.
 Wenn eine Technik nicht erfolgreich ist dann wird mit der nächsten Lösungsstrategie aus der Liste weiter gemacht. 
+
+Die Reihenfolge der Lösungstechniken ist von der Website \cite{martin} übernommen. Zuerst werden einfache Lösungsansätze ausprobiert und wenn diese nicht erfolgreich sind, werden immer komplexere Techniken angewendet.
 
 \begin{lstlisting}[language=Python, caption={Funktion um eine anwendbare Lösungstechnik zu finden}, label={lst:try}]
 	def try_techniques(board, candidates):
-		for tech in techniques:
-			technique = tech(board, candidates)
-			successful = technique.execute_technique()
-			if successful:
-				return technique.get_result()
-		return False
+	for tech in techniques:
+	technique = tech(board, candidates)
+	successful = technique.execute_technique()
+	if successful:
+	return technique.get_result()
+	return False
 \end{lstlisting}
 
 \section{Abstrakte Klasse SolvingTechniques}
@@ -94,32 +95,33 @@ Wenn eine Technik nicht erfolgreich ist dann wird mit der nächsten Lösungsstra
 
 \section{Lösungsstrategien}
 
-In diesem Abschnitt wird ein Überblick über die implementierten Strategien gegeben. Die Lösungsstrategien sind auf der Website \url{https://www.thinkgym.de/rätselarten/sudoku/} betitelt und beschrieben. Anhand diesen Beschreibungen wurden einige Lösungsstrategien implementiert. Zunächst wird ein Überblick über die umgesetzten Strategien gegeben, bevor ausblickend die Lösungsstrategien, die noch nicht implementiert wurden, aufgezählt werden. Es gibt noch weitere Strategien die auf der Website nicht beschrieben werden. Diese werden im Folgenden aber nicht weiter beachtet.
+In diesem Abschnitt wird ein Überblick über die implementierten Strategien gegeben. Die Lösungsstrategien sind auf der Website von Simon Martin \cite{martin} betitelt und beschrieben. Anhand diesen Beschreibungen wurden einige Lösungsstrategien implementiert. Zunächst wird ein Überblick über die umgesetzten Strategien gegeben, bevor ausblickend die Lösungsstrategien, die noch nicht implementiert wurden, aufgezählt werden. Es gibt noch weitere Strategien die auf der Website nicht beschrieben werden. Diese werden im Folgenden aber nicht weiter beachtet.
 
 \subsection{Umgesetzte Lösungsstrategien}
 Da in der Ausarbeitung nur exemplarisch auf einige Lösungsstrategien eingegangen wird, wird hier aufgezählt welche Strategien alle umgesetzt wurden. 
-\begin{itemize}
-	\item Versteckter Single (Hidden Single)
-	\item Nackter Single (Naked Single)
-	\item Nacktes Paar (Naked Pair)
-	\item Verstecktes Paar (Hidden Pair)
-	\item Nackter Dreier (Naked Triple)
-	\item Versteckter Dreier (Hidden Triple)
-	\item Nackter Vierer (Naked Foursome)
-	\item Versteckter Vierer (Hidden Foursome)
-	\item \acf{RBC} (Line-Block-Interaction)
-	\item \acf{BRC} (Block-Line-Interaction)
-	\item X-Wing (X-Wing)
-	\item Steinbutt (Turbot)
-	\item Drittes Auge (Third Eye)
-	\item Wolkenkratzer (Skyscraper)
-	\item Schwertfisch (Swordfish)
-	\item Drachen (Dragon)
-	\item Verbotenes Rechteck Typ 1 (Forbidden Rectangle Type 1)
-	\item Verbotenes Rechteck Typ 2 (Forbidden Rectangle Type 2)
-	\item Verbotenes Rechteck Typ 4 (Forbidden Rectangle Type 4)
-	
-\end{itemize}
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|ll|lll}
+			\cline{1-2} \cline{4-5}
+			\multicolumn{1}{|l|}{Technikname} & Technikname engl.          & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{Technikname} & \multicolumn{1}{l|}{Technikname engl.}          \\ \cline{1-2} \cline{4-5} 
+			Versteckter Single                & Hidden Single              & \multicolumn{1}{l|}{} & Nackter Single                   & \multicolumn{1}{l|}{Naked Single}               \\
+			Verstecktes Paar                  & Hidden Pair                & \multicolumn{1}{l|}{} & Nacktes Paar                     & \multicolumn{1}{l|}{Naked Pair}                 \\
+			Versteckter Dreier                & Hidden Triple              & \multicolumn{1}{l|}{} & Nackter Dreier                   & \multicolumn{1}{l|}{Naked Triple}               \\
+			Verteckter Vierer                 & Hidden Foursome            & \multicolumn{1}{l|}{} & Nackter Vierer                   & \multicolumn{1}{l|}{Hidden Foursome}            \\
+			\ac{RBC}         & Line-Block-Ineraction      & \multicolumn{1}{l|}{} & \ac{BRC}        & \multicolumn{1}{l|}{Block-Line-Interaction}     \\
+			X-Wing                            & X-Wing                     & \multicolumn{1}{l|}{} & Steinbutt                        & \multicolumn{1}{l|}{Turbot}                     \\
+			Drittes Auge                      & Third Eye                  & \multicolumn{1}{l|}{} & Wolkenkratzer                    & \multicolumn{1}{l|}{Skyscraper}                 \\
+			Schwertfisch                      & Swordfish                  & \multicolumn{1}{l|}{} & Drachen                          & \multicolumn{1}{l|}{Dragon}                     \\
+			Verbotenes Rechteck Typ 1         & Forbidden Rectangle Type 1 & \multicolumn{1}{l|}{} & Verbotenes Rechteck Typ 2        & \multicolumn{1}{l|}{Forbidden Rectangle Type 2} \\
+			Verbotenes Rechteck Typ 3         & Forbidden Rectangle Type 3 & \multicolumn{1}{l|}{} & Verbotenes Rechteck Typ 4        & \multicolumn{1}{l|}{Forbidden Rectangle Type 4} \\
+			XY-Wing                           & XY-Wing                    &                       &                                  &                                                
+		\end{tabular}%
+	}
+	\caption{Aufzählung alles implementierten Lösungsstrategien mit deutschem und englischem Bezeichner}
+	\label{tab:implStrategien}
+\end{table}
 
 \subsection{Weitere Lösungsstrategien}
 In der Studienarbeit wurden nicht alle auf der Website \cite{martin} vorgestellten Lösungstechniken umgesetzt. Weitere Strategien die noch implementiert werden könnten sind die folgenden:

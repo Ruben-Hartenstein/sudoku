@@ -9,20 +9,81 @@
 \part{Implementierung}
 
 \chapter{Frontend}
+Nachdem in den bisherigen Kapiteln eher die Designentscheidungen und die theoretischen Grundlagen diskutiert wurden, wird nun die eigentliche Implementierung des \textbf{Sudoku Solver} erläutert.
 
-\section{\ac{UI}}
-\todo{Responsiv scheiß}
+Zunächst wird das Frontend mit allen Funktionalitäten zum \acs{UI}, \acs{UX} und der Umsetzung der einzelnen Hilfestellungen beschrieben. 
 
-\section{\ac{UX}}
+Das Frontend ist letztlich alles was der User auf der Website sehen kann. Alles was der Nutzer nicht sehen kann gehört zum Backend. Das Frontend ist trotzdem sehr entscheidend, denn es sollte möglichst Benutzerfreundlich sein. Dazu gehört eine intuitive Nutzung der Oberfläche und im Falle des \textbf{Sudoku Solver} das übersichtliche Anzeigen der Lösungsstrategie und die Erklärung dazu, sowie die sprechende Markierung auf dem Sudokuboard.
+
+\section{\acl{UI}}
+Das \acs{UI} ist die Nutzerschnittstelle zum Backend. An dieser Stelle beeinflusst der Nutzer durch seine Handlung die Reaktion im Backend und wie das Frontend letztlich wieder auf diese Handlung reagiert. An dieser Stelle der Ausarbeitung werden die Designentscheidungen für das \ac{UI} vorgestellt. In diesem Abschnitt wird daher die \ac{HTML} Struktur und das darauf basierende responsiv Design beschrieben.
+
+Ein wichtiger Teil des \ac{UI} ist das dem Nutzer die Funktionalitäten übersichtlich und klar zur Verfügung gestellt werden. Wenn das \ac{UI} schon unübersichtlich und schlecht zu verstehen ist, dann wird auch die \acs{UX} keine gute sein, egal wie gut die Software im Backend letztlich ist. Eine weitere Anforderung an das Frontend ist ein responsiv Design. Die Website soll möglichst sich möglichst allen Formaten anpassen und auf verschiedenen Endgeräten ihren Nutzen erfüllen.
+
+\subsection{\ac{HTML} Struktur}
+DIe \ac{HTML} Datei ist unterteilt in \textit{<head>} und \textit{<body>}. 
+
+Im Head werden Informationen über die Seite, wie beispielsweise der Titel oder die Stylesheets. Ebenso werden die benutzten Skripts aus den externen Dateien in das Dokument eingebunden. 
+
+Im Body sind die darzustellenden Inhalte eines \ac{HTML} Dokuments enthalten und weil das Produkt hauptsächlich auf einem Computer genutzt wird, ist die \ac{HTML} Struktur im Body darauf angepasst.
+
+\todo{Abbildung Frontend}
+
+In der Abbildung xx ist das Frontend zu sehen. Das Sudokuboard, das NumPad und die Erläuterung der Strategie liegen jeweils nebeneinander. Das Sudokuboard wird rechts und in einer zur Fenstergröße passenden Höhe abgebildet, damit man alle Zahlen gut sehen kann und direkt sieht worum es geht. Rechts daneben wird das NumPad platziert. Dadurch ist durch den Platzhalter für das Anzeigen der Strategie mit Erläuterung keine Lücke zwischen den Objekten, die für eine Nutzerinteraktion relevant sind. Um das NumPad nicht zu verschieben wenn der Titel einer Strategie angezeigt wird, hat das Feld für Titel und Erklärung einen Platzhalter links neben dem NumPad.
+
+Die Lösung ist dabei so aufgebaut, dass das Sudokuboard in einem Div liegt und das NumPad und das Textfeld für Titel und Erklärung sind ein weiteres Div teilen. Dieses Div von NumPad und Textfeld ist jeweils nochmal in zwei Divs unterteilt. In der folgenden Abbildung xx ist die Unterteilung des Elemente nochmals visualisiert.
+
+\todo{Bild mit roten Kästen um jeweilige Divs}
+
+\subsection{Responsiv Design}
+
+Die in der \ac{HTML} Struktur beschriebenen Designentscheidungen wurden hauptsächlich von dem Responsiv Design beeinflusst. 
+
+Den Elementen wird die Layoutmethode der Flexbox gegeben. Damit werden die Elemente automatisch gestreckt, wenn es mehr Platz zum Füllen gibt und sie werden gestaucht, wenn es weniger Platz gibt. Mit den Flexboxen ist es daher relativ einfach möglich ein responsiv Design zu schaffen. 
+
+Wenn das Fenster kleiner wird, dann skaliert sowohl das Board als auch das NumPad und das Textfeld mit. Falls das Fenster zu schmal wird, sodass Board und Kombination aus NumPad und Textfeld nebeneinander kein Platz haben, dann wird das Element von NumPad und Textfeld unter dem Board angezeigt.
+
+Insgesamt wird das Board so skaliert, dass der Nutzer in der horizontalen nicht scrollen muss, um das gesamte Board zu sehen. Das ist aber nur bis zu einer gewissen Breite sinnvoll, da sonst das Board zu klein wird. Diese Breite wurde basierend auf dem Frontend eines mobilen Endgeräts bestimmt.
+
+In der Flexbox von NumPad und Textfeld sind beide Divs jeweils nochmal eigene Flexboxen. Im anderen Fall ergab sich das Problem, dass die Position des NumPad abhängig von welche Stufe der Hilfestellung immer verändert war. Das ergab keine gute \ac{UX}. Durch diese beiden Flexboxen ist auch das Anzeigen bei schmaleren Fenstern einfacher geworden. In diesem Fall wird das NumPad und die Erläuterung nebeneinander unter dem Board angezeigt wie in Abbildung xx dargestellt. Die Flexbox von von NumPad und Textfeld ist dabei genauso breit wie das Board selbst.
+
+\todo{Bild wie aussieht wenn untereinander}
+
+Ein weiterer Punkt der beim responsiv Design beachtet werden muss, ist die Schriftgröße. Eine Anpassung wird deshalb bei den Zahlen und Kandidaten auf dem Board und auch bei der Größe der Tasten des NumPad und die Schrift darauf vorgenommen. Das Gleiche gilt für das Textfeld mit Lösungsstrategie und Erläuterung. Die Skalierung der Schriftgröße wird in der \ac{CSS} Datei über viewports designt. Damit die Schrift am Ende nicht zu klein ist, wird eine \textit{min-font-size} definiert. 
+
+
+\section{\acl{UX}}
+Der folgende Abschnitt ist eine Ausführung über verschiedene Funktionalitäten, die für eine guten \acl{UX} implementiert sind. Dabei wird unterschieden zwischen den Funktionalitäten vom NumPad und anderen Eingaben und den Funktionalitäten des Sudokuboards.
+
+Neben einer übersichtlichen und verständlich aufgebauten \ac{UI} gehört unter anderem noch eine gute \ac{UX}. Dazu gehören die Funktionalitäten der Knöpfe und eine angenehme Auswahl an Farben zur Markierung, um dem User die Nutzung der Website möglichst angenehm zu gestalten. Für das Eintragen der Zahlen auf dem Sudoku gibt es mehrere Funktionen um eine gute \ac{UX} zu erreichen. 
+
+\subsection{Funktionalitäten NumPad und andere Eingaben}
+Es gibt auf dem \ac{UI} ein NumPad mit verschiedenen Tasten. Wenn das Sudoku noch nicht eingetragen ist, unterscheidet sich die Anordnung der Knöpfe. Am Anfang sind in der obersten Reihe auf dem NumPad die Tasten Start, \ac{CE} und Del zu sehen. 
+
+Beim Drücken des Startknopf verschwindet dieser und wird durch einen Note Knopf ersetzt. Zudem erscheint unter dem NumPad ein Help Knopf. Die Zahlen die zum Zeitpunkt des Drücken eingegeben wurden, bekommen eine andere Farbe und sind fest auf dem Board eingetragen. Diese Zahlen können also ab diesem Zeitpunkt nicht mehr überschrieben werden. Mit der Taste \ac{CE} wird das komplette Sudokuboard zurückgesetzt. Mit eingeschlossen ist damit der Reset vom Starten des Sudokus und der Help Knopf verschwindet. Wenn das Sudoku noch nicht gestartet wurde, werden einfach die Zahlen auf dem Board entfernt. Mit der Del Taste werden in den ausgewählten Zellen der Eintrag gelöscht. Für alle Knöpfe wurden auch Tasten auf der Tastatur definiert. \todo{Welche tasten welche funktionalitäten} Mit der Note Taste wir der aktuelle Stand der Kandidaten angezeigt. Durch das mehrmalige Drücken des Help Knopf werden die abgestuften Hilfestellung angezeigt.
+
+\todo{Zwei Bilder nebeneinander von verschiedenen NumPads}
+
+Mit den Ziffern des NumPad können ganz normal Zahlen in das Sudoku eingetragen werden. Für die bessere Nutzung an einem Computer wurde zudem die Eingabe über das NumPad auf der Tastatur oder über die obere Zahlenreihe auf der Tastatur eingegeben werden.
+
+\subsection{Funktionalitäten Board}
+Auch für das Board gibt es mehrere Funktionalitäten. Es gibt mehrere Möglichkeiten eine oder mehrere Zellen einzutragen. Um die Zelle auf der man sich aktuell befindet ist eine bunte Umrandung. Diesen Curser kann man mit den Pfeiltasten bewegen. Wenn eine Zahl gedrückt wird, dann wird diese immer in der Zelle eingetragen auf der sich der Curser gerade befindet. Sobald die Zahl eingetragen wird springt der Cursor auf die nächste Zelle. Diese Funktionalität wurde auch mit der Tabulator Taste realisiert
+Es gibt aber auch die Möglichkeit durch Leertaste oder Mausklick mehrere Zellen auszuwählen. Die ausgewählten Zellen sind dann grau gefärbt. Wenn man die Markierung einer Zelle wieder rückgängig machen möchte, ist dies durch nochmaliges klicken möglich. 
+
+In der Abbildung xx sieht man das der Cursor ganz oben links auf der ersten Zelle (1, A) ist. Zudem sind mehrere Felder ausgewählt und daher grau hinterlegt.
+
+\todo{Bild mit Markierungen}
 
 
 \section{Abstufungen der Hilfestellungen}
-Die Anforderung an die verschiedenen Abstufungen der Hilfestellung wird hauptsächlich über das Frontend geregelt. 
+Die Anforderung an die verschiedenen Abstufungen der Hilfestellung wird hauptsächlich über das Frontend geregelt. Im Backend werden dafür nur die relevanten Informationen gesammelt. Im Folgenden wird die Abstufung und Umsetzung der Hilfestellungen gezeigt und Erläutert.
 
 \subsection{Erste Hilfestellung}
 
+Die erste Hilfestellung besteht daraus die anzuwendende Technik auf dem Frontend anzuzeigen und relevante Zellen zu markieren.  In dem Codebeispiel \ref{lst:help0} ist die Umsetzung dafür beschrieben.
+
 \begin{lstlisting}[caption={Erste Hilfestellung}, label={lst:help0}]
-	 socket.on('help0', function (technique_result) {
+	socket.on('help0', function (technique_result) {
 		$("#technique-name").text(technique_result['name']);
 		$("#technique-explanation").text("");
 		colorCells(technique_result['primaryCells'], 'rgb(255,216,115)');
@@ -30,7 +91,13 @@ Die Anforderung an die verschiedenen Abstufungen der Hilfestellung wird hauptsä
 	});
 \end{lstlisting}
 
+Es wird der Klasse \textit{technique-name} die Technik übergeben und über colorCells können Zellen auf dem Board in verschiedenen Farben markiert werden. Diese Markierungen und das Anzeigen des Technik Namen ist in Abbildung xx dargestellt. Die Zellen können in unterschiedlich eingefärbt werden, abhängig davon wie relevant sie für eine Technik sind. In den meisten Fällen wirken sich die \textit{primaryCells} auf eine Technik aus und sind darauf ausgelegt zuerst aufzufallen. Die secondaryCells haben aber auch eine Bedeutung für eine Technik weisen dabei aber eher auf den Grund hin, weshalb eine Technik angewendet werden kann oder in welchen Units die Technik gefunden wurde.
+
+\todo{Screenshot umsetzung}
+
 \subsection{Zweite Hilfestellung}
+Mit der zweiten Hilfestellung werden relevante Kandidaten markiert. Im Falle der Kandidaten gibt es erneut zwei unterschiedliche Markierungen. Ein Teil dieser Hilfestellung ist das Anzeigen der Kandidaten, für den Fall dass dies nicht bereits der Fall ist. 
+
 \begin{lstlisting}[caption={Zweite Hilfestellung}, label={lst:help1}]
 	socket.on('help1', function (technique_result) {
 		if (!candidatesVisible) {
@@ -42,14 +109,16 @@ Die Anforderung an die verschiedenen Abstufungen der Hilfestellung wird hauptsä
 	});
 \end{lstlisting}
 
+Kandidaten die für eine Lösungstechnik Relevanz haben können mittels der Funktion \textit{colorCandidates} markiert werden. Auch hier wird mit zwei Farben unterschieden. Kandidaten die aufgrund der Technik heraus gestrichen werden können, werden auf dem Sudokuboard Rot markiert. Kandidaten auf denen eine Technik aufbaut werden grün angezeigt. Die Umsetzung wird in dem Codebeispiel \ref{lst:help1} beschrieben und das Ergebnis in der Abbildung xx dargestellt.
+
+\todo{Screenshot umsetzung}
+
 \subsection{Dritte Hilfestellung}
-\begin{lstlisting}[caption={Dritte Hilfestellung}, label={lst:help2}]
-	socket.on('help2', function (technique_result) {
-		$("#technique-explanation").text(technique_result['explanation']);
-	});
-\end{lstlisting}
+Die dritte Hilfestellung besteht aus einer Erklärung der Technik anhand des aktuellen Sudokus. Die Erläuterung wird dabei unter dem Technikname in der Klasse \textit{technique-explanation} in einem <p> Element angezeigt. Diese Hilfestellung wurde analog zu dem Technikname in dem Codebeispiel \ref{lst:help0} umgesetzt.
 
 \subsection{Vierte Hilfestellung}
+Nachdem das Programm dem Nutzer über mehrere Schritte geholfen hat die Technik zu finden und gegebenenfalls nachzuvollziehen, wird mit der letzten Hilfestellungen die Technik ausgeführt und die rot eingefärbten Kandidaten vom Board entfernt. Außerdem werden alle Markierungen mit der Funktion \textit{resetCellColor()}, wie in dem Codebeispiel \ref{lst:help3} zurückgesetzt und der Techniktitel und die Beschreibung entfernt. 
+
 \begin{lstlisting}[caption={Vierte Hilfestellung}, label={lst:help3}]
 	socket.on('help3', function () {
 		if (!candidatesVisible) {
