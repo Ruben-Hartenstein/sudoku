@@ -5,7 +5,7 @@ from src.solutions.chains import Chain
 class XYWing(SolvingTechniques):
 
     def __init__(self, board, candidates):
-        super().__init__("XY Wing", board, candidates)
+        super().__init__("XY-Wing", board, candidates)
         self.candidate = None
         self.chain = None
 
@@ -17,7 +17,7 @@ class XYWing(SolvingTechniques):
                 domino = Chain(self.board, self.candidates, (i, j), 3)
                 candidates = SolvingTechniques.format_candidates(self.candidates[i][j])
                 for candidate in candidates:
-                    domino.calculate_all_chains(1, candidate)
+                    domino.calculate_all_chains(candidate)
                     chains = [chain for chain in domino.chains if len(chain) == 3]
                     for self.chain in chains:
                         x, y = self.chain[-1]

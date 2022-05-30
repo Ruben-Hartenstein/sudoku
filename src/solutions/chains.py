@@ -2,14 +2,14 @@ from src.solutions.solving_techniques import SolvingTechniques
 
 
 class Chain:
-    def __init__(self, board, candidates, start_cell, max_depth):
+    def __init__(self, board, candidates, start_cell, max_depth=81):
         self.board = board[:]
         self.candidates = candidates[:]
         self.start_cell = start_cell
         self.max_depth = max_depth
         self.chains = []
 
-    def calculate_all_chains(self, depth, insert, chain=[], cell=None):
+    def calculate_all_chains(self, insert, depth=1, chain=[], cell=None):
         if not cell:
             cell = self.start_cell
             self.chains = []
@@ -37,3 +37,12 @@ class Chain:
                     dominos.append((x, y))
         dominos = SolvingTechniques.remove_duplicates(dominos)
         return dominos
+
+    def get_last_insert(self, chain, candidate):
+        if len(chain) == 1:
+            return candidate
+        last_part = chain[-1]
+        prev_last_part = chain[-2]
+        last_candidates = SolvingTechniques.format_candidates(self.candidates[last_part[0]][last_part[1]])
+        prev_last_candidates = SolvingTechniques.format_candidates(self.candidates[prev_last_part[0]][prev_last_part[1]])
+        return [insert for insert in last_candidates if insert not in prev_last_candidates][0]

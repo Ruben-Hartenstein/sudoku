@@ -11,7 +11,7 @@ class XWing(SolvingTechniques):
 
     def execute_technique(self):
         for self.unit in ['row', 'column']:
-            for self.candidate in range(1, 10, 1):
+            for self.candidate in range(1, 10):
                 twice_appearances = []
                 for j in range(9):
                     unit_cells = SolvingTechniques.get_influential_cells_unit((j, j), self.unit)
