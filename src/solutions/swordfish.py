@@ -33,6 +33,7 @@ class Swordfish(SolvingTechniques):
                             self.primary_cells.extend(SolvingTechniques.get_influential_cells_unit((primary_coordinate, primary_coordinate), self.unit))
                         self.configure_highlighting()
                         if len(self.cross_outs) != 0:
+                            self.primary_cells = SolvingTechniques.remove_duplicates(self.primary_cells)
                             return True
         return False
 

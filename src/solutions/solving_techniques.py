@@ -62,6 +62,7 @@ class SolvingTechniques(ABC):
 
     @staticmethod
     def remove_duplicates(cells):
+        cells = cells[:]
         return list(dict.fromkeys(cells))
 
     @staticmethod
