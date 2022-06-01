@@ -102,21 +102,26 @@ Da in der Ausarbeitung nur exemplarisch auf einige Lösungsstrategien eingegange
 % Please add the following required packages to your document preamble:
 % \usepackage{graphicx}
 \begin{table}[H]
+	\centering
 	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|ll|lll}
+		\begin{tabular}{lllll}
 			\cline{1-2} \cline{4-5}
-			\multicolumn{1}{|l|}{Technikname} & Technikname engl.          & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{Technikname} & \multicolumn{1}{l|}{Technikname engl.}          \\ \cline{1-2} \cline{4-5} 
-			Versteckter Single                & Hidden Single              & \multicolumn{1}{l|}{} & Nackter Single                   & \multicolumn{1}{l|}{Naked Single}               \\
-			Verstecktes Paar                  & Hidden Pair                & \multicolumn{1}{l|}{} & Nacktes Paar                     & \multicolumn{1}{l|}{Naked Pair}                 \\
-			Versteckter Dreier                & Hidden Triple              & \multicolumn{1}{l|}{} & Nackter Dreier                   & \multicolumn{1}{l|}{Naked Triple}               \\
-			Verteckter Vierer                 & Hidden Foursome            & \multicolumn{1}{l|}{} & Nackter Vierer                   & \multicolumn{1}{l|}{Hidden Foursome}            \\
-			\ac{RBC}         & Line-Block-Ineraction      & \multicolumn{1}{l|}{} & \ac{BRC}        & \multicolumn{1}{l|}{Block-Line-Interaction}     \\
-			X-Wing                            & X-Wing                     & \multicolumn{1}{l|}{} & Steinbutt                        & \multicolumn{1}{l|}{Turbot}                     \\
-			Drittes Auge                      & Third Eye                  & \multicolumn{1}{l|}{} & Wolkenkratzer                    & \multicolumn{1}{l|}{Skyscraper}                 \\
-			Schwertfisch                      & Swordfish                  & \multicolumn{1}{l|}{} & Drachen                          & \multicolumn{1}{l|}{Dragon}                     \\
-			Verbotenes Rechteck Typ 1         & Forbidden Rectangle Type 1 & \multicolumn{1}{l|}{} & Verbotenes Rechteck Typ 2        & \multicolumn{1}{l|}{Forbidden Rectangle Type 2} \\
-			Verbotenes Rechteck Typ 3         & Forbidden Rectangle Type 3 & \multicolumn{1}{l|}{} & Verbotenes Rechteck Typ 4        & \multicolumn{1}{l|}{Forbidden Rectangle Type 4} \\
-			XY-Wing                           & XY-Wing                    &                       &                                  &                                                
+			Technikname               & Technikname engl.          &  & Technikname               & Technikname engl.          \\ \cline{1-2} \cline{4-5} 
+			Versteckter Single        & HiddenSingle               &  & Nackter Single            & Naked Single               \\
+			Verstecktes Paar          & Hidden Pair                &  & Nacktes Paar              & Naked Pair                 \\
+			Versteckter Dreier        & Hidden Triple              &  & Nackter Dreier            & Naked Triple               \\
+			Versteckter Vierer        & Hidden Foursome            &  & Nackter Vierer            & Naked Foursome             \\
+			Reihe-Block-Check         & Line-Block-Interaction     &  & Block-Reihe-Check         & Block-Line-Interaction     \\
+			X-Wing                    & X-Wing                     &  & Steinbutt                 & Turbot                     \\
+			Drittes Auge              & Third Eye                  &  & Wolkenkratzer             & Skyscraper                 \\
+			Schwertfisch              & Swordfish                  &  & Drachen                   & Dragon                     \\
+			Verbotenes Rechteck Typ 1 & Forbbiden Rectangle Type 1 &  & Verbotenes Rechteck Typ 2 & Forbbiden Rectangle Type 2 \\
+			Verbotenes Rechteck Typ 3 & 						   &  & Verbotenes Rechteck Typ 4 & Forbidden Rectangle Type 4 \\
+			XY-Wing                   & XY-Wing                    &  & XYZ-Wing                  & XYZ-Wing                   \\
+			X-Kette                   &                            &  & XY-Kette                  & XY-Chain                   \\
+			Schwertfisch mit Flosse   & Swordfish with fin         &  & W-Wing                    &                            \\
+			Geklonte Paare            &                            &  & Leeres Rechteck           &                            \\
+			Doppelkette               & Double Chain               &  & Forcing Chain             &                            \\ \cline{1-2} \cline{4-5} 
 		\end{tabular}%
 	}
 	\caption{Aufzählung alles implementierten Lösungsstrategien mit deutschem und englischem Bezeichner}
