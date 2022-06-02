@@ -33,8 +33,7 @@ class Chain:
         dominos = []
         for unit in ['row', 'column', 'box']:
             for x, y in SolvingTechniques.get_influential_cells_unit(cell, unit):
-                if (x, y) == cell or sum(self.candidates[x][y]) != 2 or \
-                        self.candidates[x][y] == self.candidates[cell[0]][cell[1]]:
+                if self.board[x][y] != 0 or (x, y) == cell or sum(self.candidates[x][y]) != 2 or self.candidates[x][y] == self.candidates[cell[0]][cell[1]]:
                     continue
                 if insert in SolvingTechniques.format_candidates(self.candidates[x][y]):
                     dominos.append((x, y))
@@ -58,6 +57,5 @@ class Chain:
         last_part = chain[-1]
         prev_last_part = chain[-2]
         last_candidates = SolvingTechniques.format_candidates(self.candidates[last_part[0]][last_part[1]])
-        prev_last_candidates = SolvingTechniques.format_candidates(
-            self.candidates[prev_last_part[0]][prev_last_part[1]])
+        prev_last_candidates = SolvingTechniques.format_candidates(self.candidates[prev_last_part[0]][prev_last_part[1]])
         return [insert for insert in last_candidates if insert not in prev_last_candidates][0]

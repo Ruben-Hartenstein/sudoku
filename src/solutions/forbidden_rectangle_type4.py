@@ -32,8 +32,7 @@ class ForbiddenRectangleType4(SolvingTechniques):
                             self.primary_cells.append((k, l))
                     if len(self.primary_cells) != 2:
                         continue
-                    if SolvingTechniques.get_box(self.primary_cells[0]) != SolvingTechniques.get_box(
-                            self.primary_cells[1]):
+                    if SolvingTechniques.get_box(self.primary_cells[0]) != SolvingTechniques.get_box(self.primary_cells[1]):
                         continue
                     self.candidate_pair_values = SolvingTechniques.format_candidates(candidate_pair)
                     orthogonal_cells = SolvingTechniques.get_influential_cells_unit(self.primary_cells[0], units[1 - i])
@@ -50,8 +49,7 @@ class ForbiddenRectangleType4(SolvingTechniques):
                         if not self.fourth_cell:
                             continue
                         self.fourth_cell = self.fourth_cell[0]
-                        candidate_fourth_cell_value = SolvingTechniques.format_candidates(
-                            self.candidates[self.fourth_cell[0]][self.fourth_cell[1]])
+                        candidate_fourth_cell_value = SolvingTechniques.format_candidates(self.candidates[self.fourth_cell[0]][self.fourth_cell[1]])
                         if not all(elem in candidate_fourth_cell_value for elem in self.candidate_pair_values):
                             continue
                         for unit in [self.unit, 'box']:
