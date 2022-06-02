@@ -78,7 +78,7 @@ $(document).ready(function () {
             $('#candidate').css('color', 'red');
         }
         colorCandidates(technique_result['crossOuts'], 'red');
-        colorCandidates(technique_result['highlights'], 'lime');
+        colorCandidates(technique_result['highlights'], 'limegreen');
     });
 
     socket.on('help2', function (technique_result) {
