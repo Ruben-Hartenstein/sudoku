@@ -124,7 +124,7 @@ In der Abbildung \ref{fig:Markierungen} sieht man das der Cursor ganz oben links
 Zahlen die vor dem Starten auf dem Sudokuboard eingetragen werden, werden mit dem Starten Blau markiert. Diese Zahlen können ab diesem Zeitpunkt nicht mehr überschrieben werden. Für den Fall, dass bei einem bereits gestartetem Sudoku eine inkorrekte Zahl eingetragen wird, so wird diese Rot markiert.
 
 
-\section{Abstufungen der Hilfestellungen}
+\section{Abstufungen der Hilfestellungen}\label{Abstufung}
 Die Anforderung an die verschiedenen Abstufungen der Hilfestellung wird hauptsächlich über das Frontend umgesetzt. Im Backend werden dafür nur die relevanten Informationen gesammelt. Im Folgenden wird die Abstufung und Umsetzung der Hilfestellungen erläutert und anhand von Beispielen gezeigt.
 
 \subsection{Erste Hilfestellung}
@@ -192,5 +192,11 @@ Nachdem das Programm dem Nutzer über mehrere Schritte geholfen hat die Technik 
 
 \end{lstlisting}
 
-\section{Fertig gelöstes Sudoku}
-Dem Nutzer wird sobald alle Zellen auf dem Board korrekt ausgefüllt wurden, über das Textfeld angezeigt, dass er das Sudoku korrekt gelöst hat.
+\section{Weitere Funktionalitäten}
+In diesem Abschnitt werden zwei weitere Situationen und die Reaktion des Programms darauf beleuchtet. Zum einen wird die Reaktion beschrieben wenn der User das Board korrekt beendet hat und zum anderen was passiert wenn der \textbf{Sudoku Solver} keine der umgesetzten Strategien erfolgreich anwenden kann.
+
+\subsection{Fertig gelöstes Sudoku}
+Dem Nutzer wird sobald alle Zellen auf dem Board korrekt ausgefüllt wurden, über das Textfeld angezeigt, dass er das Sudoku korrekt gelöst hat. In dem Textfeld erscheint der Schriftzug \textit{Victory}.
+
+\subsection{Keine Technik anwendbar}
+Für den Fall, dass keine Strategie auf das Board angewendet werden kann, dann wird dies dem User visuell über das Textfeld mitgeteilt. 
