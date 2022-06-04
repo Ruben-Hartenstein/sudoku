@@ -76,12 +76,12 @@ class ForbiddenRectangleType3(SolvingTechniques):
                                 if self.other_candidates[index] not in chain_start_candidate:
                                     continue
                                 self.candidate = self.other_candidates[1 - index]
-                                domino = Chain(self.board, self.candidates, start_cell)
+                                domino = Chain(self, start_cell)
                                 chain_start_candidate.remove(self.other_candidates[index])
-                                domino.calculate_all_chains(chain_start_candidate[0])
+                                domino.calculate_all_domino_chains(chain_start_candidate[0])
                                 chains = domino.chains
                                 for self.chain in chains:
-                                    if domino.get_last_insert(self.chain) != self.candidate:
+                                    if domino.get_domino_last_insert(self.chain) != self.candidate:
                                         continue
                                     primary_cells_copy = self.primary_cells[:]
                                     self.primary_cells.append(third_cell)

@@ -14,10 +14,10 @@ class XYWing(SolvingTechniques):
             for j in range(9):
                 if self.board[i][j] != 0 or sum(self.candidates[i][j]) != 2:
                     continue
-                domino = Chain(self.board, self.candidates, (i, j), 3)
+                domino = Chain(self, (i, j), 3)
                 candidates = SolvingTechniques.format_candidates(self.candidates[i][j])
                 for candidate in candidates:
-                    domino.calculate_all_chains(candidate)
+                    domino.calculate_all_domino_chains(candidate)
                     chains = [chain for chain in domino.chains if len(chain) == 3]
                     for self.chain in chains:
                         x, y = self.chain[-1]

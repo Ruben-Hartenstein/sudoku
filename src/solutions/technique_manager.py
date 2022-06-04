@@ -21,12 +21,13 @@ from src.solutions.forbidden_rectangle_type3 import ForbiddenRectangleType3
 from src.solutions.forbidden_rectangle_type4 import ForbiddenRectangleType4
 from src.solutions.xy_wing import XYWing
 from src.solutions.xyz_wing import XYZWing
+from src.solutions.x_chain import XChain
 from src.solutions.xy_chain import XYChain
 from src.solutions.swordfish_with_fin import SwordfishWithFin
 from src.solutions.double_chain import DoubleChain
 
-techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Swordfish, Dragon, ForbiddenRectangleType1, ForbiddenRectangleType2, ForbiddenRectangleType3, ForbiddenRectangleType4, XYWing, XYZWing, XYChain, SwordfishWithFin, DoubleChain]
-#techniques = [DoubleChain]
+techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Swordfish, Dragon, ForbiddenRectangleType1, ForbiddenRectangleType2, ForbiddenRectangleType3, ForbiddenRectangleType4, XYWing, XYZWing, XChain, XYChain, SwordfishWithFin, DoubleChain]
+#techniques = [XChain]
 
 def set_solved_board(board):
     SolvingTechniques.set_solved_board(board)

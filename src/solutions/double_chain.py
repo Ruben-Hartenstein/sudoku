@@ -14,11 +14,11 @@ class DoubleChain(SolvingTechniques):
             for j in range(9):
                 if self.board[i][j] != 0 or sum(self.candidates[i][j]) != 2:
                     continue
-                domino = Chain(self.board, self.candidates, (i, j))
+                domino = Chain(self, (i, j))
                 candidates = SolvingTechniques.format_candidates(self.candidates[i][j])
                 chains = []
                 for candidate in candidates:
-                    domino.calculate_all_chains(candidate)
+                    domino.calculate_all_domino_chains(candidate)
                     chains.append([chain for chain in domino.chains if len(chain) >= 3])
                 if not all(chain for chain in chains):
                     continue
@@ -33,7 +33,7 @@ class DoubleChain(SolvingTechniques):
                             continue
                         if self.chain[0] not in SolvingTechniques.get_unique_influential_cells(self.chain[-1]):
                             continue
-                        if domino.get_last_insert(self.chain) not in SolvingTechniques.format_candidates(
+                        if domino.get_domino_last_insert(self.chain) not in SolvingTechniques.format_candidates(
                                 self.candidates[self.chain[0][0]][self.chain[0][1]]):
                             continue
                         self.primary_cells = self.chain

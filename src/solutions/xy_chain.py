@@ -16,17 +16,17 @@ class XYChain(SolvingTechniques):
             for j in range(9):
                 if self.board[i][j] != 0 or sum(self.candidates[i][j]) != 2:
                     continue
-                domino = Chain(self.board, self.candidates, (i, j))
+                domino = Chain(self, (i, j))
                 candidates = SolvingTechniques.format_candidates(self.candidates[i][j])
                 chains = []
                 for candidate in candidates:
-                    domino.calculate_all_chains(candidate)
+                    domino.calculate_all_domino_chains(candidate)
                     chains.append(domino.chains)
 
                 for self.chain0 in chains[0]:
                     for self.chain1 in chains[1]:
-                        self.candidate = domino.get_last_insert(self.chain0, candidates[0])
-                        if self.candidate != domino.get_last_insert(self.chain1, candidates[1]):
+                        self.candidate = domino.get_domino_last_insert(self.chain0, candidates[0])
+                        if self.candidate != domino.get_domino_last_insert(self.chain1, candidates[1]):
                             continue
                         self.primary_cells = [self.chain0[0]]
                         self.configure_highlighting()
