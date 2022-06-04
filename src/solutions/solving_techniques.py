@@ -107,16 +107,23 @@ class SolvingTechniques(ABC):
         return unique_cells
 
     @staticmethod
+    def get_unit_cells(unit_number, unit):
+        j, i = unit_number, unit_number
+        if unit == 'box':
+            j, i = SolvingTechniques.index2box(j)
+        return SolvingTechniques.get_influential_cells_unit((j, i), unit)
+
+    @staticmethod
     def index2box(index):
-        box_coords = {0: (1, 1),
-                      1: (1, 4),
-                      2: (1, 7),
-                      3: (4, 1),
-                      4: (4, 4),
-                      5: (4, 7),
-                      6: (7, 1),
-                      7: (7, 4),
-                      8: (7, 7)}
+        box_coords = {0: (0, 0),
+                      1: (0, 3),
+                      2: (0, 6),
+                      3: (3, 0),
+                      4: (3, 4),
+                      5: (3, 6),
+                      6: (6, 0),
+                      7: (6, 3),
+                      8: (6, 6)}
         return box_coords[index]
 
     @staticmethod

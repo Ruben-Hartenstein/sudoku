@@ -26,7 +26,7 @@ from src.solutions.swordfish_with_fin import SwordfishWithFin
 from src.solutions.double_chain import DoubleChain
 
 techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Swordfish, Dragon, ForbiddenRectangleType1, ForbiddenRectangleType2, ForbiddenRectangleType3, ForbiddenRectangleType4, XYWing, XYZWing, XYChain, SwordfishWithFin, DoubleChain]
-#techniques = [ForbiddenRectangleType3]
+#techniques = [DoubleChain]
 
 def set_solved_board(board):
     SolvingTechniques.set_solved_board(board)
