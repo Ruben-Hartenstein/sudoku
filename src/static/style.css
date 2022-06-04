@@ -112,7 +112,9 @@ table.candidates {
 }
 
 #help button{
-    width: 8vw;
+    width: 16vw;
+    min-width: 110px;
+    max-width: 330px;
 }
 
 #keyboard button:active {
