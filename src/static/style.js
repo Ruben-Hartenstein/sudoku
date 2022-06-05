@@ -103,7 +103,6 @@ function pointer2nextCell(){
 function toggleCellHighlighting(coord, isOn) {
     let id = coord[0].toString() + coord[1].toString();
     let obj = $(`#${id}`);
-    //obj.css('background', isOn ? 'radial-gradient(ellipse at center, red 0%, #e70000 25%, rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%)': 'white');
     obj.css('outline', isOn ? '3px solid yellowgreen' : '1px none black');
 }
 

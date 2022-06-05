@@ -1,21 +1,22 @@
 from flask import Flask, render_template
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, emit
 from copy import deepcopy
+import secrets
 import sudoku_board as sudoku_board
 from src.solutions import technique_manager
-
 from engineio.payload import Payload
 
 Payload.max_decode_packets = 500
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
+app.config['SECRET_KEY'] = secrets.token_hex(16)
 socketio = SocketIO(app)
 
 has_started = False
 help_step = 0
-technique_result = None
-sudoku = sudoku_board.SudokuBoard([[0, 2, 3, 0, 6, 5, 0, 8, 9], [9, 0, 0, 0, 0, 4, 0, 0, 5], [5, 0, 0, 0, 0, 0, 0, 0, 0], [6, 0, 0, 3, 4, 0, 0, 1, 8], [3, 8, 0, 5, 9, 0, 0, 0, 2], [0, 0, 0, 0, 8, 6, 3, 0, 0], [2, 3, 5, 0, 0, 0, 0, 0, 6], [8, 0, 7, 6, 2, 0, 0, 0, 3], [0, 9, 6, 0, 5, 3, 8, 2, 0]])
+technique_result = {}
+sudoku = sudoku_board.SudokuBoard([[0, 0, 0, 0, 0, 0, 0, 4, 0], [3, 4, 0, 8, 0, 0, 7, 2, 0], [0, 5, 6, 4, 0, 0, 8, 9, 0], [0, 3, 0, 6, 8, 5, 4, 7, 0], [0, 0, 0, 7, 3, 4, 0, 6, 2], [7, 6, 4, 2, 1, 9, 5, 3, 8], [0, 0, 0, 3, 4, 0, 0, 8, 0], [6, 8, 3, 0, 0, 0, 2, 5, 4], [4, 0, 0, 5, 0, 8, 0, 1, 0]])
+
 
 # HIDDEN TRIPLE: [[0, 0, 0, 7, 4, 0, 0, 0, 8], [4, 9, 6, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 0, 0, 4, 0], [0, 0, 0, 0, 5, 7, 6, 0, 0], [8, 0, 0, 0, 0, 0, 0, 2, 1], [0, 0, 3, 4, 0, 0, 0, 0, 0], [0, 0, 0, 3, 0, 0, 0, 0, 0], [1, 2, 4, 0, 7, 0, 0, 5, 0], [0, 0, 0, 0, 0, 0, 7, 0, 0]]
 # NAKED TRIPLE: [[0, 7, 0, 0, 0, 0, 8, 0, 0], [0, 2, 0, 8, 0, 0, 9, 5, 0], [0, 0, 0, 0, 0, 9, 6, 0, 2], [0, 0, 0, 3, 0, 4, 2, 8, 9], [0, 0, 3, 9, 0, 0, 1, 6, 4], [4, 0, 0, 6, 1, 0, 5, 0, 0], [0, 4, 0, 2, 9, 6, 0, 1, 5], [0, 0, 0, 0, 0, 0, 0, 9, 6], [0, 0, 0, 5, 3, 0, 4, 2, 8]]
@@ -43,14 +44,10 @@ sudoku = sudoku_board.SudokuBoard([[0, 2, 3, 0, 6, 5, 0, 8, 9], [9, 0, 0, 0, 0, 
 # XCHAIN2: [[0, 6, 9, 0, 0, 1, 0, 3, 0], [0, 3, 4, 0, 5, 0, 0, 1, 0], [0, 1, 0, 0, 3, 7, 0, 0, 4], [0, 0, 0, 3, 7, 0, 0, 9, 0], [0, 7, 6, 1, 8, 0, 0, 0, 5], [1, 0, 0, 2, 6, 0, 7, 0, 0], [0, 0, 1, 7, 0, 0, 0, 6, 0], [6, 0, 7, 0, 0, 0, 0, 5, 0], [4, 0, 0, 5, 1, 6, 0, 7, 0]]
 # DOUBLECHAIN: [[0, 0, 0, 0, 0, 0, 9, 0, 2], [0, 9, 0, 4, 0, 7, 5, 0, 1], [0, 0, 0, 5, 0, 0, 6, 0, 7], [9, 8, 0, 2, 5, 0, 1, 7, 6], [1, 0, 6, 0, 7, 0, 3, 0, 5], [0, 0, 0, 1, 0, 0, 8, 0, 4], [3, 6, 9, 7, 4, 1, 2, 5, 8], [0, 7, 1, 3, 0, 0, 4, 6, 9], [0, 0, 2, 0, 0, 0, 7, 1, 3]]
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
-
-
-@socketio.on('message')
-def handle_message(data):
-    send(data)
 
 
 @socketio.on('start')
@@ -59,7 +56,6 @@ def start():
     global has_started
     help_step = 0
     has_started = start_game()
-    print(sudoku.board)
     emit('start', {'hasStarted': has_started, 'startCoords': sudoku.start_coords})
 
 
@@ -67,7 +63,6 @@ def start():
 def test_connect():
     global help_step
     help_step = 0
-    print('Server Connected')
     emit('serverStatus', {'board': sudoku.board, 'hasStarted': has_started, 'startCoords': sudoku.start_coords})
 
 
@@ -77,10 +72,8 @@ def new_numbers(data):
     help_step = 0
     cell_values = sudoku.update_numbers(int(data['number']), data['checkedCells'])
     emit('update cells', {'values': cell_values, 'checkedCells': data['checkedCells']})
-    print("new Number")
     if has_started and sudoku.is_finished():
-        print("victory")
-        emit('victory')
+        emit('info', {'name': 'Victory', 'explanation': 'The Sudoku is correctly solved!'})
 
 
 @socketio.on('erase')
@@ -110,7 +103,6 @@ def candidates():
         return
     errors = sudoku.get_errors()
     if errors:
-        print(errors)
         emit('showErrors', errors)
     else:
         sudoku.update_candidates()
@@ -121,16 +113,17 @@ def candidates():
 def help():
     global help_step
     global technique_result
+    if has_started and sudoku.is_finished():
+        return
     errors = sudoku.get_errors()
     if errors:
-        print(errors)
         emit('showErrors', errors)
         return
     if help_step == 0:
         sudoku.update_candidates()
         technique_result = technique_manager.try_techniques(sudoku.board, sudoku.candidates)
         if not technique_result:
-            print("No suitable technique found!")
+            emit('info', {'name': 'Sorry', 'explanation': 'No suitable technique found!'})
             return
         emit('help0',
              {'name': technique_result['name'], 'primaryCells': technique_result['primary_cells'],
@@ -168,10 +161,5 @@ def start_game():
     return True
 
 
-def list2board(num_list):
-    num_list = [0 if x == '' else int(x) for x in num_list]
-    return [num_list[i:i + 9] for i in range(0, len(num_list), 9)]
-
-
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app)

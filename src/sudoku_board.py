@@ -171,7 +171,6 @@ class SudokuBoard:
         for cross_out in cross_outs:
             x, y = cross_out['cell']
             self.candidates[x][y][cross_out['value'] - 1] = 0
-        print("Done Removing")
 
     def update_numbers(self, number, cells):
         cell_values = []

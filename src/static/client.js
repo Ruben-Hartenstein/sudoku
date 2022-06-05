@@ -3,16 +3,6 @@ $(document).ready(function () {
     var candidatesVisible = false;
     var startCoords = [];
 
-    // Initialize connection
-    socket.on('connect', function () {
-        socket.send('User has connected!');
-    });
-
-    // Confirm arrival of message
-    socket.on('message', function (data) {
-        console.log('Received message: ' + JSON.stringify(data));
-    });
-
     socket.on('start', function (status) {
         if (status['hasStarted']) {
             $('#start').hide();
@@ -95,9 +85,9 @@ $(document).ready(function () {
         resetCellColor();
     });
 
-    socket.on('victory', function () {
-        console.log("VICTORY")
-        $("#technique-name").text("Victory");
+    socket.on('info', function (info) {
+        $("#technique-name").text(info['name']);
+        $("#technique-explanation").text(info['explanation']);
     });
 
     socket.on('update cells', function (data) {
@@ -125,7 +115,7 @@ $(document).ready(function () {
         candidatesVisible = !candidatesVisible;
         if (candidatesVisible) {
             $('#candidate').css('color', 'red');
-            updateCandidates();
+            socket.emit('getCandidates');
         } else {
             hideCandidates();
         }
@@ -144,6 +134,7 @@ $(document).ready(function () {
     });
 
     $('#reset').on('click', function () {
+        getCheckedCells() // to reset checkedCells
         candidatesVisible = false;
         startCoords = [];
         $("#technique-name").text("");
@@ -162,10 +153,6 @@ $(document).ready(function () {
         socket.emit('help');
     });
 
-    function updateCandidates() {
-        socket.emit('getCandidates');
-    }
-
     // Updates content of cells
     function updateCells(cellValues, cells) {
         let tempJSON = JSON.stringify(startCoords);
@@ -179,7 +166,7 @@ $(document).ready(function () {
             $(obj.children('p')[0]).text(text);
         });
         if (candidatesVisible)
-            updateCandidates();
+            socket.emit('getCandidates');
     }
 
     function updateBoard(board) {
