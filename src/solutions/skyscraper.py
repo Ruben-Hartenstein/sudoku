@@ -1,5 +1,5 @@
 from src.solutions.solving_techniques import SolvingTechniques
-from itertools import combinations
+from itertools import combinations, groupby
 
 
 class SkyScraper(SolvingTechniques):
@@ -28,7 +28,7 @@ class SkyScraper(SolvingTechniques):
                         twice_appearances.append(unit_cells)
                 if len(twice_appearances) >= 2:
                     relevant_cell_pairs = [self.get_cells_with_candidate(twice_appearance, self.candidate) for twice_appearance in twice_appearances]
-                    for this, that in combinations(relevant_cell_pairs, 2):
+                    for this, that in (k for k, _ in groupby(combinations(relevant_cell_pairs, 2))):
                         temp = this[:]
                         temp.extend(that)
                         # check if two candidates are at the same level in row/colum

@@ -1,5 +1,5 @@
 from src.solutions.solving_techniques import SolvingTechniques
-from itertools import combinations
+from itertools import combinations, groupby
 
 
 class Swordfish(SolvingTechniques):
@@ -21,7 +21,7 @@ class Swordfish(SolvingTechniques):
                         applicable_units.append(cells_with_candidate)
                 if len(applicable_units) < 3:
                     continue
-                for combination in combinations(applicable_units, 3):
+                for combination in (k for k, _ in groupby(combinations(applicable_units, 3))):
                     flattened_combination = SolvingTechniques.flatten(combination)
                     self.cross_out_coordinates = flattened_combination[1::2] if self.unit == 'row' else flattened_combination[0::2]
                     self.cross_out_coordinates = SolvingTechniques.remove_duplicates(self.cross_out_coordinates)

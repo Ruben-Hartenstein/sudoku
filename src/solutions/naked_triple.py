@@ -12,21 +12,16 @@ class NakedTriple(SolvingTechniques):
 
     def execute_technique(self):
         for self.unit in ['row', 'column', 'box']:
-            for j in range(9):
-                i = j
+            for i in range(9):
                 occurring_candidates = []
-                if self.unit == 'box':
-                    j, i = SolvingTechniques.index2box(j)
-                self.unit_cells = SolvingTechniques.get_influential_cells_unit((j, i), self.unit)
+                self.unit_cells = SolvingTechniques.get_unit_cells(i, self.unit)
                 for cell in self.unit_cells:
                     x, y = cell
                     if self.board[x][y] != 0:
                         continue
-                    for num, candidate in enumerate(self.candidates[x][y]):
-                        if candidate == 0:
-                            continue
-                        if num + 1 not in occurring_candidates:
-                            occurring_candidates.append(num + 1)
+                    for candidate in SolvingTechniques.format_candidates(self.candidates[x][y]):
+                        if candidate not in occurring_candidates:
+                            occurring_candidates.append(candidate)
                 combos = set(combinations(occurring_candidates, 3))
                 for self.combo in combos:
                     matches = []

@@ -1,5 +1,5 @@
 from src.solutions.solving_techniques import SolvingTechniques
-from itertools import combinations, chain
+from itertools import combinations, chain, groupby
 
 
 class SwordfishWithFin(SolvingTechniques):
@@ -24,7 +24,7 @@ class SwordfishWithFin(SolvingTechniques):
                         applicable_units.append(cells_with_candidate)
                 if len(applicable_units) < 3:
                     continue
-                for list1, list2, list3 in combinations(applicable_units, 3):
+                for list1, list2, list3 in (k for k, _ in groupby(combinations(applicable_units, 3))):
                     combination = list(chain(list1, list2, list3))
                     flattened_combination = SolvingTechniques.flatten(combination)
                     coordinates = flattened_combination[1::2] if self.unit == 'row' else flattened_combination[0::2]
