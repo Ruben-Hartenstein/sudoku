@@ -1,3 +1,27 @@
 %!TEX root = ../dokumentation.tex
 
 \chapter{Testing/Validierung}
+Zum Testen und Validieren des \textbf{Sudoku Solvers} wurden zwei verschiedenen Techniken angewendet. Das Frontend wurde mittels eines Akzeptanztests von den Entwicklern getestet und das Backend mit einem End-to-End-Test.
+
+In diesem Kapitel wird kurz der jeweilige Test erläutert und dann die Umsetzung im \textbf{Sudoku Solver} beschrieben.
+
+\section{Frontend}
+
+Das Frontend wurde mittels einem Akzeptanztest überprüft. Hierbei findet eine Funktionsprüfung einer User Story getestet. Dabei werden nicht funktionale Anforderungen wie die Benutzerfreundlichkeit und Leistung der Software getestet. Diese nicht funktionalen Anforderungen wie die Antwortzeit zwischen Front- und Backend oder das Verhalten der Oberfläche wurde früh in der Entwicklung durchgeführt.
+
+Im Zuge dieses Tests wurden Fehler abgefangen die beispielsweise beim Neu laden der Website entstanden sind. In Meetings mit dem Kunden sind weitere Unstimmigkeiten aufgetreten, die aufgrund der Anmerkungen der Kunden verbessert wurden.
+
+Ein abschließender Akzeptanztest sollte jedoch von dem Kunden der Software durchgeführt werden.
+
+\section{Backend}
+
+Im Backend muss die Korrektheit der Strategien überprüft werden. Diese Überprüfung findet während der Entwicklung statt. 
+
+Zu den Erklärungen der Strategien sind visuelle Beispiele gegeben. Die Beispiele dienen als Grundlage für den Test einer Strategie. Wenn eine Strategie auf ein Beispiel angewendet werden kann, dann wird diese Strategie in weiteren Sudokus gesucht. Beim Finden wird von Entwicklern, mittels des analogen Anwenden überprüft inwiefern eine Strategie auch außerhalb der Grundlage korrekt angewendet wird. Diese Überprüfung findet im optimalen Fall mehrere Male in unterschiedlichen Situationen, wie beispielsweise das Finden einer Strategie in verschiedenen Units, statt. Wenn eine Lösungsstrategie in unterschiedlichen Situationen von den Entwicklern nachvollzogen werden kann, so ist diese verifiziert.
+
+\section{End-to-End Test}
+Zu guter letzt wurde ein End-to-End Test durchgeführt. In disem Test wird nicht nur die Grundfunktionalität der Software überprüft, sondern auch die erweiterte Funktionalität. In diesem Test wird der gesamte Prozess geprüft. 
+
+Im Zuge des \textbf{Sudoku Solver}s wurde ein Sudoku eingegeben und die Hilfestellungen der Strategien auf ihre Richtigkeit überprüft. Auch in diesem Test abgedeckt ist die Reaktion des Frontend wenn im Backend keine passende Technik gefunden wird oder wenn das Suoku korrekt gelöst wird.
+
+Mittels des Tests wird sichergestellt, dass alle Prozesse, in diesem Fall das Anwenden verschiedener Strategien korrekt ausgeführt wird und die korrekten Informationen ans Frontend gelangen.
