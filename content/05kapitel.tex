@@ -9,11 +9,11 @@
 \part{Implementierung}
 
 \chapter{Frontend}
-Nachdem in den bisherigen Kapiteln eher die technischen und theoretischen Grundlagen diskutiert wurden, wird nun die eigentliche Implementierung des \textbf{Sudoku Solver}s erläutert.
+Nachdem in den bisherigen Kapiteln eher die technischen und theoretischen Grundlagen diskutiert wurden, wird nun die eigentliche Implementierung des \textbf{Sudoku Helper}s erläutert.
 
 Zunächst wird das Frontend mit allen Funktionalitäten des User Interfaces und der daraus resultierenden User Experience, sowie die Umsetzung der einzelnen Hilfestellungen beschrieben.
 
-Das Frontend ist letztlich alles was der User auf der Website erfahren kann. Alles was der Nutzer nicht erleben kann gehört zum Backend. Trotzdem ist das Frontend sehr entscheidend, denn es sollte möglichst Benutzerfreundlich sein. Dazu gehört eine intuitive Nutzung der Oberfläche und im Falle des \textbf{Sudoku Solver}s das übersichtliche Anzeigen der Lösungsstrategie und die Erklärung dazu, sowie die entsprechenden Markierungen auf dem Sudokuboard.
+Das Frontend ist letztlich alles was der User auf der Website erfahren kann. Alles was der Nutzer nicht erleben kann gehört zum Backend. Trotzdem ist das Frontend sehr entscheidend, denn es sollte möglichst Benutzerfreundlich sein. Dazu gehört eine intuitive Nutzung der Oberfläche und im Falle des \textbf{Sudoku Helper}s das übersichtliche Anzeigen der Lösungsstrategie und die Erklärung dazu, sowie die entsprechenden Markierungen auf dem Sudokuboard.
 
 \section{\acl{UI}}
 Das \ac{UI} ist die Nutzerschnittstelle zum Backend. An dieser Stelle beeinflusst der Nutzer durch seine Handlung die Reaktion im Backend und wie das Frontend letztlich wieder auf diese Handlung reagiert. An dieser Stelle der Ausarbeitung werden die Designentscheidungen für das \ac{UI} vorgestellt. Daher wird im Folgenden die \ac{HTML} Struktur und das darauf basierende responsive Design beschrieben.
@@ -57,23 +57,22 @@ In der Flexbox von NumPad und Textfeld sind beide \textit{<div>}s jeweils nochma
 	\label{fig:Responsiv}
 \end{figure}
 
-Ein weiterer Punkt der beim responsive Design beachtet werden muss, ist die Schriftgröße. Eine Anpassung wird deshalb bei den Zahlen und Kandidaten auf dem Board und auch bei der Größe der Tasten des NumPad und die Schrift darauf vorgenommen. Das Gleiche gilt für das Textfeld mit Lösungsstrategie und Erläuterung. Die Skalierung der Schriftgröße wird in der \ac{CSS} Datei über viewports designt. Damit die Schrift am Ende nicht zu klein ist, wird eine \textit{min-font-size} definiert. 
+Ein weiterer Punkt der beim responsive Design beachtet werden muss, ist die Schriftgröße. Eine Anpassung wird deshalb bei den Zahlen und Kandidaten auf dem Board und auch bei der Größe der Buttons des NumPad und die Schrift darauf vorgenommen. Das Gleiche gilt für das Textfeld mit Lösungsstrategie und Erläuterung. Die Skalierung der Schriftgröße wird in der \ac{CSS} Datei über viewports designt. Damit die Schrift am Ende nicht zu klein ist, wird eine \textit{min-font-size} definiert. 
 
 
 \section{\acl{UX}}
-Der folgende Abschnitt ist eine Ausführung über verschiedene Funktionalitäten, die für eine guten \acl{UX} implementiert sind. Dabei wird unterschieden zwischen den Funktionalitäten vom NumPad und anderen Eingaben und den Funktionalitäten des Sudokuboards.
+Der folgende Abschnitt ist eine Ausführung über verschiedene Funktionalitäten, die für eine guten \acl{UX} implementiert sind. Im Zuge dessen werden die beiden Zustände in denen sich der \textbf{Sudoku Helper} befinden kann, der User Input und die Elemente auf dem Frontend erläutert.
 
-Neben einer übersichtlichen und verständlich aufgebauten \ac{UI} muss noch eine gute \ac{UX} für ein gutes Frontend garantiert werden. Dazu gehören die Funktionalitäten der Knöpfe und eine angenehme Auswahl an Farben zur Markierung, um dem User die Nutzung der Website möglichst angenehm zu gestalten. Zum Beispiel gibt es für das Eintragen der Zahlen auf dem Sudoku verschiedene Varianten um eine gute \ac{UX} zu erreichen. 
+Neben einem übersichtlichen und verständlich aufgebauten \ac{UI} muss noch eine gute \ac{UX} für ein gutes Frontend garantiert werden. Dazu gehören die Funktionalitäten der Knöpfe und eine angenehme Auswahl an Farben zur Markierung, um dem User die Nutzung der Website möglichst angenehm zu gestalten. Zum Beispiel gibt es für das Eintragen der Zahlen auf dem Sudoku verschiedene Varianten um eine gute \ac{UX} zu erreichen. 
 
 \subsection{Zustände}
 
-Der \textbf{Sudoku Solver} kann zwei Zustände haben. Mit diesen Zuständen verändert sich das NumPad und einige Eigenschaften des Board. 
+Der \textbf{Sudoku Helper} kann zwei Zustände haben. Zu Beginn oder nach dem Zurücksetzten des Boards befindet sich die Seite in einem Anfangszustand, indem der Benutzer das zu lösende Sudoku eingeben kann. Per Knopfdruck auf den Startknopf wird das Sudoku auf eindeutige Lösbarkeit geprüft. Falls das Sudoku eindeutig lösbar ist, ändert sich der Zustand zum \glqq Spielzustand\grqq, die bereits eingegeben Zahlen werden farblich markiert und der Nutzer kann diese nicht mehr verändern. Zudem verändert sich das NumPad mit dem weitere Funktionalitäten des Boards freigeschaltet werden. 
 
-Es gibt auf der \ac{UI} ein NumPad mit verschiedenen Tasten. Wenn das Sudoku noch nicht gestartet wurde, unterscheidet sich die Anordnung der Knöpfe. In diesem Zustand sind in der obersten Reihe auf dem NumPad die Tasten Start, Delete (Del) und \ac{CE} zu sehen. 
+Es gibt auf dem \ac{UI} ein NumPad mit verschiedenen Tasten. Wenn das Sudoku noch nicht gestartet wurde, unterscheidet sich die Anordnung der Knöpfe. In diesem Zustand sind in der obersten Reihe auf dem NumPad die Tasten Start, Delete (Del) und \ac{CE} zu sehen. 
 
-Beim Drücken des Startknopf wird zuerst die eindeutige Lösbarkeit des Rätsels geprüft. Wenn ein Sudoku nicht eindeutig lösbar ist, dann wird das dem Nutzer angezeigt. Falls es aber eindeutig Lösbar ist, wechselt der \textbf{Sudoku Solver} in den anderen Zustand und der Start Button verschwindet, bzw wird durch einen Note Knopf ersetzt. Zudem erscheint unter dem NumPad ein Help Knopf. 
+Beim Drücken des Startknopfes wird, wie bereits beschrieben, zuerst die eindeutige Lösbarkeit des Rätsels geprüft. Wenn ein Sudoku nicht eindeutig lösbar ist, dann wird das dem Nutzer angezeigt. Falls es aber eindeutig Lösbar ist, wechselt der \textbf{Sudoku Helper} in den \glqq Spielzustand\grqq und der Start Button verschwindet, bzw wird durch einen Note Knopf ersetzt. Zudem erscheint unter dem NumPad ein Help Knopf. 
 
-Die Zahlen die zum Zeitpunkt des Drückens eingegeben wurden, bekommen eine andere Farbe und sind fest auf dem Board eingetragen. Diese können nicht mehr überschrieben werden.
 
 
 \begin{figure}[H]
@@ -86,7 +85,7 @@ Die Zahlen die zum Zeitpunkt des Drückens eingegeben wurden, bekommen eine ande
 
 \subsection{User Input}
 
-Der User Input kann sowohl über das auf der Website abgebildete NumPad geschehen, sowie über definierte Tasten auf der Tastatur. In der Tabelle \ref{tab:tastatur} sind die Keys mit ihren zugeordneten Funktionalitäten zugeordnet. Die Codierung wird im Hintergrund verwendet, um herauszufinden welche Taste gedrückt wurde.
+Der User Input kann sowohl über das auf der Website abgebildete NumPad geschehen, sowie über definierte Tasten auf der Tastatur. In der Tabelle \ref{tab:tastatur} sind die Keys mit ihren zugeordneten Funktionalitäten aufgelistet. Die Codierung wird im Hintergrund verwendet, um herauszufinden welche Taste gedrückt wurde.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{graphicx}
@@ -111,11 +110,15 @@ Der User Input kann sowohl über das auf der Website abgebildete NumPad geschehe
 	\label{tab:tastatur}
 \end{table}
 
-Mit der Taste \ac{CE} wird das komplette Sudokuboard zurückgesetzt. Mit eingeschlossen ist damit das Zurücksetzten des Zustand von dem Board. Wenn das Sudoku noch nicht gestartet wurde, werden nur die Zahlen auf dem Board entfernt. Mit der Del Taste werden in den ausgewählten Zellen der Eintrag gelöscht. Über die Note Taste wird der aktuelle Stand der Kandidaten angezeigt. Durch das mehrmalige Drücken des Help Knopfes werden die abgestuften Hilfestellungen angezeigt.
+Mit der Taste \ac{CE} wird das komplette Sudokuboard zurückgesetzt. Dabei werden alle Zahlen auf dem Board gelöscht und der Zustand des Boards in den Anfangszustand zurückgesetzt. Mit der Del Taste wird in den ausgewählten Zellen der Eintrag gelöscht. Über die Note Taste wird der aktuelle Stand der Kandidaten angezeigt. Durch das mehrmalige Drücken des Help Knopfes werden die abgestuften Hilfestellungen angezeigt.
 
-\subsection{Elemente}
+\subsection{Funktionalität}
 
-In der Abbildung \ref{fig:Markierungen} sieht man das der Cursor ganz oben links auf der ersten Zelle (1, A) liegt. Zudem sind mehrere Felder ausgewählt und daher grau hinterlegt.
+Auf dem Sudokuboard befindet sich eine markierte Zelle, im folgenden auch Cursor genannt. Diesen Cursor kann man mit den Pfeiltasten und der Shift Taste bewegen. Wenn eine Zahl eingegeben wird, dann wird diese in der Zelle des Cursors eingetragen. Sobald die Zahl eingetragen wird springt der Cursor in die nächste Zelle. 
+
+Dem Nutzer ist es zudem möglich durch Anklicken von Zellen mehrere Zellen auszuwählen. Eine weitere Möglichkeit Zellen auszuwählen, bietet die Leertaste auf dessen Knopfdruck die Zelle des Cursors ausgewählt wird. Die ausgewählten Zellen sind dann grau gefärbt. Wenn man die Markierung einer Zelle wieder rückgängig machen möchte, ist dies durch nochmaliges auswählen möglich. Für den Fall, dass Zellen markiert sind, wird die einzutragende Zahl in alle grau hinterlegten Zellen eingefügt.
+
+In der Abbildung \ref{fig:Markierungen} sieht man den Cursor ganz oben links auf der ersten Zelle (1, 1). Sowie einige ausgewählte Zellen.
 
 \begin{figure}[htbp]
 	\centering
@@ -124,13 +127,9 @@ In der Abbildung \ref{fig:Markierungen} sieht man das der Cursor ganz oben links
 	\label{fig:Markierungen}
 \end{figure}
 
-Um die Zelle auf der man sich aktuell befindet ist eine bunte Umrandung. Diesen Curser kann man mit den Pfeiltasten bewegen. Wenn eine Zahl gedrückt wird, dann wird diese immer in der Zelle eingetragen auf der sich der Curser gerade befindet. Sobald die Zahl eingetragen wird springt der Cursor auf die nächste Zelle. 
+Neben dem löschen einer Zahl mittels des Del Knopfes ist es zudem möglich eine Zahl durch nochmaliges Eintragen zu löschen. Wenn man eine andere Zahl eintragen möchte, dann kann man die vorherige Zahl überschreiben, ohne dass ein vorheriges löschen notwendig ist. 
 
-Dem Nutzer ist es zudem möglich durch einen Mausklick mehrere Zellen auszuwählen. Die ausgewählten Zellen sind dann grau gefärbt. Wenn man die Markierung einer Zelle wieder rückgängig machen möchte, ist dies durch nochmaliges klicken möglich. Für den Fall, dass mehrere Zellen markiert sind, dann wird die Zahl in alle diese Felder eingetragen.
-
-Eine weitere Funktionalität ist, dass Zahlen nicht nur durch den Del Knopf wieder entfernt werden können, sondern auch wenn man dieselbe Zahl nochmals in ein Feld einträgt. Wenn man eine andere Zahl eintragen möchte, dann kann man die vorherige Zahl überschreiben, ohne dass ein vorheriges löschen notwendig ist. 
-
-Mit dem Note Knopf werden die Kandidaten angezeigt. Wenn eine falsche Zahl eingetragen wird, während die Kandidaten angezeigt werden, dann wird diese Rot markiert. 
+Mit dem Note Knopf können Kandidaten angezeigt oder ausgeblendet werden. Wenn zu einem Zeitpunkt, indem die Kandidaten angezeigt werden, eine inkorrekte Zahl eingetragen wird, so wird diese Rot markiert.
 
 
 \section{Abstufungen der Hilfestellungen}\label{Abstufung}
@@ -202,7 +201,7 @@ Nachdem das Programm dem Nutzer über mehrere Schritte geholfen hat die Technik 
 \end{lstlisting}
 
 \section{Weitere Funktionalitäten}
-In diesem Abschnitt werden zwei weitere Situationen und die Reaktion des Programms darauf beleuchtet. Zum einen wird die Reaktion beschrieben wenn der User das Board korrekt beendet hat und zum anderen was passiert wenn der \textbf{Sudoku Solver} keine der umgesetzten Strategien erfolgreich anwenden kann.
+In diesem Abschnitt werden zwei weitere Situationen und die Reaktion des Programms darauf beleuchtet. Zum einen wird die Reaktion beschrieben wenn der User das Board korrekt beendet hat und zum anderen was passiert wenn der \textbf{Sudoku Helper} keine der umgesetzten Strategien erfolgreich anwenden kann.
 
 \subsection{Fertig gelöstes Sudoku}
 Dem Nutzer wird sobald alle Zellen auf dem Board korrekt ausgefüllt wurden, über das Textfeld angezeigt, dass er das Sudoku korrekt gelöst hat. In dem Textfeld der CSS-Klasse \textit{technique-name} erscheint der Schriftzug \textit{Victory}.
