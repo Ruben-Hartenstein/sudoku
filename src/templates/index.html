@@ -1,0 +1,57 @@
+<html class="noSelect">
+<head>
+    <title>Sudoku Helep</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='client.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='style.js') }}"></script>
+</head>
+<body>
+<div class="flex-container">
+    <div class="flex-item">
+
+        <table class="board">
+            {% for i in range(9) %}
+            <tr class="board">
+                {% for j in range(9) %}
+                <td class="board cell" id={{i}}{{j}}>
+                <p></p>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+    <div class="flex-item2">
+
+        <div id="keyboard">
+            <div class="started">
+                <button id="candidate">Note</button>
+            </div>
+                <button id="start">Start</button>
+                <button id="erase">DEL</button>
+                <button id="reset">CE</button>
+            <div id="numpad">
+                {% for i in range(1, 10) %}
+                <button class="number" id={{i}}>{{i}}</button>
+                {% endfor %}
+            </div>
+            <div class="started" id="help">
+                <button>HELEP</button>
+            </div>
+        </div>
+
+        <div class="technique-description">
+            <h1 id="technique-name"></h1>
+            <p id="technique-explanation"></p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
