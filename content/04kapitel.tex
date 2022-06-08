@@ -57,7 +57,7 @@ Felgenhauer und Jarvis haben in ihrer Veröffentlichung von 2006 die These aufge
 \section{Komplexität}
 Das folgende Unterkapitel gibt eine mathematische Definition eines Sudoku. Dabei wird eine allgemeine Beschreibung gegeben, die auf Sudokus die ein Problem n-ter Ordnung sind, angewendet werden kann.
 
-Bei Sudokus, die in den Medien veröffentlicht werden, und immer eindeutig lösbar sein müssen, kann durch logische Schlussfolgerung das Sudokurätsel gelöst werden. Durch die eindeutige Lösbarkeit ist es nicht notwendig Fallunterscheidungen zu treffen, also auszuprobieren.
+Bei Sudokus, die in den Medien veröffentlicht werden, und immer eindeutig lösbar sein müssen, kann durch logische Schlussfolgerung das Sudoku Rätsel gelöst werden. Durch die eindeutige Lösbarkeit ist es nicht notwendig Fallunterscheidungen zu treffen, also auszuprobieren.
 
 Mathematisch gesehen ist ein Sudoku ein Problem n-ter Ordnung. Dabei ist n eine natürliche Zahl. Auf einem $N\cdot N$ Gitter, wobei $N=n^2$ gilt, sind die Zahlen $1$ bis $N$ in das Gitter einzufügen. Dabei soll in jeder $1\cdot n$ Zeile, $n\cdot 1$ Spalte und $n\cdot n$ Block, jede der Zahlen $1$ bis $N$ genau einmal vorkommen. $N^2$ Felder des Gitters können dabei vorbelegt sein. Ein $9\cdot9$ Sudoku ist damit ein Problem 3-ter Ordnung. \cite{HerzbergMurty} 
 
@@ -74,7 +74,7 @@ Als notwendiges Kriterium für ein eindeutig lösbares Sudoku, müssen unter den
 Es gibt die Vermutung, dass die minimale Anzahl an vorgegebenen Ziffern 17 ist. Mittels Brute-Force Methoden wurden eindeutige Sudokus mit nur 17 vorgegebenen Zahlen gesucht. Daran wurde 2011 von einem Forschungsteam von Gary McGuire geforscht. Es gibt jedoch noch keinen mathematischen Beweis für die Vermutung. Diese Vermutung basiert also hauptsächlich auf dem Generieren und Ausprobieren von vielen unterschiedlichen Sudokurätseln mit nur 17 Ziffern und einer eindeutigen Lösung. \cite{FAZ} \cite[95\psqq]{althofer2014spiele}
 
 \section{Algorithmische Lösungsmethode: Backtracking}
-Um die eindeutige Lösbarkeit beweisen zu können muss ein Sudokurätsel gelöst werden. In der Studienarbeit wird das Überprüfen der eindeutigen Lösbarkeit mittels der algorithmischen Lösungsmethode des Backtracking bewiesen. Dieser Algorithmus wird im Verlaufe des Abschnitts erklärt und wie damit der Beweis der eindeutigen Lösbarkeit umgesetzt werden kann.
+Um die eindeutige Lösbarkeit beweisen zu können muss ein Sudoku Rätsel gelöst werden. In der Studienarbeit wird das Überprüfen der eindeutigen Lösbarkeit mittels der algorithmischen Lösungsmethode des Backtracking bewiesen. Dieser Algorithmus wird im Verlaufe des Abschnitts erklärt und wie damit der Beweis der eindeutigen Lösbarkeit umgesetzt werden kann.
 
 Backtracking ist eine Problemlösungsstrategie und mit der Rekursion verwandt. Es werden alle möglichen Lösungen ausprobiert und in jedem Schritt nach einer Abbruchbedingung überprüft. Die Bedingungen an das Problem, dass mit Backtracking gelöst werden sollen sind die Folgenden: 
 \begin{enumerate}
@@ -110,7 +110,7 @@ Die Laufzeit des Algorithmus hängt von der Anzahl der freien Zellen ab und dami
 	numbers=left,
 }
 
-\begin{lstlisting}[language=Python, caption={Funktion zum Lösen des Sudokurätsel}, label={lst:solve}]
+\begin{lstlisting}[language=Python, caption={Funktion zum Lösen des Sudoku Rätsel}, label={lst:solve}]
 	def solve(self, numbers=(1, SIZE + 1), board=None):
 		"""
 		Solves the SudokuBoard recursively via backtracking
@@ -161,7 +161,7 @@ Der Algorithmus des Backtrackings bricht nach dem Finden einer vollständigen L�
 
 Um die Eindeutigkeit eines Sudoku Rätsels zu beweisen, wird nach dem Finden einer Lösung das Backtracking nochmals von hinten begonnen. Damit ist gemeint, dass bei der ersten Lösungssuche in den freien Zellen die Zahlen von 1 bis 9 eingetragen werden und nach dem Abbruchkriterium überprüft wird. Beim Suchen nach einer zweiten Lösung beziehungsweise bei dem Beweis der Eindeutigkeit wird das Backtracking nochmals ausgeführt, dabei aber die Zahlen von 9 bis 1 in die freien Zellen eingetragen.
 
-\begin{lstlisting}[language=Python, caption={Überprüfen ob ein Sudokurätsel eine eindeutige Lösung hat}, label={lst:uniquesolve}]
+\begin{lstlisting}[language=Python, caption={Überprüfen ob ein Sudoku Rätsel eine eindeutige Lösung hat}, label={lst:uniquesolve}]
 	def is_uniquely_solvable(self):
 		temp_board = deepcopy(self.board)
 		self.solve(numbers=(9, 0, -1), board=temp_board)

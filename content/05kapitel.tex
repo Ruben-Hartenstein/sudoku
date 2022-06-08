@@ -67,11 +67,11 @@ Neben einem übersichtlichen und verständlich aufgebauten \ac{UI} muss noch ein
 
 \subsection{Zustände}
 
-Der \textbf{Sudoku Helper} kann zwei Zustände haben. Zu Beginn oder nach dem Zurücksetzten des Boards befindet sich die Seite in einem Anfangszustand, indem der Benutzer das zu lösende Sudoku eingeben kann. Per Knopfdruck auf den Startknopf wird das Sudoku auf eindeutige Lösbarkeit geprüft. Falls das Sudoku eindeutig lösbar ist, ändert sich der Zustand zum \glqq Spielzustand\grqq, die bereits eingegeben Zahlen werden farblich markiert und der Nutzer kann diese nicht mehr verändern. Zudem verändert sich das NumPad mit dem weitere Funktionalitäten des Boards freigeschaltet werden. 
+Der \textbf{Sudoku Helper} kann zwei Zustände haben. Zu Beginn oder nach dem Zurücksetzten des Boards befindet sich die Seite in einem Anfangszustand, indem der Benutzer das zu lösende Sudoku eingeben kann. Per Knopfdruck auf den \textit{Start}knopf wird das Sudoku auf eindeutige Lösbarkeit geprüft. Falls das Sudoku eindeutig lösbar ist, ändert sich der Zustand zum \glqq Spielzustand\grqq, die bereits eingegeben Zahlen werden farblich markiert und der Nutzer kann diese nicht mehr verändern. Zudem verändert sich das NumPad mit dem weitere Funktionalitäten des Boards freigeschaltet werden. 
 
-Es gibt auf dem \ac{UI} ein NumPad mit verschiedenen Tasten. Wenn das Sudoku noch nicht gestartet wurde, unterscheidet sich die Anordnung der Knöpfe. In diesem Zustand sind in der obersten Reihe auf dem NumPad die Tasten Start, Delete (Del) und \ac{CE} zu sehen. 
+Es gibt auf dem \ac{UI} ein NumPad mit verschiedenen Tasten. Wenn das Sudoku noch nicht gestartet wurde, unterscheidet sich die Anordnung der Knöpfe. In diesem Zustand sind in der obersten Reihe auf dem NumPad die Tasten \textit{Start}, Delete (\textit{Del}) und Clear everything (\textit{CE}) zu sehen. 
 
-Beim Drücken des Startknopfes wird, wie bereits beschrieben, zuerst die eindeutige Lösbarkeit des Rätsels geprüft. Wenn ein Sudoku nicht eindeutig lösbar ist, dann wird das dem Nutzer angezeigt. Falls es aber eindeutig Lösbar ist, wechselt der \textbf{Sudoku Helper} in den \glqq Spielzustand\grqq und der Start Button verschwindet, bzw wird durch einen Note Knopf ersetzt. Zudem erscheint unter dem NumPad ein Help Knopf. 
+Beim Drücken des \textit{Start}knopfes wird, wie bereits beschrieben, zuerst die eindeutige Lösbarkeit des Rätsels geprüft. Wenn ein Sudoku nicht eindeutig lösbar ist, dann wird das dem Nutzer angezeigt. Falls es aber eindeutig Lösbar ist, wechselt der \textbf{Sudoku Helper} in den \glqq Spielzustand\grqq und der \textit{Start} Button verschwindet, bzw wird durch einen \textit{Note} Knopf ersetzt. Zudem erscheint unter dem NumPad ein \textit{Help} Knopf. 
 
 
 
@@ -110,7 +110,7 @@ Der User Input kann sowohl über das auf der Website abgebildete NumPad geschehe
 	\label{tab:tastatur}
 \end{table}
 
-Mit der Taste \ac{CE} wird das komplette Sudokuboard zurückgesetzt. Dabei werden alle Zahlen auf dem Board gelöscht und der Zustand des Boards in den Anfangszustand zurückgesetzt. Mit der Del Taste wird in den ausgewählten Zellen der Eintrag gelöscht. Über die Note Taste wird der aktuelle Stand der Kandidaten angezeigt. Durch das mehrmalige Drücken des Help Knopfes werden die abgestuften Hilfestellungen angezeigt.
+Mit der Taste \textit{\ac{CE}} wird das komplette Sudokuboard zurückgesetzt. Dabei werden alle Zahlen auf dem Board gelöscht und der Zustand des Boards in den Anfangszustand zurückgesetzt. Mit der \textit{Del} Taste wird in den ausgewählten Zellen der Eintrag gelöscht. Über die \textit{Note} Taste wird der aktuelle Stand der Kandidaten angezeigt. Durch das mehrmalige Drücken des \textit{Help} Knopfes werden die abgestuften Hilfestellungen angezeigt.
 
 \subsection{Funktionalität}
 
@@ -127,9 +127,9 @@ In der Abbildung \ref{fig:Markierungen} sieht man den Cursor ganz oben links auf
 	\label{fig:Markierungen}
 \end{figure}
 
-Neben dem löschen einer Zahl mittels des Del Knopfes ist es zudem möglich eine Zahl durch nochmaliges Eintragen zu löschen. Wenn man eine andere Zahl eintragen möchte, dann kann man die vorherige Zahl überschreiben, ohne dass ein vorheriges löschen notwendig ist. 
+Neben dem löschen einer Zahl mittels des \textit{Del} Knopfes ist es zudem möglich eine Zahl durch nochmaliges Eintragen zu löschen. Wenn man eine andere Zahl eintragen möchte, dann kann man die vorherige Zahl überschreiben, ohne dass ein vorheriges löschen notwendig ist. 
 
-Mit dem Note Knopf können Kandidaten angezeigt oder ausgeblendet werden. Wenn zu einem Zeitpunkt, indem die Kandidaten angezeigt werden, eine inkorrekte Zahl eingetragen wird, so wird diese Rot markiert.
+Mit dem \textit{Note} Knopf können Kandidaten angezeigt oder ausgeblendet werden. Wenn zu einem Zeitpunkt, indem die Kandidaten angezeigt werden, eine inkorrekte Zahl eingetragen wird, so wird diese Rot markiert.
 
 
 \section{Abstufungen der Hilfestellungen}\label{Abstufung}

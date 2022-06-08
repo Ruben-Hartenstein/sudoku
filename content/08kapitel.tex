@@ -6,7 +6,7 @@ In diesem Kapitel wird abschließend geklärt ob die Forschungsaufgabe mit Erfol
 
 \section{Ergebnisse}
 
-In der Studienarbeit soll ein \textbf{Sudoku Helper} entwickelt werden. Dieser soll einem User über verschiedenen Abstufungen dabei helfen unterschiedliche Lösungstechniken auf einen Sudokurätsel anzuwenden und das Rätsel zu lösen. Dabei wird davon ausgegangen, dass ein Rätsel mit etwa 25 Lösungstechniken vollständig gelöst werden kann. 
+In der Studienarbeit soll ein \textbf{Sudoku Helper} entwickelt werden. Dieser soll einem User über verschiedenen Abstufungen dabei helfen unterschiedliche Lösungstechniken auf einen Sudoku Rätsel anzuwenden und das Rätsel zu lösen. Dabei wird davon ausgegangen, dass ein Rätsel mit etwa 25 Lösungstechniken vollständig gelöst werden kann. 
 
 In den Rahmenbedingungen werden die Programmiersprachen Python und JavaScript festgelegt. Neben den Programmiersprachen werden zwei Webserver verglichen, wobei am Ende entschieden wurde, dass die Software auf einem Apache \Ac{HTTP} Server laufen soll. Bei den Frameworks wurde sich für das leichtgewichtigere Flask entschieden, wobei sich an dem \ac{MVC} Entwurfsmuster orientiert wurde.
 
@@ -18,13 +18,13 @@ Beim Frontend wurde besonders auf die \ac{UX} geachtet sowie auf ein responsive 
 
 Als Fazit lässt sich sagen, dass die Aufgabe zum größten Teil umgesetzt wurde. Die meisten Anforderungen, wie ein responsive Design und das Implementieren von 25 Lösungsstrategien konnten umgesetzt werden. Mit den Hilfestellungen kann ein User die Anwendung der Techniken nachvollziehen und verstehen. Die Hilfestellungen teilen sich in unterschiedliche Stufen auf. Als erstes wird nur ein bestimmter Breich auf dem Board markiert und die Technik genannt, die angewendet werden kann. Im nächsten Schritt werden auch die relevanten Kandidaten in unterschiedlichen Farben hervorgehoben. Zuletzt bekommt der Nutzer eine auf das aktuelle Rätsel angepasste Erläuterung wie und vor allem warum eine Technik anwendbar ist.
 
-Die Studienarbeit hat gezeigt, dass auch mit 27 Lösungsstrategien nicht jedes Sudoku gelöst werden kann. Die vorgestellten Ergebnisse werfen die weiterführende Fragen auf, ob eine andere Reihenfolge der Lösungstechniken zu einer Lösung führen könnten. Eine andere weiterführende Forschungsfrage wäre welche Techniken weiter implementiert werden müssten, damit jedes Sudokurätsel vom \textbf{Sudoku Helper} über logische und nachvollziehbare Methoden gelöst werden kann.
+Die Studienarbeit hat gezeigt, dass auch mit 27 Lösungsstrategien nicht jedes Sudoku gelöst werden kann. Die vorgestellten Ergebnisse werfen die weiterführende Fragen auf, ob eine andere Reihenfolge der Lösungstechniken zu einer Lösung führen könnten. Eine andere weiterführende Forschungsfrage wäre welche Techniken weiter implementiert werden müssten, damit jedes Sudoku Rätsel vom \textbf{Sudoku Helper} über logische und nachvollziehbare Methoden gelöst werden kann.
 
 \section{Ausblick}
 
 Der \textbf{Sudoku Helper} wurde zwar erfolgreich umgesetzt, trotzdem gibt es noch weiteres Potential für Verbesserungen.
 
-Ein Problem des \textbf{Sudoku Helper}s ist, dass trotz der Implementierung von 27 Lösungsstrategien gerade schwierige Sudokurätsel noch nicht gelöst werden können. Man könnte also noch weitere Lösungsstrategien aus anderen Quellen implementieren. Des weiteren ist die Reaktion darauf keine anwendbare Lösungstechnik zu finden nur suboptimal geregelt. Eine weitere Option wäre es dem User erst anzuzeigen, dass er keinen passenden Algorithmus für das Sudokurästel besitzt und daraufhin eine passende Zahl in das Gitter einfügt oder einen falschen Kandidaten eliminiert. Auch das Beenden des Sudokus könnte durch den optischen Effekt von Konfetti weiter zelebriert werden.
+Ein Problem des \textbf{Sudoku Helper}s ist, dass trotz der Implementierung von 27 Lösungsstrategien gerade schwierige Sudoku Rätsel noch nicht gelöst werden können. Man könnte also noch weitere Lösungsstrategien aus anderen Quellen implementieren. Des weiteren ist die Reaktion darauf keine anwendbare Lösungstechnik zu finden nur suboptimal geregelt. Eine weitere Option wäre es dem User erst anzuzeigen, dass er keinen passenden Algorithmus für das Sudokurästel besitzt und daraufhin eine passende Zahl in das Gitter einfügt oder einen falschen Kandidaten eliminiert. Auch das Beenden des Sudokus könnte durch den optischen Effekt von Konfetti weiter zelebriert werden.
 
 Eine weitere spannende Ergänzung wäre das eigenständige Festlegen der Reihenfolge der Lösungstechniken. Damit könnte der User bestimmten Techniken eine höhere Priorität zuordnen, um eine Technik des öfteren zu finden, anzuwenden und zu verstehen. Dafür müssten in den Implementierungen der Lösungsstrategien einige Anpassungen vorgenommen werden, da aktuell zum Teil davon ausgegangen wird, dass bestimmte Konstellationen von Kandidaten bereits von einer früheren Technik gefunden werden.
 

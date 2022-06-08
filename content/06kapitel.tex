@@ -12,12 +12,32 @@ Im Backend des \textbf{Sudoku Helper}s findet die Datenverarbeitung statt. Das B
 
 
 \section{Programmarchitektur}
-\todo{UML}
 
+Wie in Kapitel xx erwähnt ist die Programmarchitektur des \textbf{Sudoku Helper} in drei Komponenten unterteilt, um eine geringe Kopplung und eine hohe Skalierbarkeit zu erreichen. 
+
+\subsection{Model}
+Aufgrund einer geringen Menge an Daten wird keine Anbindung an eine Datenbank benötigt. Bei den Daten selbst handelt es sich nur um teilweise verschachtelte Listen, in in der \textit{SudokuBoard} Klasse gehalten werden. Für die Manipulation dieser Daten verfügt die Klasse \textit{SudokuBoard} über einige Funktionen, die dem Controller eine Verarbeitung und Nutzung der Daten ermöglicht.
+
+Erweitert wird das Model durch die Implementierung der Lösungsstrategien und deren benötigten Komponenten, die das Anwenden der Strategien ermöglichen. Die Strategien werden über den Controller aufgerufen.
+
+\subsection{View}
+Die View ist für die Darstellung der Daten und für das Empfangen der Nutzereingaben zuständig. Sie dient dem Nutzer als Steuerung, welcher über die im folgenden Kapitel xx beschriebenen Funktionalitäten das Programm beeinflussen kann. Die Eingaben des Benutzers werden an den Controller weitergegeben, im Gegenzug liefert der Controller Informationen über die Daten, die dargestellt werden sollen. 
+
+Die Struktur der Darstellung ist vorgegeben durch eine \ac{HTML} Datei, welche mittels einer \ac{CSS} Datei gestaltet und formatiert wird. In der \textit{client.js} Datei wird der Client initialisiert, die Verbindung zum Server aufgebaut und dient zur Kommunikation mit dem Controller. Die \textit{style.js} Datei dient zur DOM Manipulation sowie zur Änderung \ac{CSS} Eigenschaften, um die Repräsentation für den Nutzer anzupassen.
+
+\subsection{Controller}
+Die Datei \textit{app.py} repräsentiert den Controller, welcher als zentrale Schnittstelle dient. Er startet die Applikation durch das Starten des Flask Servers und definiert einige Endpunkte für den Client. Alle Aktionen werden durch den Benutzer ausgelöst, wobei die von der View empfangenen Befehle überprüft und entsprechend die Daten an das Model weitergeleitet werden. Im Spezialfall des Betätigens der Hilfefunktion wird die oben erwähnte Erweiterung des Models der Lösungsstrategien gebraucht. Die entsprechenden Daten zur Darstellung der Hilfefunktion werden der View übergeben, für den letzten Hilfsschritt, dem Anwenden der Strategie, werden die Informationen dem Model übergeben. Die Antwort des Models wird über den Controller der View übergeben und die Darstellung aktualisiert. 
 
 \section{Serverseite}
 
-\todo{Serverseite}
+Um die Anwendung zu realisieren müssen Server und Client miteinander kommunizieren. Im Falle von standardmäßigen \ac{HTTP} Requests die synchron verlaufen wird die Seite bei jedem Request neu geladen. Dieses Verhalten beeinflusst die \ac{UX} negativ, daher sollte von einer synchronen Übertragung abgesehen werden. Eine naheliegende Alternative ist \ac{AJAX}. 
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/Websocket.png}
+	\caption{https://ably.com/blog/the-realtime-web-evolution-of-the-user-experience}
+	\label{fig:VergleichWeb}
+\end{figure}
 
 In den meisten Fällen wird die Verbindung über WebSocket hergestellt, was einen Kommunikationskanal mit geringem Aufwand zwischen Server und Client darstellt. Für die Studienarbeit wird für die Kommunikation SocketIO verwendet. 
 
@@ -69,7 +89,7 @@ Die Kandidaten sind in einer dreidimensionalen Liste gespeichert. Mit den ersten
 Beim Initialisieren der Kandidaten, wie im Code \ref{lst:candidates} umgesetzt, werden zunächst alle Kandidaten gesetzt. Auf einem leeren Board könnte nämlich in jede Zelle jeder Wert, wenn noch keine Zahlen vorgegeben sind. Sobald dann Zahlen eingetragen werden, werden die Kandidatenwerte geupdated.
 
 \subsection{Funktionalität}
-Neben der Initialisierung des Boards und der Kandidaten, gehört das Prüfen der eindeutigen Lösbarkeit eines Sudokurätsel zu den wichtigsten Funktionalitäten der \textit{SudokuBoard} Klasse. Die Umsetzung dieser Funktionen wurde in dem Abschnitt \ref{eindeutigLösbar} und dem darauf folgendem bereits vorgestellt. Eine weiter wichtige Funktionalität dieser Klasse ist das updaten des Boards und der Kandidaten wenn Zahlen eingetragen sind. Auf diesen Datenstrukturen bauen alle Umsetzungen der Lösungstechniken auf. 
+Neben der Initialisierung des Boards und der Kandidaten, gehört das Prüfen der eindeutigen Lösbarkeit eines Sudoku Rätsel zu den wichtigsten Funktionalitäten der \textit{SudokuBoard} Klasse. Die Umsetzung dieser Funktionen wurde in dem Abschnitt \ref{eindeutigLösbar} und dem darauf folgendem bereits vorgestellt. Eine weiter wichtige Funktionalität dieser Klasse ist das updaten des Boards und der Kandidaten wenn Zahlen eingetragen sind. Auf diesen Datenstrukturen bauen alle Umsetzungen der Lösungstechniken auf. 
 
 Des weiteren findet im \textit{SudokuBoard} die Umsetzung der Strategien statt. Dafür wurden die Funktionen \textit{remove\_candidates(self, cross\_outs)} und \textit{update\_numbers(self, number, cells)} implementiert. Hier wird eine weitere Unterscheidung zwischen Kandidaten und Zahlen getroffen. Kandidaten lassen sich nur entfernen, während es bei Zahlen sowohl das Löschen als auch das Hinzufügen möglich ist. Außerdem wird die Liste der Kandidaten nicht automatisch mit dem eintragen einer Zahl aktualisiert, sondern ausschließlich mit der letzten Hilfestellung.
 
@@ -185,7 +205,7 @@ In der Studienarbeit wurden nicht alle auf der Website \cite{martin} vorgestellt
 Der Erweiterte \ac{BRC} wurde nicht umgesetzt, weil es eine Kombination aus dem \ac{BRC} und einem Versteckten Single ist. Außerdem wurde die Forcing Chain nicht implementiert, weil sie von der XY-Kette beinhaltet wird.
 
 \section{Beispielhafte Umsetzung von Strategien}
-Die Lösungsstrategien können zwei unterschiedliche Wirkungen auf ein Sudokurätsel haben. Entweder es ist möglich eine Zahl einzufügen oder es können Kandidaten aus verschiedenen Gründen eliminiert werden. Diese beiden Wirkungen werden im Backend unterschiedlich behandelt. In den nächsten zwei Unterkapiteln wird die Funktionsweise und die Unterschiede beider Varianten anhand zweier Beispiele erklärt. 
+Die Lösungsstrategien können zwei unterschiedliche Wirkungen auf ein Sudoku Rätsel haben. Entweder es ist möglich eine Zahl einzufügen oder es können Kandidaten aus verschiedenen Gründen eliminiert werden. Diese beiden Wirkungen werden im Backend unterschiedlich behandelt. In den nächsten zwei Unterkapiteln wird die Funktionsweise und die Unterschiede beider Varianten anhand zweier Beispiele erklärt. 
 
 Für beide Umsetzungen wird die Abstrakte Klasse \textit{SolvingTechniques} genutzt.
 
@@ -200,7 +220,7 @@ Der Fall, dass aufgrund einer Lösungstechnik direkt eine Zahl in das Sudokugitt
 
 Für das Beispiel wird die Strategie des Nacktem Singles erklärt. Bei einem Nacktem Single steht in einer Zelle nur noch ein einziger Kandidat. Dieser Wert kann damit in die Zelle eingetragen werden.
 
-Sobald auf dem Numpad der Help Button das erste mal gedrückt wird, wird die Funktion \textit{try\_techniques()} im \textit{TechniqueManager} ausgeführt. 
+Sobald auf dem Numpad der \textit{Help} Button das erste mal gedrückt wird, wird die Funktion \textit{try\_techniques()} im \textit{TechniqueManager} ausgeführt. 
 \begin{lstlisting}[caption={Serverseitig help}, label={lst:helper}]
 @socketio.on('help')
 def help():
