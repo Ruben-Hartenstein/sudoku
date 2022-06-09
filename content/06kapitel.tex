@@ -30,7 +30,9 @@ Die Datei \textit{app.py} repräsentiert den Controller, welcher als zentrale Sc
 
 \section{Serverseite}
 
-Um die Anwendung zu realisieren müssen Server und Client miteinander kommunizieren. Im Falle von standardmäßigen \ac{HTTP} Requests die synchron verlaufen wird die Seite bei jedem Request neu geladen. Dieses Verhalten beeinflusst die \ac{UX} negativ, daher sollte von einer synchronen Übertragung abgesehen werden. Eine naheliegende Alternative ist \ac{AJAX}. 
+Um die \textbf{Sudoku Helper} Anwendung zu realisieren müssen Server und Client miteinander kommunizieren. Im Falle von standardmäßigen \ac{HTTP} Requests die synchron verlaufen wird die Seite bei jedem Request neu geladen. Dieses Verhalten beeinflusst die \ac{UX} negativ, daher sollte von einer synchronen Übertragung abgesehen werden.
+
+Eine naheliegende Alternative ist \ac{AJAX}, welches ein Konzept der asynchronen Datenübertragung darstellt und eine Datenübertragung ohne Neuladen der Seite ermöglichen sollte. Dennoch bieten WebSockets einige Vorteile gegenüber \ac{AJAX}. WebSockets werden benutzt um full-duplex Kommunikation zwischen Server und Client zu definieren. Sie konzentrieren sich auf echte Parallelität und Leistungsoptimierung. Wie in Abbildung \ref{fig:VergleichWeb} zu erkennen ist, lassen sich über WebSockets dauerhafte Verbindungen herstellen, wobei Overhead eingespart werden kann.   
 
 \begin{figure}[htbp]
 	\centering
@@ -39,11 +41,11 @@ Um die Anwendung zu realisieren müssen Server und Client miteinander kommunizie
 	\label{fig:VergleichWeb}
 \end{figure}
 
-In den meisten Fällen wird die Verbindung über WebSocket hergestellt, was einen Kommunikationskanal mit geringem Aufwand zwischen Server und Client darstellt. Für die Studienarbeit wird für die Kommunikation SocketIO verwendet. 
+In jedem Fall lassen sich mit einer WebSocket-Verbindung Bandbreite und CPU Zyklen einsparen. Für die Studienarbeit wird für die Kommunikation Serverseitig die Flask Erweiterung Flask-SocketIO verwendet.
 
 \subsection{SocketIO}
 
-Socket.IO ist eine Bibliothek, die eine bidirektionale und ereignisbasierte Kommunikation mit niedriger Latenz zwischen einem Client und einem Server ermöglicht. Die Hauptidee hinter Socket.IO ist, dass beliebige Ereignisse mit beliebigen Daten gesendet und empfangen werden können.
+Socket.IO ist eine Bibliothek, die eine bidirektionale und ereignisbasierte Kommunikation mit niedriger Latenz zwischen einem Client und einem Server ermöglicht. Die Hauptidee hinter Socket.IO ist, dass beliebige Ereignisse mit beliebigen Daten gesendet und empfangen werden können. Es baut auf dem WebSocket Protokoll auf und erweitert es mit Absicherungen wie die automatische Wiederverbindung von Clients und Verwendung von HTTP long-polling im falle von Kompatibilitätsproblemen.
 
 Auf der Server-Seite erweitert die Socket-Instanz die EventEmitter-Klasse.
 
