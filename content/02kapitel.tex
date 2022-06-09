@@ -19,7 +19,7 @@ In diesem Projekt wird mit der Version 3.9 von Python gearbeitet. \cite{Python} 
 \subsection{JavaScript}
 Im Frontend wurde sich für JavaScript mit jQuery entschieden. JavaScript ist eine der meist verwendeten Programmiersprachen der Welt. Als JavaScript erfunden wurde, ging man davon aus, dass es für kurze Codeschnipsel verwendet wird, eingebettet in eine Webseite. Es ist eine Skriptsprache und wurde für die Benutzerinteraktion entwickelt. Mithilfe von JavaScript lassen sich Inhalte verändern oder neu generieren. Für das Projekt ist die Interaktion mit dem Benutzer von entscheidender Bedeutung, da er ständig neue Zahlen oder Kandidaten eingeben kann. 
 
-Diese Anforderungen lassen sich mit JavaScript umsetzten. Daher wurde sich beim Frontenddevolpment für JavaScript mit der Erweiterung von jQuery entschieden. \cite[7\psqq]{Java} \cite{stackoverflow}
+Diese Anforderungen lassen sich mit JavaScript umsetzten. Daher wurde sich beim Frontend Devolpment für JavaScript mit der Erweiterung von jQuery entschieden. \cite[7\psqq]{Java} \cite{stackoverflow}
 
 
 \subsubsection{jQuery}
@@ -30,9 +30,13 @@ Neben JavaScript wird die freie Programmbibliothek jQuery für das Frontend verw
 Die Studienarbeit soll zum Schluss auf einem Webserver laufen. In diesem Kapitel wird beschrieben, welchen Anforderungen ein Webserver gerecht werden muss. Danach werden mit dem Apache HTTP Server und dem Nginx Webserver zwei beliebte Webserver vorgestellt und verglichen. Zuletzt wird die Designentscheidung aufgrund des Vergleichs begründet.
 
 Ein Webserver ist in der Regel ein Server, der zur Verbreitung von Webinhalten im Inter- oder Intranet dient. Die jeweiligen Informationen und Dokumentationen können demnach weltweit oder firmenintern erreicht werden. Damit eine Website jederzeit erreichbar sein kann, muss der Webserver permanent online sein.
-Der Rechner, auf dem der Webserver läuft, wird als Host bezeichnet. Der Webserver ist für die zuverlässige Übertragung von statischen, wie beispielsweise von unveränderlichen \ac{HTML}-Dateien, aber auch von dynamischen Dateien verantwortlich. Für dynamische Dateien muss der Webserver vor der Antwort Programmcode ausführen. Dieser Programmcode wird in diesem Fall in der Programmiersprache Python geschrieben. Mittels einer \ac{CSS} Datei können die Inhalte der dynamischen Dateien weitestgehend von den Darstellungsvorgaben getrennt werden. In der \ac{HTML} Datei wird folglich nur die inhaltliche Gliederung definiert und in der \ac{CSS} Datei die Darstellung, wie etwa Farben oder Layout.
+
+Der Rechner, auf dem der Webserver läuft, wird als Host bezeichnet. Der Webserver ist für die zuverlässige Übertragung von statischen, wie beispielsweise von unveränderlichen \ac{HTML}-Dateien, aber auch von dynamischen Dateien verantwortlich. Für dynamische Dateien muss der Webserver vor der Antwort Programmcode ausführen. Dieser Programmcode wird in diesem Fall in der Programmiersprache Python geschrieben. In der \ac{HTML} Datei wird die inhaltliche Gliederung definiert und in der \ac{CSS} Datei die Darstellung, wie etwa Farben und Formatierung.
+
 Für die Übermittlung wird das Übertragungsprotokoll \ac{HTTP} oder die verschlüsselte Variante \ac{HTTPS} verwendet.
 Ein Webserver ist in der Lage, die Inhalte auf viele verschiedene Rechner gleichzeitig zu übermitteln. Wie viele Nutzeranfragen (Requests) ein Server bearbeiten kann, hängt von der Hardware und der Auslastung des Hosts ab. 
+
+Am meisten verbreitet sind unter anderem die Webserver Apache HTTP Server und Nginx, wie in die Statistik \ref{fig:WebserverStatistik} dargestellt. Beide Programme sind freie Software und wurden daher für das Projekt in Betracht gezogen. \cite{karlstetter_2019} \cite{stackoverflow}
 
 \begin{figure}[H]
 	\centering
@@ -40,8 +44,6 @@ Ein Webserver ist in der Lage, die Inhalte auf viele verschiedene Rechner gleich
 	\caption{Benutzungsstatistiken von Webservern \cite{w3techs}}
 	\label{fig:WebserverStatistik}
 \end{figure}
-
-Am meisten verbreitet sind unter anderem die Webserver Apache HTTP Server und Nginx, wie in die Statistik \ref{fig:WebserverStatistik} dargestellt. Beide Programme sind freie Software und wurden daher für das Projekt in Betracht gezogen. \cite{karlstetter_2019} \cite{stackoverflow}
 
 \subsection{Apache HTTP Server}
 Der Apache Webserver wurde erstmals 1995 veröffentlicht und hat sich schnell zu einem der beliebtesten Webserver entwickelt. Er unterstützt neben Unix und Linux noch eine Vielzahl an weiteren Betriebssystemen.
@@ -131,19 +133,19 @@ Beide Frameworks wären für das Projekt geeignet. Die Django Community ist grö
 
 Aufgrund der Leichtigkeit wurde sich bei den Frameworks für Flask entschieden. Da es bei der Performance keine großen Unterschiede zwischen Django und Flask gibt, ist es als Merkmal für die Entscheidung eines Frameworks nicht relevant. Für den \textbf{Sudoku Helper} wird nur eine einseitige Anwendung ohne Datenbankanbindung benötigt, wodurch Flask das geeignetere Framework ist. Auch der modulare Aufbau spricht für Flask, da nur wenige zusätzliche Pakete genutzt werden. 
 
-Das Entwurfsmuster \ac{MVC} wird im Framework Flask übernommen.
+Das Entwurfsmuster \ac{MVC} wird für das Framework Flask übernommen.
 
 \section{Entwurfsmuster}
 In der Studienarbeit wird für die Übersichtlichkeit ein Entwurfsmuster verwendet. Der folgende Abschnitt stellt das Entwurfsmuster und die Komponenten vor.
 
-Wie im Abschnitt der Frameworks schon erwähnt, wird in diesem Projekt eine bestimmte Softwarearchitektur verwendet, damit der Programmcode eine gewisse Übersichtlichkeit behält. Damit werden in einem Projekt die grundlegenden Komponenten und das Zusammenspiel dieser visualisiert. Damit ist es einfacher nicht-funktionale Eigenschaften wie die Modifizierbarkeit, Wartbarkeit oder Sicherheit darzustellen und zu verstehen.  \cite[3\psq]{musch2021design}
+Wie im Abschnitt der Frameworks schon erwähnt, wird in diesem Projekt die \ac{MVC} Softwarearchitektur verwendet, damit der Programmcode eine gewisse Übersichtlichkeit behält und Kopplung reduziert wird. Dadurch lässt sich durch die Möglichkeit die einzelnen Module auszutauschen, die Skalierbarkeit erhöhen. Zudem wird das Zusammenspiel der Komponenten in einem Projekt verständlicher. Damit ist es einfacher nicht-funktionale Eigenschaften wie die Modifizierbarkeit, Wartbarkeit oder Sicherheit darzustellen und zu verstehen.  \cite[57\psq]{musch2021design}
 
-Das Framework Django arbeitet immer mit dem \ac{MVC} Architekturmuster. Da aber Flask als Framework genutzt wird, muss diese Architektur selbst implementiert werden. Im Folgenden wird das Architekturmuster mit seinen drei Komponenten kurz beschrieben.
+Das Framework Django gibt das \ac{MVC} Architekturmuster vor. Da aber Flask als Framework genutzt wird, muss diese Architektur selbst implementiert werden. Im Folgenden wird das Architekturmuster mit seinen drei Komponenten kurz beschrieben.
 
 \subsection{\acl{MVC}}
 Das Ziel dieser Entwurfsarchitektur ist es, spätere Änderungen oder Erweiterungen zu vereinfachen und die Wiederverwendbarkeit der einzelnen Komponenten zu steigern. In der Abbildung \ref{fig:MVC} ist die Architektur visualisiert. Durchgezogene Linien stehen hierbei für eine direkte Assoziation und gestichelte für eine indirekte Assoziation.  \cite[57\psq]{musch2021design}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	\includegraphics{images/MVC.png}
 	\caption{\ac{MVC} Konzept}
@@ -151,8 +153,10 @@ Das Ziel dieser Entwurfsarchitektur ist es, spätere Änderungen oder Erweiterun
 \end{figure}
 
 \subsubsection{Model}
-Im Model sind die Daten enthalten, die dargestellt werden sollen. In Falle des \textbf{Sudoku Helper}s ist hier das Sudoku Board gespeichert.
+Im Model sind die Daten enthalten, die dargestellt werden sollen. In Falle des \textbf{Sudoku Helper}s ist hier das Sudoku Board gespeichert. Dieser Teil dient zur Verwaltung und Manipulation der Daten und kommuniziert mit der View nur über den Controller.
+
 \subsubsection{View}
-In der View oder der Präsentation werden die Daten aus dem Model dargestellt. Außerdem wird in der View die Benutzerinteraktion geregelt. Die View kennt die Daten aus dem Model, soll diese aber nicht bearbeiten oder verändern und ist völlig unabhängig von dem Controller.
+In der View oder der Präsentation werden die Daten aus dem Model dargestellt. Außerdem wird in der View die Benutzerinteraktion geregelt. Die View kennt die Daten aus dem Model, soll diese aber nicht bearbeiten oder verändern. Jegliche Kommunikation mit dem Model erfolgt über den Controller.
+
 \subsubsection{Controller}
-Im Controller werden das Model und die View verwaltet. Die View unterrichtet den Controller von Benutzerinteraktionen. Im Controller wird diese dann ausgewertet und gegebenenfalls das Model und die View angepasst.  In dieser Komponente sind die Lösungsstrategien für den \textbf{Sudoku Helper} implementiert.
+Der Controller ist die zentrale Steuereinheit. In ihm werden das Model und die View verwaltet. Die View unterrichtet den Controller von Benutzerinteraktionen. Im Controller wird diese dann ausgewertet und gegebenenfalls das Model und die View angepasst.
