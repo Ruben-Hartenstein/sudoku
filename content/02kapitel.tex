@@ -53,7 +53,7 @@ Der Apache Server ist modular aufgebaut, wodurch benötigte Funktionen, die der 
 Beim Apache-Webserver wird ein Ansatz verfolgt, bei dem jede Clientanfrage von einem separaten Prozess oder Thread bearbeitet wird. Dadurch werden Prozesse, die Schreib- oder Leseoperationen erfordern, nacheinander abgearbeitet und es kann passieren, dass ein Request in der Warteschlange verweilen muss, bis der vorherige Request durchgeführt werden konnte. Damit man dieses Problem umgehen kann, gibt es die Möglichkeit, mehrere Single-Threading-Prozesse gleichzeitig zu starten. Diese Strategie ist jedoch mit einem hohen Ressourcenaufwand verbunden. Um dies zu vermeiden, kommen Multi-Threading-Mechanismen zum Einsatz. Für die parallele Abfrage von Clientanfragen gibt es verschiedene Multi-Processing-Module, die integriert werden können. \cite{karlstetter_2019} \cite{ionosdigitalguide_2017}
 
 
-\subsection{Nginx Webserver}
+\subsection{Nginx}
 Der Marktanteil von Nginx ist in den letzten Jahren kontinuierlich gestiegen, weshalb auch dieser Webserver für die Studienarbeit in Betracht gezogen wurde. Nginx wurde erstmals 2004 veröffentlicht und ist wie der Apache Server auch mit diversen Betriebssystemen kompatibel.
 
 Wie Apache ist auch Nginx modular aufgebaut und verschiedene Funktionen können über Module bereitgestellt werden. Zu diesen Modulen gehört jedoch nicht die Option, Interpreter für eine Programmiersprache entsprechend in den Webserver zu integrieren. Es wird also ein weiterer Anwendungsserver benötigt. Für kleine Webprojekte ist das ein Mehraufwand, der nicht immer eingegangen werden muss. 
@@ -84,7 +84,7 @@ Die folgende Tabelle \ref{tab:ServerVergleich} zeigt die Unterschiede und Gemein
 			\hline
 		\end{tabular}
 	}
-	\caption{Vergleich der Webserver Apache HTTP Server und Nginx Webserver}
+	\caption{Vergleich der Webserver Apache HTTP Server und Nginx}
 	\label{tab:ServerVergleich}
 \end{table}
 
@@ -142,7 +142,10 @@ Wie im Abschnitt der Frameworks schon erwähnt, wird in diesem Projekt die \ac{M
 
 Das Framework Django gibt das \ac{MVC} Architekturmuster vor. Da aber Flask als Framework genutzt wird, muss diese Architektur selbst implementiert werden. Im Folgenden wird das Architekturmuster mit seinen drei Komponenten kurz beschrieben.
 
+\newpage
+
 \subsection{\acl{MVC}}
+\label{sub:mvc}
 Das Ziel dieser Entwurfsarchitektur ist es, spätere Änderungen oder Erweiterungen zu vereinfachen und die Wiederverwendbarkeit der einzelnen Komponenten zu steigern. In der Abbildung \ref{fig:MVC} ist die Architektur visualisiert. Durchgezogene Linien stehen hierbei für eine direkte Assoziation und gestichelte für eine indirekte Assoziation.  \cite[57\psq]{musch2021design}
 
 \begin{figure}[H]

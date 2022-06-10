@@ -87,7 +87,7 @@ Für jedes Element des Problems, in diesem Fall für jede freie Zelle, werden al
 Damit basiert Backtracking auf dem Trial-and-Error Prinzip und versucht eine erreichte Teillösung in eine Gesamtlösung zu transferieren. 
 
 Bei $z$ möglichen Verzweigungen jeder Teillösung und einem möglichen Verzweigungsbaum mit der Tiefe von $N$ hat das Backtracking, sofern $z > 1$ ist, im schlechtesten Fall mit $O(z^{N})$  eine exponentielle Laufzeit.
-\begin{equation}\formelentry{Zeitkomplexität}
+\begin{equation}\formelentry{Zeitkomplexität Backtracking}
 	1 + z + z^{2} + z^{3} + ... + z^{N} 
 \end{equation} 
 
@@ -110,7 +110,7 @@ Die Laufzeit des Algorithmus hängt von der Anzahl der freien Zellen ab und dami
 	numbers=left,
 }
 
-\begin{lstlisting}[language=Python, caption={Funktion zum Lösen des Sudoku Rätsel}, label={lst:solve}]
+\begin{lstlisting}[language=Python, caption={Backtracking zum Lösen des Sudoku Rätsel}, label={lst:solve}]
 	def solve(self, numbers=(1, SIZE + 1), board=None):
 		"""
 		Solves the SudokuBoard recursively via backtracking
@@ -135,7 +135,7 @@ Die Laufzeit des Algorithmus hängt von der Anzahl der freien Zellen ab und dami
 
 \subsubsection{Abbruchbedingung}
 Die Abbruchbedingung für das Backtracking ist mit einer eigenen Funktion \textit{is\_valid} umgesetzt.
-\begin{lstlisting}[language=Python, caption={Abbruchbedingung durch Validierung der Lösungsvariante}, label={lst:valid}]
+\begin{lstlisting}[language=Python, caption={Abbruchbedingung Backtracking}, label={lst:valid}]
 	def is_valid(self, number, position, board=None):
 		...
 		# Check row
@@ -161,7 +161,7 @@ Der Algorithmus des Backtrackings bricht nach dem Finden einer vollständigen L�
 
 Um die Eindeutigkeit eines Sudoku Rätsels zu beweisen, wird nach dem Finden einer Lösung das Backtracking nochmals von hinten begonnen. Damit ist gemeint, dass bei der ersten Lösungssuche in den freien Zellen die Zahlen von 1 bis 9 eingetragen werden und nach dem Abbruchkriterium überprüft wird. Beim Suchen nach einer zweiten Lösung beziehungsweise bei dem Beweis der Eindeutigkeit wird das Backtracking nochmals ausgeführt, dabei aber die Zahlen von 9 bis 1 in die freien Zellen eingetragen.
 
-\begin{lstlisting}[language=Python, caption={Überprüfen ob ein Sudoku Rätsel eine eindeutige Lösung hat}, label={lst:uniquesolve}]
+\begin{lstlisting}[language=Python, caption={Überprüfen auf eindeutige Lösbarkeit}, label={lst:uniquesolve}]
 	def is_uniquely_solvable(self):
 		temp_board = deepcopy(self.board)
 		self.solve(numbers=(9, 0, -1), board=temp_board)
