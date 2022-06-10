@@ -65,5 +65,5 @@ class DoubleChain(SolvingTechniques):
                             })
 
     def update_explanation(self):
-        self.explanation = f"""Two closed chains are on the same fields, {self.chain}.
+        self.explanation = f"""Two closed chains are on the same fields, {SolvingTechniques.pretty_print_cells(self.chain)}.
     If two parts of the chain with the same candidate are in the same unit, all other candidates of that value in the unit can be deleted."""

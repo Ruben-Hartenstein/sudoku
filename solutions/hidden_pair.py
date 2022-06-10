@@ -64,5 +64,5 @@ class HiddenPair(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""The total of two candidates, ({self.combo[0]} and {self.combo[1]}),
-occur in exactly two fields ({self.primary_cells[0]} and {self.primary_cells[1]}) of a {self.unit}.
+occur in exactly two fields {SolvingTechniques.pretty_print_cells(self.primary_cells[0])} and {SolvingTechniques.pretty_print_cells(self.primary_cells[1])} of a {self.unit}.
 Therefore all other candidates in these fields can be removed."""

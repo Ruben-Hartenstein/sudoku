@@ -64,5 +64,5 @@ class HiddenTriple(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""The total of three candidates, ({self.combo[0]}, {self.combo[1]} and {self.combo[2]}),
-occur in exactly three fields ({self.primary_cells[0]}, {self.primary_cells[1]} and {self.primary_cells[2]}) of a {self.unit}.
+occur in exactly three fields {SolvingTechniques.pretty_print_cells(self.primary_cells[0])}, {SolvingTechniques.pretty_print_cells(self.primary_cells[1])} and {SolvingTechniques.pretty_print_cells(self.primary_cells[2])} of a {self.unit}.
 Therefore all other candidates in these fields can be removed."""

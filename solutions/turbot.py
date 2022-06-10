@@ -105,7 +105,7 @@ class Turbot(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""The candidate {self.candidate} appears only twice in a {self.unit}, but in different blocks.
-The target object is in a field that is logically reached by both of these initial candidates, in this case {self.cross_outs[0]['cell']}. 
-Regardless which of the two candidates in the starting {self.unit} is correct, we can eliminate the {self.candidate} in the target field {self.cross_outs[0]['cell']}, 
-because the elimination occurs either directly or via a small chain {self.primary_cells[2]} and {self.primary_cells[3]}.
+The target object is in a field that is logically reached by both of these initial candidates, in this case {SolvingTechniques.pretty_print_cells(self.cross_outs[0]['cell'])}. 
+Regardless which of the two candidates in the starting {self.unit} is correct, we can eliminate the {self.candidate} in the target field {SolvingTechniques.pretty_print_cells(self.cross_outs[0]['cell'])}, 
+because the elimination occurs either directly or via a small chain {SolvingTechniques.pretty_print_cells(self.primary_cells[2])} and {SolvingTechniques.pretty_print_cells(self.primary_cells[3])}.
 """

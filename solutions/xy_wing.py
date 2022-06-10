@@ -59,6 +59,6 @@ class XYWing(SolvingTechniques):
         first_other_candidate = SolvingTechniques.format_candidates(self.candidates[first_cell[0]][first_cell[1]])
         first_other_candidate.remove(self.candidate)
         first_other_candidate = first_other_candidate[0]
-        self.explanation = f"""If the candidate, {self.candidate} would be inserted into the cell {self.chain[0]}, all candidates {self.candidate} have to be deleted from the influenced cells.
-If the other possibility {first_other_candidate} would be inserted, the candidate {self.candidate} has to be placed into the cell {self.chain[-1]}.
+        self.explanation = f"""If the candidate, {self.candidate} would be inserted into the cell {SolvingTechniques.pretty_print_cells(self.chain[0])}, all candidates {self.candidate} have to be deleted from the influenced cells.
+If the other possibility {first_other_candidate} would be inserted, the candidate {self.candidate} has to be placed into the cell {SolvingTechniques.pretty_print_cells(self.chain[-1])} via the chain {SolvingTechniques.pretty_print_cells(self.chain)}.
 Therefore all candidates {self.candidate} that are seen by both cells can be deleted."""

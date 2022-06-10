@@ -66,4 +66,4 @@ class ForbiddenRectangleType1(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""Because the candidates {self.candidate_pair_values[0]} and {self.candidate_pair_values[1]} are the only candidates in 3 out of 4 fields of the rectangle,
-the fourth field, {self.fourth_cell}, cannot possibly be one of those 2 candidates, otherwise the sudoku wouldn't have a unique solution, and they can be removed"""
+the fourth field, {SolvingTechniques.pretty_print_cells(self.fourth_cell)}, cannot possibly be one of those 2 candidates, otherwise the sudoku wouldn't have a unique solution, and they can be removed"""

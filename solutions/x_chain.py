@@ -56,4 +56,5 @@ class XChain(SolvingTechniques):
     def update_explanation(self):
         self.explanation = f"""If a candidate (here {self.candidate}) occurs only twice in a unit one of them is always correct while the other is not.
 If there are several such pairs of candidates, and their units overlap, a logical chain can be build in which alternately one candidate is correct while the other is not.
-While the order of which is wrong and which is correct cannot be said, any candidate seen from both kind of squares can be eliminated since one definitely is correct."""
+While the order of which is wrong and which is correct cannot be said, any candidate seen from both kind of squares can be eliminated since one definitely is correct.
+The Chain: {SolvingTechniques.pretty_print_cells(self.chain)}"""

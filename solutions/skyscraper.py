@@ -96,4 +96,4 @@ class SkyScraper(SolvingTechniques):
 
         self.explanation = f"""The candidate {self.candidate} only exists twice in two separate {self.unit}s. 
 Two of those fields are in the same row and see each other and the other two aren't. 
-Thus, a {self.candidate} has to be in one of the cells {self.uneven_cell_pair[0]} and {self.uneven_cell_pair[1]} and all candidates  {self.candidate} in fields that are seen by both of these cells can be removed for certain."""
+Thus, a {self.candidate} has to be in one of the cells {SolvingTechniques.pretty_print_cells(self.uneven_cell_pair[0])} and {SolvingTechniques.pretty_print_cells(self.uneven_cell_pair[1])} and all candidates  {self.candidate} in fields that are seen by both of these cells can be removed for certain."""

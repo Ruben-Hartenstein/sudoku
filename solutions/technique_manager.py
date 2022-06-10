@@ -27,8 +27,12 @@ from solutions.swordfish_with_fin import SwordfishWithFin
 from solutions.double_chain import DoubleChain
 from solutions.almost_locked_sets import AlmostLockedSets
 
-techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome, HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper, Swordfish, Dragon, ForbiddenRectangleType1, ForbiddenRectangleType2, ForbiddenRectangleType3, ForbiddenRectangleType4, XYWing, XYZWing, XChain, XYChain, SwordfishWithFin, DoubleChain, AlmostLockedSets]
-#techniques = [AlmostLockedSets]
+techniques = [NakedSingle, HiddenSingle, NakedPair, HiddenPair, NakedTriple, HiddenTriple, NakedFoursome,
+              HiddenFoursome, LineBlockInteraction, BlockLineInteraction, XWing, Turbot, ThirdEye, SkyScraper,
+              Swordfish, Dragon, ForbiddenRectangleType1, ForbiddenRectangleType2, ForbiddenRectangleType3,
+              ForbiddenRectangleType4, XYWing, XYZWing, XChain, XYChain, SwordfishWithFin, DoubleChain,
+              AlmostLockedSets]
+
 
 def set_solved_board(board):
     SolvingTechniques.set_solved_board(board)

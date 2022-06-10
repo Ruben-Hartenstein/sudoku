@@ -12,17 +12,27 @@
 <body>
 <div class="flex-container">
     <div class="flex-item">
-
         <table class="board">
-            {% for i in range(9) %}
-            <tr class="board">
-                {% for j in range(9) %}
-                <td class="board cell" id={{i}}{{j}}>
-                <p></p>
-                </td>
+            <tr>
+                {% for letter in '0ABCDEFGHI' %}
+                    {% if letter != '0' %}
+                        <td class="coords">{{letter}}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
                 {% endfor %}
             </tr>
-            {% endfor %}
+            {% for i in range(1, 10) %}
+                <tr class="board">
+                    {% for j in range(10) %}
+                        {% if j == 0 %}
+                            <td class="coords">{{i}}</td>
+                        {% else %}
+                            <td class="board cell" id={{i-1}}{{j-1}}><p></p></td>
+                        {% endif %}
+                     {% endfor %}
+                 </tr>
+             {% endfor %}
         </table>
 
     </div>

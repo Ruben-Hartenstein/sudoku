@@ -6,6 +6,16 @@ table.board {
     min-width: 330px;
 }
 
+.coords {
+    text-align: center;
+    font-size: clamp(20px, 2vw, 90px);
+}
+
+td:first-child{
+    border-top-style: hidden;
+    border-bottom-style: hidden;
+}
+
 td.board {
     height: calc(100% / 9);
     width: calc(100% / 9);
@@ -14,22 +24,22 @@ td.board {
     border: 1px solid;
 }
 
-td:first-child.board {
+td:nth-child(2).board {
     border-left: solid;
     border-left-width: 3px;
 }
 
-td:nth-child(3n).board {
+td:nth-child(3n + 1).board {
     border-right: solid;
     border-right-width: 3px;
 }
 
-tr:first-child.board {
+tr:nth-child(2).board {
     border-top: solid;
     border-top-width: 3px;
 }
 
-tr:nth-child(3n).board {
+tr:nth-child(3n + 1).board {
     border-bottom: solid;
     border-bottom-width: 3px;
 }

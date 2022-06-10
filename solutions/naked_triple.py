@@ -73,5 +73,5 @@ class NakedTriple(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""Because only three candidates ({self.combo[0]}, {self.combo[1]} and {self.combo[2]}) exist
-in three fields ({self.primary_cells[0]}, {self.primary_cells[1]} and {self.primary_cells[2]}) of a {self.unit},
+in three fields {SolvingTechniques.pretty_print_cells(self.primary_cells[0])}, {SolvingTechniques.pretty_print_cells(self.primary_cells[1])} and {SolvingTechniques.pretty_print_cells(self.primary_cells[2])} of a {self.unit},
 these candidates can be eliminated in the remaining fields of the {self.unit}"""

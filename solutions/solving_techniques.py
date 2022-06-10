@@ -143,3 +143,12 @@ class SolvingTechniques(ABC):
     @abstractmethod
     def update_explanation(self):
         pass
+
+    @staticmethod
+    def pretty_print_cells(cells):
+        def pretty_print_cell(cell):
+            return f"({cell[0] + 1}, {chr(ord('@') + (cell[1] + 1))})"
+        if type(cells) == list:
+            return ','.join(pretty_print_cell(cell) for cell in cells)
+        else:
+            return pretty_print_cell(cells)

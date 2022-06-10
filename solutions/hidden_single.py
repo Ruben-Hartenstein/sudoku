@@ -45,4 +45,4 @@ class HiddenSingle(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""Every {self.highlights[0]['value']} in the {self.unit}, except one, is blocked.
-Therefore, {self.highlights[0]['value']} can be put in the only possible field in the {self.unit}, {self.highlights[0]['cell']}."""
+Therefore, {self.highlights[0]['value']} can be put in the only possible field in the {self.unit}, {SolvingTechniques.pretty_print_cells(self.highlights[0]['cell'])}."""

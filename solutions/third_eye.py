@@ -48,5 +48,5 @@ class ThirdEye(SolvingTechniques):
                     return
 
     def update_explanation(self):
-        self.explanation = f"""On the whole board every field has two candidates, except the field {self.highlights[0]['cell']} which has three.
+        self.explanation = f"""On the whole board every field has two candidates, except the field {SolvingTechniques.pretty_print_cells(self.highlights[0]['cell'])} which has three.
 The candidate that is contained in three fields in one unit (in this case {self.highlights[0]['value']}) can be inserted otherwise the sudoku is not uniquely solvable."""

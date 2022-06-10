@@ -80,6 +80,6 @@ class Dragon(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""The candidate {self.candidate} exists only twice in a row and a column and two of those cells share one box. 
-The cell {self.primary_cells[4]} builds the intersection of the other two cells.
-No matter where the candidate {self.candidate} is entered, because of the logical connection the {self.candidate} can be deleted in the cell {self.primary_cells[4]}."""
+The cell {SolvingTechniques.pretty_print_cells(self.primary_cells[4])} builds the intersection of the other two cells.
+No matter where the candidate {self.candidate} is entered, because of the logical connection the {self.candidate} can be deleted in the cell {SolvingTechniques.pretty_print_cells(self.primary_cells[4])}."""
 

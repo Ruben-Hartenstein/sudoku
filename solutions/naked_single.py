@@ -33,5 +33,5 @@ class NakedSingle(SolvingTechniques):
         self.secondary_cells.remove((x, y))
 
     def update_explanation(self):
-        self.explanation = f"""Because every other candidate in the field {self.highlights[0]['cell']} is blocked,
+        self.explanation = f"""Because every other candidate in the field {SolvingTechniques.pretty_print_cells(self.highlights[0]['cell'])} is blocked,
 the only possibility left, {self.highlights[0]['value']}, can be inserted."""

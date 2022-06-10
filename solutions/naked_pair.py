@@ -74,5 +74,5 @@ class NakedPair(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""The same two candidate values, {self.highlights[0]['value']} and {self.highlights[1]['value']}, occupy two squares of a {self.unit},
-they divide the two squares {self.highlights[0]['cell']} and {self.highlights[2]['cell']}, and we know that they can't occur in other squares of the {self.unit}.
+they divide the two squares {SolvingTechniques.pretty_print_cells(self.highlights[0]['cell'])} and {SolvingTechniques.pretty_print_cells(self.highlights[2]['cell'])}, and we know that they can't occur in other squares of the {self.unit}.
 Therefore, the values {self.highlights[0]['value']} and {self.highlights[1]['value']} can be removed from the rest of the affected fields."""

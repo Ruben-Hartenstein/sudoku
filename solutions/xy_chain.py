@@ -58,5 +58,7 @@ class XYChain(SolvingTechniques):
 
 
     def update_explanation(self):
-        self.explanation = f"""If either possible candidate in the field {self.primary_cells[0]} would be inserted, the candidate {self.candidate} either has to be inserted into the field {self.chain0[-1]} or {self.chain1[-1]}.
-The candidate {self.candidate} can therefore be deleted from all cells, seen by both of them."""
+        print(SolvingTechniques.format_candidates(self.candidates[self.primary_cells[0][0]][self.primary_cells[0][1]])[0])
+        self.explanation = f"""If the candidate {SolvingTechniques.format_candidates(self.candidates[self.primary_cells[0][0]][self.primary_cells[0][1]])[0]} would be inserted into the field {SolvingTechniques.pretty_print_cells(self.primary_cells[0])}, the candidate {self.candidate} has to be inserted into the field {SolvingTechniques.pretty_print_cells(self.chain0[-1])} via the chain {SolvingTechniques.pretty_print_cells(self.chain0)}.
+If the candidate {SolvingTechniques.format_candidates(self.candidates[self.primary_cells[0][0]][self.primary_cells[0][1]])[1]} would be inserted into the field {SolvingTechniques.pretty_print_cells(self.primary_cells[0])}, the candidate {self.candidate} has to be inserted into the field {SolvingTechniques.pretty_print_cells(self.chain1[-1])} via the chain {SolvingTechniques.pretty_print_cells(self.chain1)}.
+In all possible cases, the candidate {self.candidate} has to be inserted into one of the two ends of the chains, therefore the candidate can be deleted in all fields, seen by both of them."""

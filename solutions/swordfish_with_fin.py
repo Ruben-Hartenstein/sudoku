@@ -99,5 +99,5 @@ class SwordfishWithFin(SolvingTechniques):
     def update_explanation(self):
         orthogonal_unit = ['row', 'column']
         orthogonal_unit.remove(self.unit)
-        self.explanation = f"""The candidate {self.candidate} depicts a swordfish, except for the fin, {self.fin}. It is therefore no real swordfish.
+        self.explanation = f"""The candidate {self.candidate} depicts a swordfish, except for the fin, {SolvingTechniques.pretty_print_cells(self.fin)}. It is therefore no real swordfish.
 Nevertheless, the candidate {self.candidate} from the overlapping fields of influence of the swordfish and the fin, can be deleted."""

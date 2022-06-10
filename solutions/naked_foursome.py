@@ -73,5 +73,5 @@ class NakedFoursome(SolvingTechniques):
 
     def update_explanation(self):
         self.explanation = f"""Because only four candidates ({self.combo[0]}, {self.combo[1]}, {self.combo[2]} and {self.combo[3]}) exist
-in four fields ({self.primary_cells[0]}, {self.primary_cells[1]}, {self.primary_cells[2]} and {self.primary_cells[3]}) of a {self.unit},
+in four fields {SolvingTechniques.pretty_print_cells(self.primary_cells[0])}, {SolvingTechniques.pretty_print_cells(self.primary_cells[1])}, {SolvingTechniques.pretty_print_cells(self.primary_cells[2])} and {SolvingTechniques.pretty_print_cells(self.primary_cells[3])} of a {self.unit},
 these candidates can be eliminated in the remaining fields of the {self.unit}"""
